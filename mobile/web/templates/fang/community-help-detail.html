@@ -1,0 +1,68 @@
+<ion-view view-title="友邻互助社">
+    <ion-nav-buttons side="left">
+        <button class="button icon ion-ios-arrow-left button-clear button-positive" ng-click="goBack()"></button>
+    </ion-nav-buttons>
+    <ion-content class="grey" style="padding-top: 2px;">
+        <div class="help-list">
+            <div class="help-info">
+                <a class="item item-avatar" ng-if="items.account_info.avatar">
+                    <img ng-src="{{qiniuDomain + items.account_info.avatar}}">
+                    <h2>
+                        <span style="font-weight: bold">{{items.title}}</span>
+                        <span class="date">{{items.formate_time}}</span>
+                    </h2>
+                    <p class="text">
+                        <span>{{items.account_info.nickname}}</span>
+                        <span class="ask-help">
+                            请{{items.volunteer_info.nickname}}帮忙
+                        </span>
+                        <span class="unsolved" ng-show="items.status==0">
+                            未解决
+                        </span>
+                        <span class="solved" ng-show="items.status==1">
+                            已解决
+                        </span>
+                    </p>
+                </a>
+            </div>
+            <p class="help-article">
+                {{items.content}}
+            </p>
+            <div class="news-images row row-wrap">
+                <div class="col-33" ng-repeat="keys in items.pics track by $index" ng-if="keys.length > 0">
+                    <img style="width:98%;" ng-src="{{qiniuDomain + keys}}?imageView2/1/w/200/h/200"
+                         ng-click="goto('community-picture', {id:items.id})">
+                </div>
+            </div>
+            <div class="help-comments">
+                <div class="comment-note" ng-repeat="reply in replyList" >
+                    <div class="comment-icon" ng-if= "items.reply">
+                        <img ng-src="{{qiniuDomain + reply.reply_info.avatar}}">
+                    </div>
+                    <div class="comment-detail">
+                        <p>
+                            <span>{{reply.reply_info.nickname}}</span>
+                            <img src="../../assets/img/icon_worker.png" ng-if="reply.isVounteer && reply.isVolunteer != 0">
+                            <span>{{reply.created_at}}</span>
+                        </p>
+                        <p>
+                            {{reply.content}}
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </ion-content>
+    <div class="bar bar-footer">
+        <div class="button-bar">
+            <a class="button zone-bottom-button" ng-click="action.reply()">
+                <span class="zone-comments-words">回复</span>
+            </a>
+            <a class="button zone-bottom-button"  ng-show="items.status==0 && items.isShowComplete"
+               ng-click="action.complete()">
+                <span class="zone-comments-words">已解决</span>
+            </a>
+        </div>
+    </div>
+</ion-view>

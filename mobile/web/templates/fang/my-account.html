@@ -1,0 +1,30 @@
+<ion-view view-title="个人中心">
+    <ion-content class="page-account grey" scroll="false">
+        <div class="news-focus" style="margin-bottom: 8px; display:block;height: 140px">
+            <a class="item item-thumbnail-left">
+                <img ng-src="{{qiniuDomain + items.avatar}}?imageView2/1/w/300" style="margin-top: 15px" ng-if="items.avatar != undefined">
+                <h2 class="account-name">
+                    {{items.nickname}}
+                    <img class="icon" ng-src="{{items.sex}}">
+                </h2>
+                <p class="tel" style="margin-left: 2px">
+                    {{items.primary_mobile}}
+                </p>
+                <a class=" button button-outline button-small button-edit" ng-click="goto('account-manage')">
+                    <i class="icon ion-compose"></i>&nbsp;&nbsp;
+                    编 辑
+                </a>
+            </a>
+        </div>
+        <div class="community-session list account-menu">
+            <div class="item item-icon-right" ng-click="goto('estate-manage')">
+                <a style="font-weight: bold">房产管理</a>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </div>
+            <div class="item item-icon-right" ng-click="goto('order')">
+                <a style="font-weight: bold">我的服务</a>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

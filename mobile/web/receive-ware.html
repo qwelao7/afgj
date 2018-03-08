@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>我为小区添便利</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function () {
+            return false;
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current" id="receive-ware">
+        <header class="bar bar-nav" style="background-color: #d8442e">
+            <h1 class="title">领取物品</h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel go-back"></a>
+        </header>
+        <nav class="bar bar-tab">
+            <a class="tab-item external white go-back">
+                <span style="color: #333338" >取消</span>
+            </a>
+            <a class="tab-item" style="background-color: #d8442e" id="agree">
+                <span class="font-white">我同意</span>
+            </a>
+        </nav>
+        <div class="content content-no-padding grey" id="container">
+            <div class="lr-padding white" style="padding-bottom: .6rem">
+                <p class="h3" style="padding: .6rem 0;font-weight: bold">
+                    您申请领用此物品，表示您同意：
+                </p>
+                <p class="h3 receive-term">
+                  ① 您愿意为<span>平治东苑</span>小区业主保管此物品；
+                </p>
+                <p class="h3 receive-term">
+                  ② 回来啦社区会在借用功能，<span>平治东苑</span>小区以您的名义共享此物品；
+                </p>
+                <p class="h3 receive-term">
+                  ③ <span>平治东苑</span>小区其他认证业主可通过回来啦社区借用功能，向您借用此物品；
+                </p>
+                <p class="h3 receive-term" style="padding-bottom: .6rem">
+                  ④ 小区业主因借用物品，感谢您的积分，归您个人所有，可在回来啦社区当现金使用。
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/receive-ware.js"></script>
+</body>
+</html>

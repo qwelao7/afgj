@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>添加房产</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="estate-add">
+        <header class="bar bar-nav">
+            <h1 class="title">添加房产</h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" href="javascript:history.go(-1)"></a>
+        </header>
+        <button class="bar bar-tab" id="submit" style="text-align: center;padding: .6rem;color: #fff;">
+            提交
+        </button>
+        <form class="content grey" style="font-size: .7rem;">
+            <div id="container">
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--新建小区-->
+<script id="tpl" type="text/template">
+    <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+        <div class="col-25 h3" style="color: #888">行政区</div>
+        <div class="col-75" style="margin-left: 8%">
+            <input type="text" placeholder="请选择" style="border: none;width: 100%;" readonly id="picker" name="district_id">
+            <i class="iconfont icon-right pull-right" style="position: absolute;right: .2rem;top: .1rem;"></i>
+        </div>
+    </div>
+    <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+        <div class="col-25 h3" style="color: #888">小区名</div>
+        <div class="col-75" style="margin-left: 8%">
+            <input type="text" placeholder="请输入小区名" style="border: none" class="community-name" name="community_name">
+        </div>
+    </div>
+    <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+        <div class="col-25 h3" style="color: #888">组团名</div>
+        <div class="col-75" style="margin-left: 8%">
+            <input type="text" placeholder="请输入组团名/苑名/街区名" style="border: none" class="group" name="group_name">
+        </div>
+    </div>
+    <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+        <div class="col-25 h3" style="color: #888">楼栋号</div>
+        <div class="col-75" style="margin-left: 8%">
+            <input type="text" placeholder="请输入楼栋号" style="border: none" class="building" name="building_num">
+        </div>
+    </div>
+    <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+        <div class="col-25 h3" style="color: #888">单元</div>
+        <div class="col-75" style="margin-left: 8%">
+            <input type="text" placeholder="请输入单元号" style="border: none" class="unit" name="unit_num">
+        </div>
+    </div>
+    <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+        <div class="col-25 h3" style="color: #888">户号</div>
+        <div class="col-75" style="margin-left: 8%">
+            <input type="text" placeholder="请输入户号" style="border: none" class="house" name="house_num">
+        </div>
+    </div>
+    <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+        <div class="col-25 h3" style="color: #888">设为常住房产</div>
+        <div class="col-75" style="margin-left: 8%">
+            <label class="label-switch">
+                <input type="checkbox" class="default" name="is_default">
+                <div class="checkbox"></div>
+            </label>
+        </div>
+    </div>
+    <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+        <div class="col-25 h3" style="color: #888">联系人</div>
+        <div class="col-75" style="margin-left: 8%">
+            <input type="text" placeholder="请输入联系人姓名" style="border: none" class="contact" name="consignee">
+        </div>
+    </div>
+    <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+        <div class="col-25 h3" style="color: #888">联系人电话</div>
+        <div class="col-75" style="margin-left: 8%">
+            <input type="text" placeholder="请输入联系人电话" style="border: none" class="mobile" name="mobile">
+        </div>
+    </div>
+</script>
+
+<!--选择的小区-->
+<script id="ext" type="text/template">
+    <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+        <div class="col-25 h3" style="color: #888">小区名</div>
+        <div class="col-75 community-name" style="margin-left: 8%" data-id="${community.id}">
+            <span class="h2">${community.name}</span>
+        </div>
+    </div>
+    {@if arr[0]}
+    <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+        <div class="col-25 h3" style="color: #888">组团名</div>
+        <div class="col-75" style="margin-left: 8%">
+            <input type="text" placeholder="请输入组团号" style="border: none" class="group" name="group_name">
+        </div>
+    </div>
+    {@/if}
+    <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+        <div class="col-25 h3" style="color: #888">楼栋号</div>
+        <div class="col-75" style="margin-left: 8%">
+            <input type="text" placeholder="请输入楼栋号" style="border: none" class="building" name="building_num">
+        </div>
+    </div>
+    {@if arr[1]}
+    <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+        <div class="col-25 h3" style="color: #888">单元</div>
+        <div class="col-75" style="margin-left: 8%">
+            <input type="text" placeholder="请输入单元号" style="border: none" class="unit" name="unit_num">
+        </div>
+    </div>
+    {@/if}
+    {@if arr[2]}
+    <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+        <div class="col-25 h3" style="color: #888">户号</div>
+        <div class="col-75" style="margin-left: 8%">
+            <input type="text" placeholder="请输入户号" style="border: none" class="house" name="house_num">
+        </div>
+    </div>
+    {@/if}
+    <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+        <div class="col-25 h3" style="color: #888">设为常住房产</div>
+        <div class="col-75" style="margin-left: 8%">
+            <label class="label-switch">
+                <input type="checkbox" class="default" name="is_default">
+                <div class="checkbox"></div>
+            </label>
+        </div>
+    </div>
+    <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+        <div class="col-25 h3" style="color: #888">联系人</div>
+        <div class="col-75" style="margin-left: 8%">
+            <input type="text" placeholder="请输入联系人姓名" style="border: none" class="contact" name="consignee">
+        </div>
+    </div>
+    <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+        <div class="col-25 h3" style="color: #888">联系人电话</div>
+        <div class="col-75" style="margin-left: 8%">
+            <input type="text" placeholder="请输入联系人电话" style="border: none" class="mobile" name="mobile">
+        </div>
+    </div>
+
+    <!--显示更多-->
+    {@if arr.indexOf(false) != -1}
+    <h3 style="margin-top: .5rem;" class="font-grey lr-padding" id="more">显示更多房产字段</h3>
+    <div id="except" class="visibility-hidden">
+        {@if !arr[0]}
+        <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+            <div class="col-25 h3" style="color: #888">组团名</div>
+            <div class="col-75" style="margin-left: 8%">
+                <input type="text" placeholder="请输入组团号" style="border: none" class="group" name="group_name">
+            </div>
+        </div>
+        {@/if}
+        {@if !arr[1]}
+        <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+            <div class="col-25 h3" style="color: #888">单元</div>
+            <div class="col-75" style="margin-left: 8%">
+                <input type="text" placeholder="请输入单元号" style="border: none" class="unit" name="unit_num">
+            </div>
+        </div>
+        {@/if}
+        {@if !arr[2]}
+        <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+            <div class="col-25 h3" style="color: #888">户号</div>
+            <div class="col-75" style="margin-left: 8%">
+                <input type="text" placeholder="请输入户号" style="border: none" class="house" name="house_num">
+            </div>
+        </div>
+        {@/if}
+    </div>
+    {@/if}
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/estate-add.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>活动</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no, email=no"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script src="weixin/src/css/fonts/iconfont.js"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<!-- 主页面 -->
+<div class="page-group">
+    <div class="page page-current" id="event-wechat">
+        <header class="bar bar-nav">
+            <h1 class="title" id="title">
+                添加客服微信
+            </h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+        </header>
+        <!-- content -->
+        <div class="content white" id="container" style="padding-top: 20%;">
+            <div class="white lg-margin" style="position: relative;top: 18%;">
+                <div style="width: 9.5rem;height: 9.5rem;
+                background-image: url('weixin/src/css/img/event-qr-bg1.png');
+                background-size: cover;margin: 0rem auto;">
+                    <div id="qrcode" class="event_qrcode" style="padding-top: 0;height: 100%;text-align: center;">
+                        <!-- 二维码 -->
+                        <img src="http://pub.huilaila.net/WechatIMG7.jpeg" alt="" style="width: 90%;height: 90%;margin-top: 5%;">
+                    </div>
+                </div>
+                <h2 class="font-green" style="margin-top: 1rem;margin-bottom: .6rem;text-align: center">添加客服微信</h2>
+                <h3 style="text-align: center;line-height: 1.2rem;">
+                    添加客服即为报名成功，可关闭此网页<br>
+                    谢谢您的配合
+                </h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script id="tpl" type="text/template">
+
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/event-wechat.js"></script>
+</body>
+</html>

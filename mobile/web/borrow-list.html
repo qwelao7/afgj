@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>借用</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current" id="borrow-list">
+        <!--header-->
+        <header class="bar bar-nav">
+            <h1 class="title" id="title">
+            </h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+        </header>
+        <!--nav-->
+        <nav class="bar bar-tab">
+            <a class="tab-item external" id="create">
+                <span class="font-white">发布待借物品</span>
+            </a>
+        </nav>
+        <div class="content content-no-padding infinite-scroll" data-distance="1%">
+            <div class="buttons-tab fixed-tab" data-offset="44">
+                <a class="tab-link button">全部</a>
+                <a class="tab-link button">工具</a>
+                <a class="tab-link button">卡券</a>
+                <a class="tab-link button">图书</a>
+                <a class="tab-link button">其他</a>
+            </div>
+
+            <!--tabs-->
+            <div class="tabs">
+                <div class="tab active">
+                    <div class="content-block">
+                    </div>
+                    <!-- 加载提示符 -->
+                    <div class="infinite-scroll-preloader">
+                        <div class="preloader">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--header-->
+<script id="header" type="text/template">
+    <input type="text" id="picker" style="background-color: #009042;border: none; text-align: center;width:100%;"
+           value="${name}▾" readonly>
+</script>
+
+<!--list-->
+<script id="tpl" type="text/template">
+    {@each list as item}
+    <div class="lg-margin white">
+        <div class="lg-margin-item has-border-bottom" data-id="${item.id}">
+            <div class="user-item decoration-item no-border lr-padding white">
+                <div class="user-item-img">
+                    <img src="${item.headimgurl}" alt="" style="border-radius: 50%;">
+                </div>
+                <div class="user-item-content">
+                    <h1 class="item-two-line-title">
+                        ${item.nickname}
+                    </h1>
+                    <h5 class="item-two-line-detail">
+                        ${item.created_at | format} ${item.borrow_item_type}
+                    </h5>
+                </div>
+                <br style="clear: both">
+                {@if item.item_desc != ''}
+                <h3 style="padding-bottom: .6rem;margin-bottom: 0">
+                    ${item.item_desc}
+                </h3>
+                {@/if}
+            </div>
+            {@if item.item_pics != null}
+            <div>
+                <div class="row white lr-padding">
+                    {@each item.item_pics as data}
+                    <a class="col col-33-img open-about">
+                        <img src="${data | imgPath}?imageMogr2/thumbnail/!300x300r/gravity/center/crop/200x200"
+                             class="decoration-img" style="margin:0;">
+                    </a>
+                    {@/each}
+                </div>
+            </div>
+            {@/if}
+        </div>
+        <div style="padding: .4rem 0">
+            <div class="buttons-row white no-border" data-id="${item.id}">
+                <div class="button no-border font-orange to-thank" style="margin-left: -.2rem">
+                    <i class="iconfont icon-love font-orange" style="padding: 0;"></i><span class="font-orange">&nbsp;${item.thanks_num}</span>
+                </div>
+                <div class="button no-border font-dark to-comment" style="border-left: 1px solid #f6f6f9">
+                    <i class="iconfont icon-liuyan" style="padding: 0;font-size:.9rem;"></i><span class="font-grey">&nbsp;${item.comment_num}</span>
+                </div>
+                <div class="button no-border font-dark to-praise" style="border-left: 1px solid #f6f6f9"
+                     data-ispraise=${item.isPraise}>
+                    {@if item.isPraise}
+                    <i class="iconfont icon-dianzanhll font-green" style="padding: 0;"></i><span class="font-green">&nbsp;${item.praise_num}</span>
+                    {@else}
+                    <i class="iconfont icon-zan1" style="padding: 0;"></i><span class="font-grey">&nbsp;${item.praise_num}</span>
+                    {@/if}
+                </div>
+            </div>
+        </div>
+    </div>
+    {@/each}
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/borrow-list.js"></script>
+</body>
+</html>

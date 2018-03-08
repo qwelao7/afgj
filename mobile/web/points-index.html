@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>我的友元</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="points-index">
+        <header class="bar bar-nav" id="header">
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+            <h1 class="title">我的友元</h1></header>
+        <div class="content grey" id="container">
+            <!-- container -->
+        </div>
+    </div>
+</div>
+
+<script type="text/template" id="tpl">
+    <div class="points-index-banner">
+        <h3 style="height:100px;font-size: .75rem;color:#fff;width: 100%;display: block;padding-top: 8%;margin-bottom: 0;">
+            <span style="opacity: .69">可用友元:</span><br>
+            <span style="font-size: 1.5rem;opacity: 1">${all_points}</span>
+        </h3>
+    </div>
+    <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom: 0" id="all">
+        <div class="col-25 h3 points-index-list" style="color: #595757;width: 100%">
+            所有记录
+            <a class="iconfont icon-right pull-right open-panel"></a>
+        </div>
+    </div>
+    <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom: 0" id="collect">
+        <div class="col-25 h3" style="color: #595757;width: 100%">
+            获取记录
+            <a class="iconfont icon-right pull-right open-panel"></a>
+        </div>
+    </div>
+    <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom: 0" id="used">
+        <div class="col-25 h3" style="color: #595757;width: 100%">
+            使用记录
+            <a class="iconfont icon-right pull-right open-panel"></a>
+        </div>
+    </div>
+    <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom: 0" id="expire">
+        <div class="col-25 h3" style="color: #595757;width: 100%">
+            过期记录
+            <a class="iconfont icon-right pull-right open-panel"></a>
+        </div>
+    </div>
+    <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom: 0" id="share">
+        <div class="col-25 h3" style="color: #595757;width: 100%">
+            分享友元
+            <a class="iconfont icon-right pull-right open-panel"></a>
+        </div>
+    </div>
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/points-index.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>设施管理</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>
+        $.config = {
+            routerFilter: function (i) {
+                return !!i.is("index.html")
+            }
+        }
+    </script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current" id="equip-repair-list">
+        <!-- header -->
+        <header class="bar bar-nav" id="header">
+            <h1 class="title">设施维修</h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+        </header>
+        <!-- container -->
+        <div class="content content-no-padding" id="container">
+
+        </div>
+    </div>
+</div>
+
+<script id="tpl" type="text/template">
+    <div class="white" style="text-align: center">
+        {@if service.cust_service_phone && service.cust_service_phone != ''}
+        <h2 style="margin-top: 0;font-size: .9rem;color: #333338;padding-top: .5rem">${service.name}客服售后电话: </h2>
+        <a style="font-size: 1.5rem;color: #009042" href="tel:${service.cust_service_phone}">${service.cust_service_phone}</a>
+        {@/if}
+        {@if service.service_time && service.service_time != ''}
+        <h3 style="font-size: .7rem;color: #595757;padding-bottom: .5rem">服务时间: ${service.service_time}</h3>
+        {@/if}
+    </div>
+    {@if address.length > 0}
+    <div class="list-title lr-padding has-border-bottom white">
+        <h2 style="margin: 0">
+            <svg class="icon" aria-hidden="true" style="font-size: 1rem">
+                <use xlink:href="#icon-MaintenancePoint-hll"></use>
+            </svg>
+            同城维修点(${address.length})
+        </h2>
+    </div>
+    {@if address.length > 0}
+    {@each address as item, index}
+    <div class="sm-margin white" style="height: auto;min-height: 90px;">
+        <div class="repair_item" data-id="${item.id}">
+            <div class="white has-border-bottom equip-detail"
+                 style="padding:0 1.2rem;position: relative">
+                <div class="repair_address" data-address="${item.company_address}">
+                    <h2 style="margin: 0;padding-top: .3rem">
+                        ${item.company_name}
+                    </h2>
+                    <h5>
+                        ${item.company_address}
+                    </h5>
+                </div>
+                {@if item.phone && item.phone != ''}
+                <a class="font-green" style="margin-top: 0" href="tel:${item.phone}">电话: ${item.phone}</a>
+                {@/if}
+            </div>
+            <div class="white lr-padding h5" style="height: 1.4rem;text-align: right;line-height: 1.4rem">
+                商家信息有误？&nbsp;&nbsp;&nbsp;
+                    <span class="open-3-modal">
+                         <i class="iconfont icon-bianji1 font-orange"
+                            style="padding: 0;font-size: .7rem;margin-top: -.2rem"></i>
+                    纠错有奖
+                    </span>
+            </div>
+        </div>
+        <div style="clear: both"></div>
+    </div>
+    {@/each}
+    {@/if}
+    {@/if}
+</script>
+
+<script id="extra" type="text/template">
+    {@if value && value.length > 0}
+    <div style="clear: both;overflow: hidden;">
+        {@each value as item, index}
+        <label class="label-checkbox item-content" style="margin-bottom: .2rem;display: block;">
+            <input type="radio" name="extra" value="${key[index]}">
+            <div class="item-media" style="text-align: left;">
+                <i class="icon icon-form-checkbox" style="vertical-align: middle;"></i>
+                <span style="margin-left: .2rem;font-size:.7rem ">${item}</span>
+            </div>
+        </label>
+        {@/each}
+    </div>
+    {@/if}
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/equip-repair-list.js"></script>
+<script src="weixin/src/css/fonts/iconfont.js"></script>
+</body>
+</html>

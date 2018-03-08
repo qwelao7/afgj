@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>服务反馈</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function () {
+            return false;
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="fault-reply-list">
+        <!-- 头部 -->
+        <header class="bar bar-nav">
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+            <h1 class="title">我的提问</h1>
+        </header>
+        <!-- container -->
+        <div class="content grey infinite-scroll" id="content" data-distance="1%">
+            <div class="tab">
+                <div class="content-block" id="container" style="margin-top: 0;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- tpl -->
+<script id="tpl" type="text/template">
+    {@if list && list.length > 0}
+    {@each list as item}
+    <div class="normal-list lr-padding has-border-bottom row error_item">
+        <div class="col-40 h3" style="color: #888;margin-left: 0">状态</div>
+        <div class="col-60">
+            <span class="h3 font-green">${item.status_name}</span>
+        </div>
+    </div>
+    <div class="normal-list lr-padding has-border-bottom row error_item">
+        <div class="col-40 h3" style="color: #888;margin-left: 0">反馈时间</div>
+        <div class="col-60">
+            <span class="h3 font-green">${item.created_at | format}</span>
+        </div>
+    </div>
+        {@each item.content as data, index}
+            {@if data.type != 'content'}
+            {@if data.type != 'text'}
+            <div class="normal-list lr-padding has-border-bottom row error_item">
+                <div class="col-40 h3" style="color: #888;margin-left: 0">${data.label}</div>
+                <div class="col-60">
+                    <span class="h3">${data.value}</span>
+                </div>
+            </div>
+            {@else}
+            <div class="normal-list lr-padding has-border-bottom row error_item" style="height: auto;">
+                <div class="col-40 h3" style="color: #888;margin-left: 0;">${data.label}</div>
+                    <div class="col-60">
+                    <p class="h3" style="padding: .5rem 0;line-height: 1.2rem;">${data.value}</p>
+                </div>
+            </div>
+            {@/if}
+            {@else if data.type == 'content'}
+                {@if data.value && data.value.length > 0}
+                <div class="error-img-row row white lr-padding has-border-bottom">
+                    {@each data.value as result}
+                    <div class="error-img-container">
+                        <img src="${result | imgPath}" style="width: 4rem;height: auto;">
+                    </div>
+                    {@/each}
+                </div>
+                {@/if}
+            {@/if}
+        {@/each}
+    <div class="buttons-row ride-btn-bar white has-border-bottom lg-margin">
+        <div class="button ride-btn font-green route-cancel" data-id="${item.id}"
+             style="border: none;border-right: 1px solid #f6f6f9;height: 1.2rem;line-height: 1.2rem;margin: .5rem 0">查看进度</div>
+    </div>
+    {@/each}
+    {@/if}
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/fault-reply-list.js"></script>
+
+</body>
+</html>

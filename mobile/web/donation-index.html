@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>公益筹</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <style type="text/css">
+        .progress {
+            margin: 2.5rem 2rem 0;
+            height: .3rem;
+            background: #d7d7d7;
+            overflow: visible;
+            border-radius: 20px;
+        }
+
+        .progress .progress-bar {
+            float: left;
+            height: 100%;
+            border-radius: 20px;
+            position: relative;
+            animation: animate-positive 2s;
+        }
+
+        .progress .progress-value {
+            display: block;
+            padding: 3px 7px;
+            font-size: 13px;
+            color: #fff;
+            border-radius: 4px;
+            background: #be0b21;
+            position: absolute;
+            top: -40px;
+            right: -10px;
+        }
+
+        .progress .progress-value:after {
+            content: "";
+            border-top: 10px solid #be0b21;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            position: absolute;
+            bottom: -6px;
+            left: 26%;
+        }
+
+        .progress-bar.active {
+            animation: reverse progress-bar-stripes 0.40s linear infinite, animate-positive 2s;
+        }
+
+        @-webkit-keyframes animate-positive {
+            0% {
+                width: 0;
+            }
+        }
+
+        @keyframes animate-positive {
+            0% {
+                width: 0;
+            }
+        }
+    </style>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="donation-index">
+        <nav class="bar bar-tab" id="submit" style="background-color: #be0b21">
+            <a class="tab-item external">
+                <span class="font-white">我要捐款</span>
+            </a>
+        </nav>
+        <!-- 内容 -->
+        <div class="content content-no-padding infinite-scroll" data-distance="1%" id="content"
+             style="background-image: url('weixin/src/css/img/donation-bg.jpg');background-size: 100%">
+            <div style="background-image: url('weixin/src/css/img/donation-bg.jpg');background-size: 100%">
+                <img src="weixin/src/css/img/donation-01.jpg" style="width: 100%">
+                <div class="white" style="margin: 0 .9rem;border-radius: .2rem;padding-bottom: 2rem" id="row">
+
+                </div>
+                <div id="detail" style="margin:2.9rem 0 .9rem;padding: 0 .9rem">
+                </div>
+
+
+                <div style="margin: 2rem .9rem;border-radius: .5rem;padding-bottom: .5rem" class="white">
+                    <img src="weixin/src/css/img/donation-title.png" style="width: 100%">
+                    <div id="list">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!--捐款情况-->
+<script id="number" type="text/template">
+    <div class="row" style="padding-top: 1rem">
+        <div class="col-50" style="text-align: center;margin-left: 0;width: 50%;border-right: 1px solid #d7d7d7">
+            <span class="h4">已筹金额(元)</span>
+            <br>
+            <span class="h2" style="color: #be0b21">${donate_money}</span>
+        </div>
+        <div class="col-50"
+             style="text-align: center;margin-left: 0;width: 50%">
+            <span class="h4">目标金额(元)</span>
+            <br>
+            <span class="h2" style="color: #be0b21">${target_money}</span>
+        </div>
+    </div>
+    <div class="progress">
+        <div class="progress-bar progress-bar-danger progress-bar-striped active" id="progress-bar"
+             style="background-color: #be0b21;width: ${percent_num}%">
+            <div class="progress-value">${percent}%</div>
+        </div>
+    </div>
+</script>
+
+
+<!--捐款人员-->
+<script id="tpl" type="text/template">
+    {@each list as item}
+    <div class="user-item decoration-item lr-padding white">
+        <div class="user-item-img">
+            <img class="head-img" src="${item.headimgurl}">
+        </div>
+        <div class="user-item-content">
+            <h1 class="item-two-line-title">
+                ${item.nickname}
+                <span class="h3" style="margin-left: .2rem">支持了<span style="color: #be0b21">￥${item.donate_money}</span></span>
+            </h1>
+            <h5 class="item-two-line-detail"> ${item.created_at} </h5>
+        </div>
+        <br style="clear: both">
+        <h3 style="margin: 0;padding-left: 14%"> ${item.wish} </h3>
+    </div>
+    {@/each}
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/donation-index.js"></script>
+</body>
+</html>

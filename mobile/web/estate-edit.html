@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>编辑房产</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="estate-edit">
+        <header class="bar bar-nav">
+            <h1 class="title">编辑房产</h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+        </header>
+        <button class="bar bar-tab" id="submit" style="text-align: center;padding: .6rem;color: #fff;">
+            提交
+        </button>
+        <form class="content grey" style="font-size: .7rem;">
+            <div id="container">
+            </div>
+        </form>
+    </div>
+</div>
+
+<script id="tpl" type="text/template">
+    <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+        <div class="col-25 h3" style="color: #888">行政区</div>
+        <div class="col-75" style="margin-left: 8%">
+            <input type="text" style="border: none;width: 100%;" readonly value="${district}" class="font-grey">
+        </div>
+    </div>
+    {@if name != ''}
+    <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+        <div class="col-25 h3" style="color: #888">小区名</div>
+        <div class="col-75" style="margin-left: 8%">
+            {@if type == 1}
+            <input type="text" placeholder="请输入小区名" readonly style="border: none" value="${name}" class="font-grey">
+            {@else if type == 2}
+            <input type="text" placeholder="请输入小区名" readonly style="border: none" value="${community_name}" class="font-grey">
+            {@/if}
+        </div>
+    </div>
+    {@/if}
+    {@if group_name != ''}
+    <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+        <div class="col-25 h3" style="color: #888">组团名</div>
+        <div class="col-75" style="margin-left: 8%">
+            <input type="text" placeholder="请输入组团名/苑名/街区名" readonly style="border: none" value="${group_name}" class="font-grey">
+        </div>
+    </div>
+    {@/if}
+    {@if building_num != ''}
+    <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+        <div class="col-25 h3" style="color: #888">楼栋号</div>
+        <div class="col-75" style="margin-left: 8%">
+            <input type="text" placeholder="请输入楼栋号" readonly style="border: none" value="${building_num}" class="font-grey">
+        </div>
+    </div>
+    {@/if}
+    {@if unit_name != ''}
+    <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+        <div class="col-25 h3" style="color: #888">单元号</div>
+        <div class="col-75" style="margin-left: 8%">
+            <input type="text" placeholder="请输入单元号" readonly style="border: none" value="${unit_num}" class="font-grey">
+        </div>
+    </div>
+    {@/if}
+    {@if house_name != ''}
+    <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+        <div class="col-25 h3" style="color: #888">户号</div>
+        <div class="col-75" style="margin-left: 8%">
+            <input type="text" placeholder="请输入户号" readonly style="border: none" value="${house_num}" class="font-grey">
+        </div>
+    </div>
+    {@/if}
+    <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+        <div class="col-25 h3" style="color: #888">设为常住房产</div>
+        <div class="col-75" style="margin-left: 8%">
+            <label class="label-switch">
+                {@if is_default == 'yes'}
+                <input type="checkbox" class="default" checked>
+                {@else if is_default == 'no'}
+                <input type="checkbox" class="default">
+                {@/if}
+                <div class="checkbox"></div>
+            </label>
+        </div>
+    </div>
+    <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+        <div class="col-25 h3" style="color: #888">联系人</div>
+        <div class="col-75" style="margin-left: 8%">
+            <input type="text" placeholder="请输入联系人姓名" style="border: none" id="contact" value="${(consignee) ? consignee : ''}">
+        </div>
+    </div>
+    <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+        <div class="col-25 h3" style="color: #888">联系人手机</div>
+        <div class="col-75" style="margin-left: 8%">
+            <input type="text" placeholder="请输入联系人手机" style="border: none" id="mobile" value="${(mobile ? mobile : '')}">
+        </div>
+    </div>
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/estate-edit.js"></script>
+
+</body>
+</html>

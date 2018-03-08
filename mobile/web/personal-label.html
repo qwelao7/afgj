@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>个人信息</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current" id="personal-label">
+        <header class="bar bar-nav">
+            <a class="iconfont icon-left pull-left icon-white open-panel" style="z-index: 30;" href="javascript:history.go(-1)"></a>
+            <h1 class="title">个性标签</h1>
+        </header>
+        <div class="content content-no-padding" id="container">
+        </div>
+    </div>
+</div>
+
+<script id="tpl" type="text/template">
+    <div class="white row lg-margin" style="padding: .3rem .6rem"  id="selectedWrapper">
+        {@if user.length > 0}
+        {@each user as item}
+        <div class="sm-margin label-container label-selected">
+            <span class="h3 font-white" style="padding: 0 .6rem">
+                ${item}
+                <i class="iconfont icon-guanbi font-white pull-right"
+                   style="padding: 0;font-size: .4rem;padding-right: .3rem"></i>
+            </span>
+        </div>
+        {@/each}
+        {@else}
+        <p id="label-none">您暂未添加标签</p>
+        {@/if}
+    </div>
+
+    <div class="white lr-padding">
+        <h2 class="has-border-bottom label-select-title">
+            <span>选择个性标签</span>
+            <span class="font-white green label-design" id="label-add">自定义标签</span>
+        </h2>
+        <div class="white row" style="padding: .3rem 0">
+            {@each skills as skill}
+            <div class="sm-margin label-container label-choose ${ (user.indexOf(skill.skill) == -1) ? 'label-container-unselected' : '' }" data-selected="${ (user.indexOf(skill.skill) == -1) ? false : true }">
+                <span class="h3 ${ (user.indexOf(skill.skill) == -1) ? 'label-unselected' : 'label-active' }">
+                    ${skill.skill}
+                </span>
+            </div>
+            {@/each}
+        </div>
+    </div>
+</script>
+
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/personal-label.js"></script>
+
+</body>
+</html>

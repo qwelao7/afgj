@@ -1,0 +1,80 @@
+<ion-view title="投票详情">
+    <ion-nav-buttons side="left">
+        <button class="button icon ion-ios-arrow-left button-clear button-light button-white"
+                ng-click="goBack()" ng-hide="history.length==1"></button>
+    </ion-nav-buttons>
+
+    <ion-content class="grey" ng-show='!isVoted && !isDelay' style="margin-bottom: 50px;">
+        <!-- 未投票/投票未过期 -->
+        <div style="background-color: #fff;line-height: 22px;font-size:15px;padding:10px 10px 15px;margin-bottom: 8px"
+             ng-if="items.content">
+            {{items.content}}
+        </div>
+        <div class="list" ng-repeat="list in items.question">
+            <div class=" vote-title">
+                {{list.title}}({{list.type}})
+            </div>
+            <ul class="list">
+                <li class="item item-checkbox" ng-repeat="item in list.options">
+                    <label class="checkbox">
+                        <input type="checkbox" ng-model="item.checked" ng-change="action.check(item, list)"
+                               class="checkboxClss+{{item.id}}">
+                    </label>
+                    <p>{{item.content}}</p>
+                    <img style="width: 120px;height:120px;" ng-src="{{qiniuDomain + item.picpath}}"
+                         ng-if="item.picpath && item.picpath !=undefined">
+                </li>
+            </ul>
+        </div>
+    </ion-content>
+    <!-- 已投票 && 投票结果可展示 -->
+    <ion-content ng-show="isVoted && isShow && !isDelay">
+        <div class="list" ng-repeat="list in items.question" style="margin-bottom: 12px">
+            <div class="vote-title">
+                {{list.title}}({{list.type}})
+            </div>
+            <ul class="item" ng-repeat="item in list.options" style="border-color: #fff!important;">
+                <li class="vote-stats">
+                    <p style="width: 100%;color: #000;white-space: normal">
+                        {{item.content}}
+                        <span style="color: #acb2b8" ng-show="item.voted">(已选)</span>
+                    </p>
+                    <progress style="background-color:#00a263;display: inline-block;width: 70%" min="0" max="100"
+                              value="{{item.per_cent}}">
+                    </progress>
+
+                    <span style="margin-top: 14px">{{item.per_cent}}%</span>
+                    <span style="margin-top: 14px">{{item.voted_num}}票</span>
+                </li>
+            </ul>
+        </div>
+        <div class="voted" ng-show="items">
+            <p>您已投票</p>
+        </div>
+    </ion-content>
+    <!-- 已投票 && 投票结果不展示 -->
+    <ion-content ng-show="isVoted && !isShow && !isDelay" class="page-order-success" scroll="false">
+        <div class="action-result">
+            <i class="icon ion-ios-checkmark" style="font-size: 120px;color:#009042;"></i>
+            <p>您的投票已提交</p>
+            <p class="result-desc">
+                回来啦社区感谢您的参与
+            </p>
+            <p class="result-desc">投票结果将在近期展示，敬请期待!</p>
+        </div>
+    </ion-content>
+    <!-- 投票时间过期 -->
+    <ion-content ng-show="isDelay" class="page-order-success" scroll="false">
+        <div class="action-result">
+            <i class="icon ion-ios-checkmark" style="font-size: 120px;color:#009042;"></i>
+            <p>很抱歉，本次投票已截止</p>
+            <p class="result-desc">
+                非常感谢您的关注
+            </p>
+            <p class="result-desc">投票结果将在近期展示，敬请期待!</p>
+        </div>
+    </ion-content>
+    <div class="bar bar-footer" style="background-image:none;background-color: #299a15;color: #fff" ng-if="!isVoted && !isDelay">
+        <p class="title" ng-click="action.submit()" ng-if="!isVoted && !isDelay">提交</p>
+    </div>
+</ion-view>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>客户信息</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="data-client-search">
+        <!-- 头部 -->
+        <header class="bar bar-nav">
+            <div class="title title-search">
+                <input class="title-search-input wd100" type="text" name="search" id="search"
+                       placeholder="请输入客户姓名或手机号码">
+            </div>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+            <a class="pull-right font-white" style="line-height: 2.2rem;font-size: .75rem" id="to-search">搜索</a>
+        </header>
+        <!-- 内容 -->
+        <div class="content content-no-padding infinite-scroll" data-distance="1%" id="content">
+            <!-- 加载提示符 -->
+            <div class="infinite-scroll-preloader">
+                <div class="preloader">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 图书类别 -->
+<script id="tpl" type="text/template">
+    {@each list as item}
+
+    <div class="account-item lr-padding white last-noborder" data-id="${item.customer_code}">
+        <div class="user-item-content" style="width: 100%">
+            {@if item.is_fav==true}
+            <div style="display: inline-block;width:2rem;float: left" class="fav_star">
+                <i class="iconfont icon-hd-hll2" style="color: #eda239"></i>
+            </div>
+            {@else}
+            <div style="display: inline-block;width:2rem;float: left" class="unfav_star">
+                <i class="iconfont icon-hd-hll1"></i>
+            </div>
+            {@/if}
+            <h2 class="ellipsis account-item-name" style="line-height:2.2rem;margin:0;width: calc(100% - 2rem)">
+                ${item.name}(${item.mobile})
+            </h2>
+        </div>
+    </div>
+
+    {@/each}
+
+</script>
+
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/data-client-search.js"></script>
+</body>
+</html>

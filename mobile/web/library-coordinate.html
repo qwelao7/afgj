@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>设置图书馆位置信息</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="library_coor">
+        <header class="bar bar-nav">
+            <h1 class="title">设置书架位置信息</h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" href="javascript:history.go(-1)"></a>
+        </header>
+        <button class="bar bar-tab" id="submit" style="text-align: center;padding: .6rem;color: #fff;">
+            提交
+        </button>
+        <form class="content grey">
+            <div id="container">
+            </div>
+        </form>
+    </div>
+</div>
+
+<!--新建小区-->
+<script id="tpl" type="text/template">
+
+    <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+        <div class="col-25 h3" style="color: #888">书架</div>
+        <div class="col-75" style="margin-left: 8%">
+            <input type="text" placeholder="请选择" style="border: none;width: 100%;" readonly id="picker">
+            <i class="iconfont icon-right pull-right" style="position: absolute;right: .2rem;top: .1rem;"></i>
+        </div>
+    </div>
+
+    <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+        <div class="col-25 h3" style="color: #888">经度</div>
+        <div class="col-75" style="margin-left: 8%">
+            <input type="text" placeholder="请输入经度" style="border: none" readonly class="longitude">
+        </div>
+    </div>
+    <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+        <div class="col-25 h3" style="color: #888">纬度</div>
+        <div class="col-75" style="margin-left: 8%">
+            <input type="text" placeholder="请输入纬度" style="border: none" readonly class="latitude">
+        </div>
+    </div>
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/library-coordinate.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>个人信息</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current" id="personal-info">
+        <header class="bar bar-nav">
+            <a class="iconfont icon-left pull-left icon-white open-panel" style="z-index: 30;" id="back"></a>
+            <h1 class="title">个人信息</h1>
+        </header>
+        <div class="content content-no-padding" id="container"></div>
+        <div class="popup popup-all"></div>
+    </div>
+</div>
+<script id="tpl" type="text/template">
+    <div class="account-user lr-padding white lg-margin row">
+        <div class="col-25 h3 personal-info-img-title">头像</div>
+        <div class="col-75 personal-info-img-detail">
+            <img src="${list.headimgurl}" id="headImg">
+        </div>
+    </div>
+    <div class="normal-list lr-padding has-border-bottom row open-nick" style="margin-bottom: 0">
+        <div class="col-25 h3 personal-info-sec-title">昵称</div>
+        <div class="col-75 personal-info-sec-detail">
+            <h3 class="no-origin val-nick">${list.nickname}</h3>
+        </div>
+    </div>
+    <div class="normal-list lr-padding has-border-bottom row open-sex" style="margin-bottom: 0">
+        <div class="col-25 h3 personal-info-sec-title">性别</div>
+        <div class="col-75 personal-info-sec-detail">
+            <h3 class="no-origin val-sex">${list.sex|trans}</h3>
+        </div>
+    </div>
+    <div class="normal-list lr-padding has-border-bottom row open-mobile" style="margin-bottom: 0">
+        <div class="col-25 h3 personal-info-sec-title">手机号</div>
+        <div class="col-75 personal-info-sec-detail">
+            <h3 class="no-origin val-mobile">${list.mobile_phone}</h3>
+        </div>
+    </div>
+    <div class="normal-list lr-padding has-border-bottom row" id="skills">
+        <div class="col-25 h3 personal-info-sec-title">个性标签</div>
+        <div class="col-75 personal-info-sec-detail">
+            {@each skills as skill}
+            <h5 class="personal-label">${skill}</h5>
+            {@/each}
+        </div>
+    </div>
+    {@if platform == false}
+    <button class="button btn-lg btn-border" id="exit">退 出</button>
+    {@/if}
+</script>
+
+<script id="popup" type="text/template">
+    <header class="bar bar-nav">
+        <h2 style="float: left;color: #fff;" id="close">取消</h2>
+        <h2 style="float: right;color: #fff;" id="update${type}${code}">提交</h2>
+        <h2 style="text-align: center;color: #fff;">设置${title}</h2>
+    </header>
+    <div class="content content-no-padding">
+        <!-- 昵称 -->
+        {@if type == 1}
+        <div class="normal-list has-border-bottom row" style="margin-bottom: 0">
+            <div class="col-35 h3 personal-info-sec-title" style="padding: 0 0.5rem;">设置昵称</div>
+            <input class="up-nick" type="text" placeholder="请输入您的昵称"
+                   style="font-size: 0.7rem;border: none;"
+                   value="${val}">
+        </div>
+        {@else if type == 3}
+        <!-- 性别 -->
+        <div class="normal-list has-border-bottom row" style="margin-bottom: 0">
+            <div class="col-33 h3 personal-info-sec-title" style="padding: 0 0.5rem;">设置性别</div>
+            <div class="col-66">
+                <div class="row">
+                    {@if val == '男'}
+                    <div class="col-33">
+                        <label class="label-checkbox item-content check-isfree" style="height: 2.2rem;padding-left: 0;">
+                            <input type="radio" name="sex" value="1" checked>
+                            <div class="item-media">
+                                <i class="icon icon-form-checkbox"></i>
+                                <span style="margin-left: .3rem">男</span>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="col-33">
+                        <label class="label-checkbox item-content check-isfree" style="height: 2.2rem;padding-left: 0;">
+                            <input type="radio" name="sex" value="2">
+                            <div class="item-media">
+                                <i class="icon icon-form-checkbox"></i>
+                                <span style="margin-left: .3rem">女</span>
+                            </div>
+                        </label>
+                    </div>
+                    {@else}
+                    <div class="col-33">
+                        <label class="label-checkbox item-content check-isfree" style="height: 2.2rem;padding-left: 0;">
+                            <input type="radio" name="sex" value="1">
+                            <div class="item-media">
+                                <i class="icon icon-form-checkbox"></i>
+                                <span style="margin-left: .3rem">男</span>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="col-33">
+                        <label class="label-checkbox item-content check-isfree" style="height: 2.2rem;padding-left: 0;">
+                            <input type="radio" name="sex" value="2" checked>
+                            <div class="item-media">
+                                <i class="icon icon-form-checkbox"></i>
+                                <span style="margin-left: .3rem">女</span>
+                            </div>
+                        </label>
+                    </div>
+                    {@/if}
+                </div>
+            </div>
+            {@else if type == 4}
+            <!-- 手机 -->
+            <div class="normal-list has-border-bottom row" style="margin-bottom: 0">
+                <div class="col-35 h3 personal-info-sec-title" style="padding: 0 0.5rem;">设置手机号</div>
+                <input class="up-mobile" type="number" placeholder="请输入您的手机号码"
+                       style="font-size: 0.7rem;border: none;" value="${val}">
+            </div>
+            {@/if}
+        </div>
+    </div>
+</script>
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/personal-info.js"></script>
+
+</body>
+</html>

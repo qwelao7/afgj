@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>活动</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current" id="event-qrcode">
+        <header class="bar bar-nav">
+            <h1 class="title">签到码</h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+        </header>
+        <!-- content -->
+        <div class="content lr-padding white login-success-content" id="content">
+
+        </div>>
+    </div>
+</div>
+
+<script id="tpl" type="text/template">
+    <h2 class="font-green" style="margin-top: 2rem;font-weight: bold">${event.title}</h2>
+    {@if event.events_type == 'general'}
+    <h3 style="margin: .25rem 0;">${event.events_time}</h3>
+    {@else if event.events_type == 'sessions'}
+    <h3 style="margin: .25rem 0;">${event.session_title}</h3>
+    <h3 style="margin: .25rem 0;">${event.session_content}</h3>
+    {@/if}
+    <h3 style="margin: .25rem 0;">${event.address}</h3>
+    <!-- 注意事项 -->
+    {@if event.events_tips != ''}
+    <h3 style="width: 90%;margin: .25rem auto;">$${event.events_tip | parse}</h3>
+    {@/if}
+    <div style="width: 9.5rem;height: 9.9rem;
+                background-image: url('weixin/src/css/img/event-qr-bg.png');
+                background-size: cover;margin: 1rem auto 1.5rem">
+        <div id="qrcode" class="event_qrcode">
+            <!-- 二维码 -->
+        </div>
+    </div>
+    <h1 style="font-size: 2rem;margin-bottom: 0">${sign_in_code}</h1>
+    <h2 class="font-green" style="margin: 0 auto 2rem">签到数字码</h2>
+    <h3 style="padding: 0 2.8rem">您可长按二维码并保存图片到手机相册。参加活动时向工作人员出示二维码或数字码均可完成签到。</h3>
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/event-qrcode.js"></script>
+
+</body>
+</html>

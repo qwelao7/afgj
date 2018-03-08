@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>刮刮卡</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="square-tab-lottery">
+        <div class="content content-no-padding">
+            <div style="position: relative;width: 100%;height: 100%;">
+                <div style="position: relative;background-image: url('weixin/src/css/img/lottery.jpg');width: 100%;height: 100%;background-size: 100% auto;background-repeat: no-repeat;background-color: #5AA11D"
+                     id="container">
+                    <!-- container -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- tpl -->
+<script id="tpl" type="text/template">
+    {@if message}
+    <h2 style="text-align: center;padding-top: 82%;margin: 0 auto;font-weight: bold;width: 60%;">${message}</h2>
+    {@else}
+    <h2 style="text-align: center;padding-top: 70%;margin: 0;font-weight: bold">您还有&nbsp;<span style="font-size: 1.2rem;color: red">${num}</span>&nbsp;次刮奖机会</h2>
+    <div style="width: 64%;;height: 3.5rem;position: absolute;left: 18%;top: 52%;background: #ccc;">
+        <div id="scratch" style="position: relative;width: 100%;height: 100%;">
+            <div style="text-align: center;line-height: 3.5rem;color: #fff;letter-spacing: 2px;opacity: 0;width: 100%" id="card">${point}友元</div>
+        </div>
+    </div>
+    {@/if}
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/square-tab-lottery.js"></script>
+</body>
+</html>

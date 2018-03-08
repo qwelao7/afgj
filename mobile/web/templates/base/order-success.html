@@ -1,0 +1,15 @@
+<ion-view view-title="预约成功">
+    <ion-content class="page-order-success" scroll="false">
+        <div class="action-result">
+            <i class="icon ion-ios-checkmark" style="font-size: 120px;color:#009042;"></i>
+            <p>服务预约成功</p>
+            <p class="result-desc" ng-if="show == 'true'">
+                回来啦社区正在为您确认预约
+            </p>
+            <p class="result-desc" ng-if="show == 'true'">确认结果将通过微信通知您</p>
+        </div>
+    </ion-content>
+    <div class="bar bar-footer bar-balanced" style="background-color: #009042;background-image: none">
+        <div class="title" ng-click="showOrder()">查看服务</div>
+    </div>
+</ion-view>

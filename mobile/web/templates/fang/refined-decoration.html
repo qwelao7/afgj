@@ -1,0 +1,18 @@
+<ion-view view-title="装修方案">
+    <ion-nav-buttons side="left">
+        <button class="button icon ion-ios-arrow-left button-clear button-positive" ng-click="goBack()"></button>
+    </ion-nav-buttons>
+    <ion-content>
+        <div class="list refined">
+            <div class="item col-50 col-float-left" ng-repeat="item in items">
+                <div class='row'>
+                    <a class="col" ng-click="goto('hardcover-program', {id:housetype.id})" ng-repeat="housetype in item.housetype">
+                        <img class="full-image" ng-src="{{qiniuDomain + housetype.pic}}-w640"/>
+                        <h3>{{item.title}}</h3>
+                        <p>{{housetype.lowest_total_price}}万起</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

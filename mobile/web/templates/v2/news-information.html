@@ -1,0 +1,131 @@
+<ion-view view-title="资讯">
+    <ion-nav-buttons side="left">
+        <button class="button icon ion-ios-arrow-left button-clear button-positive"
+                ng-click="goBack()"></button>
+    </ion-nav-buttons>
+    <!-- 顶部tab -->
+    <ion-tabs class="tabs-striped tabs-color-balanced tabs-top">
+        <tab class="tab-item news-loupan-tab" ng-class="{active:type=='news'}" ng-click="action.set()">
+            <span class="news-tab news-tab-news" ng-class="{active:type=='news'}"></span>
+            资讯
+        </tab>
+        <tab class="tab-item news-loupan-tab" ng-click="action.journal()" ng-class="{active:type=='journal'}">
+            <span class="news-tab news-tab-journal" ng-class="{active:type=='journal'}"></span>
+            成长日志
+        </tab>
+        <tab class="tab-item news-loupan-tab" ng-class="{active:type=='fang'}" ng-click="action.fang()">
+            <span class="news-tab news-tab-activity" ng-class="{active:type=='fang'}"></span>
+            楼盘信息
+        </tab>
+    </ion-tabs>
+    <ion-content ng-class="0==items.length?'':'grey'" style="margin-top: 47px" ng-switch="type">
+        <!-- 空白页展示 -->
+        <div class="no-content" ng-show="1==sysOp.page&&!sysOp.moreDataFlag">
+            <img ng-src="../../assets/css/images/blank_news.png">
+            <p>抱歉，该楼盘尚无信息~</p>
+        </div>
+        <!-- 楼盘信息 -->
+        <div ng-switch-when="fang">
+            <img src="../../assets/css/images/pinpai_banner.png" style="width: 100%" ng-click="goto('brand-hall')">
+            <div class="list house-list">
+                <a class="item item-thumbnail-left" ng-repeat="item in fang"
+                   ng-click="goto('floor-information', {id:item.id})">
+                    <img ng-src="{{qiniuDomain + item.thumbnail}}" ng-if="item.thumbnail"/>
+                    <h3><span>{{item.name}}</span><span class="price">{{item.avg_price}}</span></h3>
+                    <p>{{item.address}}</p>
+                    <div class="tag-list">
+                        <span ng-repeat="tag in item.tag" class="{{tag.class}}">{{tag.name}}</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!-- 楼盘成长日志 -->
+        <div class="list house-list" style="margin-bottom: 15px;background-color: #fff" ng-switch-when="journal">
+            <a class="item item-thumbnail-left"
+               ng-click="goto('news-journal-detail', {id:journal.id})" ng-repeat="journal in journals">
+                <img ng-src="{{qiniuDomain + journal.thumbnail}}" ng-if="journal.thumbnail"/>
+                <h3><span>{{journal.name}}</span><span class="price">{{journal.avg_price}}</span></h3>
+                <p>{{journal.address}}</p>
+                <div class="tag-list">
+                    <span ng-repeat="tag in journal.tag" class="{{keyMap['loupanTag'][tag]['class']}}">{{keyMap['loupanTag'][tag]['name']}}</span>
+                </div>
+            </a>
+        </div>
+        <!-- 列表展示 -->
+        <div ng-switch-when="news">
+            <div class="news-list" ng-repeat="item in items| filter:filterMessageList" style="margin-bottom: 10px">
+                <!-- 消息介绍 -->
+                <div class="news-info" ng-click="action.redirect(item)">
+                    <a class="item item-avatar">
+                        <img ng-src="{{item.adminInfo.headimgurl}}" ng-if="item.adminInfo.headimgurl">
+                        <h2>{{item.title}}</h2>
+                        <p class="text">{{item.adminInfo.name}} {{item.publish_time}}</p>
+                        <p class="date">{{item.fang}}</p>
+                    </a>
+                </div>
+                <!-- 消息文本 -->
+                <p class="news-article  isAll-{{!params.isAll[$index]}}"
+                   ng-click="action.redirect(item)" ng-if="item.content">
+                    {{item.content_show}}
+                </p>
+                <!-- 展开收起 -->
+                <p class="full-article full-article1" ng-click="action.all($index,item, 1)"
+                   ng-if="!params.isAll[$index] && item.content.length > 100">全文 <span class="triangleDown"></span></p>
+                <p class="full-article full-article2" ng-click="action.all($index,item, 2)"
+                   ng-if="params.isAll[$index]">收起 <span
+                        class="triangleUp"></span></p>
+                <!-- PUTONG -->
+                <!-- 附件(图片) 3或>4个 -->
+                <div class="news-images row row-wrap"
+                     ng-if="item.attachment_type == 1 && (item.attachment_content.length==3||item.attachment_content.length>4)">
+                    <div class="col-33" ng-repeat="keys in item.attachment_content track by $index">
+                        <img style="width:98%;height:inherit;" ng-src="{{qiniuDomain + keys}}?imageView2/1/w/200/h/200"
+                             ng-click="goto('news-picture', {id:item.id})" ng-if="keys">
+                    </div>
+                </div>
+                <!-- 附件(图片) 1个-->
+                <div class="news-images row row-wrap"
+                     ng-if="item.attachment_type == 1 && item.attachment_content.length==1">
+                    <div class="col" ng-repeat="keys in item.attachment_content track by $index">
+                        <img style="max-width: 98%" ng-src="{{qiniuDomain + keys}}?imageView2/0/w/375"
+                             ng-click="goto('news-picture', {id:item.id})">
+                    </div>
+                </div>
+                <!-- 附件(图片) 2或4个 -->
+                <div class="news-images row row-wrap"
+                     ng-if="item.attachment_type == 1 && (item.attachment_content.length==2||item.attachment_content.length==4)">
+                    <div class="col-50" ng-repeat="keys in item.attachment_content track by $index">
+                        <img style="width:98%;height:inherit;" ng-src="{{qiniuDomain + keys}}?imageView2/1/w/200/h/200"
+                             ng-click="goto('news-picture', {id:item.id})" ng-if="keys">
+                    </div>
+                </div>
+                <!-- ARTICLE -->
+                <div class="news-images" ng-if="item.attachment_type == 3">
+                    <img style="width: 98%;height:150px;"
+                         ng-src="{{qiniuDomain + item.fujian.thumbnail}}?imageView2/1/w/690/h/300"
+                         ng-click="goto('news-article', {id:item.attachment_content})" ng-if="item.fujian">
+                    <div class="news-images-banner">&nbsp;&nbsp;{{item.fujian.title}}</div>
+                </div>
+                <!-- 点赞 -->
+                <div class="fuctional-button button-bar">
+                    <a class="button comment-button" ng-click="action.like($index, item)">
+                        <img class="like" ng-src="../../assets/img/icon_upthumb.png" alt=""
+                             ng-show="params.isLike[$index]">
+                        <img class="like" ng-src="../../assets/img/icon_thumb.png" alt=""
+                             ng-hide="params.isLike[$index]">
+                        {{item.praise_num}}
+                    </a>
+                    <a class="button comment-button"
+                       ng-click="editShow({showComment:1,key: 'comment',title: '评论', name:comment.content, item: item})"><img
+                            ng-src="../../assets/img/icon_comment.png">{{item.comment_num}}</a>
+                </div>
+            </div>
+
+            <!-- 上拉加载 -->
+            <ion-infinite-scroll on-infinite="sysOp.loadMore()" ng-if="sysOp.moreDataFlag" distance="1%">
+            </ion-infinite-scroll>
+            <p ng-hide="sysOp.moreDataFlag||0==items.length" class="col-center">---数据已加载完毕---
+            <p>
+        </div>
+    </ion-content>
+</ion-view>

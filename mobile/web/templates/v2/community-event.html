@@ -1,0 +1,115 @@
+<ion-view view-title="{{params.title.bbs_name}}">
+    <ion-nav-buttons side="left">
+        <button class="button icon ion-ios-arrow-left button-clear button-positive"
+                ng-click="action.back()"></button>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right">
+        <button class="button icon ion-android-add button-clear button-postiive"
+                ng-click="action.create()"></button>
+        <button class="button icon ion-ios-people-outline button-clear button-postiive" style="margin-left: 10px;"
+                ng-click="action.goto()"></button>
+    </ion-nav-buttons>
+    <ion-content ng-class="0==items.length?'':'grey'" style="padding-top: 2px;">
+        <!-- 空白页 -->
+        <div class="no-content" ng-show="params.error">
+            <img src="../../assets/css/images/blank_news.png">
+            <p>抱歉，该社团尚无信息~</p>
+        </div>
+        <!-- 列表展示 -->
+        <div class="news-list" ng-repeat="item in items" style="margin-bottom: 10px">
+            <!-- 信息简介 -->
+            <div class="news-info" ng-click="goto('community-event-detail', {id:item.id})">
+                <a class="item item-avatar" style="border-bottom: 1px solid #c5d8e2">
+                    <img ng-src="{{item.accountInfo.headimgurl}}" ng-if="item.accountInfo.headimgurl">
+                    <h2>{{item.title}}</h2>
+                    <p class="text" ng-if="item.account_id > 0">{{item.accountInfo.nickname}}</p>
+                    <p style="color: red;" class="text" ng-if="item.admin_id > 0">{{item.accountInfo.nickname}}</p>
+                    <p class="date">{{item.publish_time}}</p>
+                </a>
+            </div>
+            <!-- 内容 -->
+            <div ng-show="item.content_show" style="margin:0 10px;">
+                <p class="news-article  isAll-{{!params.isAll[$index]}}" style="margin-top: 10px"
+                   ng-click="goto('community-event-detail', {id:item.id})">
+                    {{item.content_show}}
+                </p>
+                <!-- 收起展开 -->
+                <div ng-show="item.content.length > 100">
+                    <p class="full-article full-article1" ng-click="action.all($index,item, 1)"
+                       ng-if="!params.isAll[$index] && item.content.length > 100">全文 <span class="triangleDown"></span></p>
+                    <p class="full-article full-article2" ng-click="action.all($index,item, 2)"
+                       ng-if="params.isAll[$index]">收起 <span
+                            class="triangleUp"></span></p>
+                </div>
+            </div>
+            <!-- 附件(图片) 3或>4个 -->
+            <div class="news-images row row-wrap"
+                 ng-if="item.attachment_type == 1 && (item.attachment_content.length==3||item.attachment_content.length>4)">
+                <div class="col-33" ng-repeat="keys in item.attachment_content track by $index">
+                    <img style="width:98%;height:inherit;" ng-src="{{qiniuDomain + keys}}?imageView2/1/w/200/h/200"
+                         ng-click="goto('news-picture', {id:item.id})" ng-if="keys">
+                </div>
+            </div>
+            <!-- 附件(图片) 1个-->
+            <div class="news-images row row-wrap"
+                 ng-if="item.attachment_type == 1 && item.attachment_content.length==1">
+                <div class="col" ng-repeat="keys in item.attachment_content track by $index">
+                    <img style="max-width: 98%" ng-src="{{qiniuDomain + keys}}?imageView2/0/w/375"
+                         ng-click="goto('news-picture', {id:item.id})" ng-if="keys">
+                </div>
+            </div>
+            <!-- 附件(图片) 2或4个 -->
+            <div class="news-images row row-wrap"
+                 ng-if="item.attachment_type == 1 && (item.attachment_content.length==2||item.attachment_content.length==4)">
+                <div class="col-50" ng-repeat="keys in item.attachment_content track by $index">
+                    <img style="width:98%;height:inherit;" ng-src="{{qiniuDomain + keys}}?imageView2/1/w/200/h/200"
+                         ng-click="goto('news-picture', {id:item.id})" ng-if="keys">
+                </div>
+            </div>
+            <!-- ARTICLE -->
+            <div class="news-images" ng-if ="item.attachment_type == 3">
+                <img style="width: 98%;height:150px;" ng-src="{{qiniuDomain + item.fujian.thumbnail}}?imageView2/1/w/690/h/300"
+                     ng-click="goto('news-article', {id:item.attachment_content})">
+                <div class="news-images-banner">&nbsp;&nbsp;{{item.fujian.title}}</div>
+            </div>
+            <!-- 活动附件 -->
+            <div class="item item-avatar event-share-content"
+            ng-if="item.attachment_type == 5 && item.fujian"
+            ng-click="goto('community-zone-event-detail', {'id':item.attachment_content, 'loupan_id':params.id})">
+                <img ng-src="{{item.fujian.thumbnail}}">
+                <div class="share-content">
+                    <h2 style="margin-left: 0">{{item.fujian.name}}</h2>
+                    <p style="display: inline-block;margin-bottom: 0;margin-right: 5px">截止时间：<span>{{item.fujian.signup_end}}</span></p>
+                    <p style="display: inline-block">报名人数：<span>{{item.fujian.person_num}}</span></p>
+                </div>
+            </div>
+            <!-- 投票附件 -->
+            <div class="item item-avatar event-share-content"
+            ng-if="item.attachment_type ==4 && item.fujian"
+            ng-click="action.href(item)">
+                <img src="../assets/css/images/icon_vote.png">
+                <div class="share-content">
+                    <h2 style="margin-left: 0">{{item.fujian.title}}</h2>
+                    <p style="display: inline-block;margin-bottom: 0;margin-right: 5px">截止时间：<span>{{item.fujian.deadline}}</span></p>
+                    <p style="display: inline-block">投票人数：<span>{{item.voted_person_num}}</span></p>
+                </div>
+            </div>
+            <!-- 评论点赞 -->
+            <div class="fuctional-button button-bar">
+                <a class="button comment-button" ng-click="action.like($index,item)">
+                  <img class="like" src="../../assets/img/icon_upthumb.png" alt="" ng-show = "params.isLike[$index]">
+                  <img class="like" src="../../assets/img/icon_thumb.png" alt="" ng-hide = "params.isLike[$index]">
+                  {{item.praise_num}}
+                </a>
+                <a class="button comment-button" ng-click="action.comment(item)"><img
+                        src="../../assets/img/icon_comment.png">{{item.comment_num}}</a>
+            </div>
+        </div>
+
+         <!-- 上拉加载 -->
+        <ion-infinite-scroll on-infinite="sysOp.loadMore()" ng-if="sysOp.moreDataFlag" distance="1%">
+        </ion-infinite-scroll>
+        <p ng-hide="sysOp.moreDataFlag||0==items.length" class="col-center">---数据已加载完毕---<p>
+
+    </ion-content>
+</ion-view>

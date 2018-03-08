@@ -1,0 +1,38 @@
+<ion-view view-title="个人中心" hide-nav-bar="true">
+  <ion-content class="page-account">
+    <div class="item item-divider">
+      基础资料
+    </div>
+    <div class="item item-input item-icon-right" ng-click="editShow({key: 'name',title: '姓名', name:user.name})">
+      <span class="input-label">姓名</span>
+      <span class="input-title">{{user.name}}</span>
+      <i class="icon ion-chevron-right icon-accessory"></i>
+    </div>
+    <div class="item item-input item-icon-right" ng-click="editShow({showSelect:1, key: 'sex',title: '称呼', name:user.sex, params:[{key:1,val:'先生'},{key:2,val:'女士'}]});">
+      <span class="input-label">称呼</span>
+      <span class="input-title">{{user.sex==2?'女士':'先生'}}</span>
+      <i class="icon ion-chevron-right icon-accessory"></i>
+    </div>
+    <div class="item item-input item-icon-right" ng-click="goto('bind-mobile')">
+      <span class="input-label">手机</span>
+      <span class="input-title">{{user.phone?user.phone:'单击绑定手机号码'}}</span>
+      <i class="icon ion-chevron-right icon-accessory"></i>
+    </div>
+    <div class="item item-divider">
+      房屋管理
+      <span style="float: right;" ng-click="addressAdd()"><i class="icon ion-plus-round icon-accessory"></i> 添加</span>
+    </div>
+      <ion-list>
+        <ion-item class="item item-icon-right item-remove-animate " ng-click="addressEdit(item)" ng-repeat="item in addressList">
+            <span>{{item.street + item.mansion + item.building_house_num}}{{item.is_default=='yes'?'（默认地址）':''}}</span>
+            <i class="icon ion-chevron-right icon-accessory"></i>
+            <ion-option-button class="button-energized" ng-click="setDefaultAddress(item)">
+                设为默认
+            </ion-option-button>
+            <ion-option-button class="button-assertive" ng-click="delAddress(item)">
+                删除
+            </ion-option-button>
+        </ion-item>
+      </ion-list>
+  </ion-content>
+</ion-view>

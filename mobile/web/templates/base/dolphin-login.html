@@ -1,0 +1,65 @@
+<ion-view view-title="海豚计划" hide-nav-bar="true">
+    <ion-nav-buttons side="left">
+        <button class="button icon ion-ios-arrow-left button-clear button-positive" ng-click="goBack()"></button>
+    </ion-nav-buttons>
+    <ion-content class="dolphin" scroll="false">
+        <div style="margin-top: 3rem;text-align: center">
+            <img src="../../assets/css/images/dolphin_login_top.png" style="width: 80%">
+            <p class="dolphin-phone" ng-if="!params.isDelay && !params.allow">请您输入您报名时使用的手机号</p>
+            <input class="dolphin-input" type="number" placeholder="TEL" ng-model="mobile" ng-show="!params.isDelay && !params.allow">
+            <!--期间内提交按钮-->
+            <button style="position: relative;z-index: 9999999" class="button dolphin-btn" ng-click="action.submit(mobile)" ng-if="!params.isDelay && !params.allow">
+                <span>提交</span>
+            </button>
+            <!--活动期前倒计时-->
+            <button style="position: relative;z-index: 9999999" class="button dolphin-yet-btn" ng-if="!params.isDelay && params.allow">
+                <div>距离活动开始还剩</div>
+                <div id="CountMsg" class="HotDate">
+                    <span id="t_d">00天</span>
+                    <span id="t_h">00时</span>
+                    <span id="t_m">00分</span>
+                    <span id="t_s">00秒</span>
+                </div>
+            </button>
+            <!--活动结束-->
+            <button style="position: relative;z-index: 9999999" class="button dolphin-yet-btn" ng-if="params.isDelay">
+                <span>本次活动已结束</span>
+            </button>
+            <div ng-if="isShowTips==3">
+                <p style="color: #DB4A1E;font-size: 14px">您输入的手机号码未报名本届海豚计划活动</p>
+                <p style="color: #DB4A1E;font-size: 14px">请与报名点核实报名信息，谢谢</p>
+            </div>
+            <div ng-if="isShowTips==1">
+                <p style="color: #DB4A1E;font-size: 14px">请填写您的手机号</p>
+            </div>
+            <div ng-if="isShowTips==2">
+                <p style="color: #DB4A1E;font-size: 14px">手机号格式错误，请重新填写</p>
+            </div>
+            <div ng-if="isShowTips==4">
+                <p style="color: #DB4A1E;font-size: 14px">该手机号被他人占用，请输入新的手机号</p>
+            </div>
+
+        </div>
+        <!--弹出框-->
+        <div class="loading-mask" ng-click="action.showMain()" ng-if="isShowSelect"></div>
+        <div class="dolphin-popup" ng-if="isShowSelect">
+            <p class="dolphin-popup-title">请选择小业主的年龄段</p>
+            <label class="dolphin-popup-label">
+                <input type="radio" name="group" value="5-7岁" ng-model="choose">
+                <span> 5~7岁</span>
+            </label>
+            <label class="dolphin-popup-label">
+                <input type="radio" name="group" value="8-10岁" ng-model="choose">
+                <span> 8~10岁</span>
+            </label>
+            <label class="dolphin-popup-label">
+                <input type="radio" name="group" value="11-12岁" ng-model="choose">
+                <span> 11~12岁</span>
+            </label>
+            <div class="dolphin-popup-confirm" ng-click="action.confirm(choose)">
+                确定
+            </div>
+        </div>
+    </ion-content>
+    <!--<img src="../../assets/css/images/dolphin_login_bottom.png" style="width: 100%;position: absolute;bottom: 0;z-index: 10000;">-->
+</ion-view>

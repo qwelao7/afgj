@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>活动</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta http-equiv="Expires" CONTENT="0">
+    <meta http-equiv="Cache-Control" CONTENT="no-cache">
+    <meta http-equiv="Pragma" CONTENT="no-cache">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="event-detail">
+        <header class="bar bar-nav">
+            <h1 class="title">
+                活动详情
+            </h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+            <!--delete按钮只有发布者能够看到-->
+        </header>
+        <!--右上角菜单弹出层-->
+        <div class="modal-popup white" id="popup" style="display: none">
+            <p class="modal-p-list modify open-report" id="delete" style="color: #3d4145;padding-left: .4rem">
+                <i class="iconfont icon-qx-hll font-red" style="padding-top: .3rem;margin-right: .6rem"></i>
+                删除活动
+            </p>
+            <p class="modal-p-list modify open-report" id="edit" style="color: #3d4145;padding-left: .4rem">
+                <i class="iconfont icon-bianji font-green" style="padding-top: .3rem;margin-right: .6rem"></i>
+                编辑活动
+            </p>
+        </div>
+
+        <!--遮罩层-->
+        <div class="modal-overlay" id="modal"></div>
+        <nav class="bar bar-tab" id="commentBtn">
+            <a class="tab-item external">
+                <span class="font-white">评价</span>
+            </a>
+        </nav>
+
+        <nav class="bar bar-tab bar-white">
+            <div style="padding: .4rem 0;border-top: 1px solid #f6f6f9">
+                <div class="buttons-row white no-border" id="buttons">
+                </div>
+            </div>
+        </nav>
+        <div class="content content-no-padding  infinite-scroll" id="content" data-distance="1%">
+            <div id="container">
+            </div>
+            <div class="tabs">
+                <div id="tab" class="tab active">
+                </div>
+                <!-- 加载提示符 -->
+                <div class="infinite-scroll-preloader">
+                    <div class="preloader">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 简介 -->
+<script id="tpl" type="text/template">
+    <div class="user-item lr-padding white">
+        <div class="user-item-content" style="width: 100%">
+            <h2 class="item-two-line-title">
+                ${title}
+            </h2>
+            <h5 class="item-two-line-detail ellipsis-full">
+                ${nickname} ${begin_time | format}
+            </h5>
+        </div>
+    </div>
+    <div class="sm-margin">
+        <div class="list-title lr-padding white">
+            <h3>
+                <i class="iconfont icon-shijian1 font-green"></i>
+                ${events_time}
+            </h3>
+        </div>
+        <div class="list-title lr-padding white">
+            <h3>
+                <i class="iconfont icon-dz_hll font-green"></i>
+                ${address}
+            </h3>
+        </div>
+        <div class="list-title lr-padding white">
+            <h3>
+                <i class="iconfont icon-ybm-hll font-green"></i>
+                ${signup_stat}
+            </h3>
+        </div>
+        <div class="list-title lr-padding white lg-margin">
+            <h3>
+                <i class="iconfont icon-q-hll font-green" style="font-size: .85rem"></i>
+                {@if free == 1}
+                    {@if fee == '0' || fee ==''}
+                    免费
+                    {@else}
+                    ${fee}
+                    {@/if}
+                {@else}
+                ${fee}元/人
+                {@/if}
+            </h3>
+        </div>
+    </div>
+    <div class="buttons-tab fixed-tab lr-padding" data-offset="44">
+        <a class="tab-link button tab_button">详情</a>
+        <a class="tab-link button tab_button">报名 (<span>${joined_num}</span>)</a>
+        <a class="tab-link button tab-zan tab_button">留言 <span>(${comment_num})</span></a>
+        <a class="tab-link button tab-zan tab_button">感谢 <span>(${thanks_num})</span></a>
+    </div>
+</script>
+<!-- 详情 -->
+<script id="more" type="text/template">
+    {@if !content}
+    <h3 style='text-align: center;margin-top: 4rem;' class="tips1">暂无详情</h3>
+    {@else}
+    $${content}
+    {@/if}
+</script>
+<!-- 报名 -->
+<script id="joined" type="text/template">
+    {@each list as item}
+    <!-- 报名列表 -->
+    <div class="user-item white to-praise" data-id="${item.id}" style="padding: 0 1.2rem !important;min-height: 2.8rem;height: auto">
+        <div class="user-item-img">
+            <img class="head-img" src="${item.headimgurl}">
+        </div>
+        <div class="user-item-content">
+            <h2 class="item-two-line-title">
+                ${item.nickname}&nbsp;<span style="color: #a0a0a0">(${item.num}人)</span>
+                {@if item.is_check == 0}
+                &nbsp;<span class="font-green right check_status_desc" style="font-size: .6rem;">待审核</span>
+                {@/if}
+            </h2>
+            <h5 class="item-two-line-detail">
+                ${item.created_at | format}
+            </h5>
+        </div>
+        <br style="clear: both">
+        <!--发布者全部可见 && 当前报名人可见自己-->
+        <!--活动详情的报名信息-->
+        {@if (item.user_info || item.ext_info) && (item.ext_info.is_self == 1 || isself == 1)}
+        <div class="sm-margin">
+            <!-- 活动扩展信息 -->
+            {@each item.user_info as field, index}
+            {@if field.type != 'pics'}
+            <div class="list-title white">
+                <h3 class="ellipsis-full" style="width: 100%;">
+                    ${field.label}：<span class="font-green">${field.value}</span>
+                </h3>
+            </div>
+            {@/if}
+            {@/each}
+            <!-- 报名场次及费用信息 -->
+            {@if item.ext_info.content !== ''}
+            <div class="list-title white">
+                <h3 class="ellipsis-full" style="width: 100%;">
+                    活动场次：<span class="font-green">${item.ext_info.content}</span>
+                </h3>
+            </div>
+            {@/if}
+            {@if !isfree}
+            <div class="list-title white">
+                <h3>
+                    总费用：<span class="font-green">${item.ext_info.total_fee}元</span>
+                </h3>
+            </div>
+            <div class="list-title white">
+                <h3>
+                    友元抵扣：<span class="font-green">${item.ext_info.youyuan_fee}元</span>
+                </h3>
+            </div>
+            <div class="list-title white">
+                <h3>
+                    实付：<span class="font-green">${item.ext_info.cash_fee}元</span>
+                </h3>
+            </div>
+            {@/if}
+            <!-- 申请退费信息 -->
+            {@if item.ext_info.is_refund == 1}
+            <div class="list-title white">
+                <h3>
+                    申请退费金额：<span class="font-green">${item.ext_info.refund.fee | getMoney, item.ext_info.refund.point}元</span>
+                </h3>
+            </div>
+            {@/if}
+
+            <!-- 申请退费拒绝理由 -->
+            {@if item.pay_status == 2 && item.ext_info.refund && item.ext_info.refund.status == 3}
+            <div class="list-title white">
+                <h3>
+                    退费拒绝理由：<span class="font-green">${item.ext_info.refund.check_reason}</span>
+                </h3>
+            </div>
+            {@/if}
+
+            <!-- 按钮组 -->
+            {@if item.is_check == 0 && isself == 1}
+            <div style="width: 100%;border-bottom: 2px solid green;padding-bottom: .25rem;"
+                 class="white buttons-row no-border"
+                 data-apply="${item.id}" data-user="${item.ect_uid}">
+                <div class="button no-border font-green auth_success"
+                     style="border-left: 1px solid #f6f6f9;height: 1.5rem;line-height: 1.5rem;">
+                    审核通过
+                </div>
+                <div class="button no-border font-grey auth_fail"
+                     style="border-left: 1px solid #f6f6f9;height: 1.5rem;line-height: 1.5rem;">
+                    审核不通过
+                </div>
+            </div>
+            {@/if}
+            <!-- 审核缴费按钮组 -->
+            {@if item.ext_info.refund && item.ext_info.refund.status == 1 && item.pay_status == 3 && isself == 1}
+            <div style="width: 100%;border-bottom: 2px solid green;padding-bottom: .25rem;"
+                 class="white buttons-row no-border" data-refund_id="${item.ext_info.refund.id}">
+                <div class="button no-border font-green con_success"
+                     style="border-left: 1px solid #f6f6f9;height: 1.5rem;line-height: 1.5rem;">
+                    允许退费
+                </div>
+                <div class="button no-border font-grey con_fail"
+                     style="border-left: 1px solid #f6f6f9;height: 1.5rem;line-height: 1.5rem;">
+                    拒绝退费
+                </div>
+            </div>
+            {@/if}
+        </div>
+        {@/if}
+    </div>
+    {@/each}
+</script>
+<!-- 留言 -->
+<script id="comments" type="text/template">
+    {@each list as item}
+    <div class="user-item decoration-item white" style="padding: 0 1.2rem !important;">
+        <div class="user-item-img">
+            <img class="head-img" src="${item.headimgurl}">
+        </div>
+        <div class="user-item-content">
+            <h2 class="item-two-line-title">
+                ${item.nickname}
+            </h2>
+            <h5 class="item-two-line-detail">
+                ${item.created_at | format}
+            </h5>
+        </div>
+        <br style="clear: both">
+        <h3 style="padding-bottom: .4rem;margin-top:.4rem;margin-bottom: 0;padding-left: 14%">
+            ${item.content}
+        </h3>
+    </div>
+    {@/each}
+</script>
+<!-- 感谢 -->
+<script id="thanks" type="text/template">
+    {@each list as item}
+    <div class="user-item white" style="padding: 0 1.2rem !important;height: auto;">
+        <div class="user-item-img">
+            <img class="head-img" src="${item.headimgurl}">
+        </div>
+        <div class="user-item-content">
+            <h2 class="item-two-line-title">
+                ${item.nickname}
+            </h2>
+            <h5 class="item-two-line-right font-orange">
+                <i class="iconfont icon-thanks font-orange" style="font-size: .8rem"></i>
+                <span style="font-size: .8rem">${item.thanks_point}</span>
+            </h5>
+            <h5 class="item-two-line-detail">
+                ${item.created_at | format}
+            </h5>
+        </div>
+        <br style="clear: both">
+        <h3 style="padding-bottom: .4rem;margin-top:.4rem;margin-bottom: 0;padding-left: 14%">
+            ${item.content}
+        </h3>
+    </div>
+    {@/each}
+</script>
+<!-- 按钮组 -->
+<script id="actions" type="text/template">
+   {@if isself != 1}
+   <div class="button no-border font-orange"
+        style="border-left: 1px solid #f6f6f9;height: 1rem;line-height: 1rem" id="to-thank">
+       <i class="iconfont icon-love font-orange" style="padding: 0;"></i>
+       感谢
+   </div>
+   {@/if}
+    <div class="button no-border font-dark"
+         style="border-left: 1px solid #f6f6f9;height: 1rem;line-height: 1rem" id="to-comment">
+        <i class="iconfont icon-liuyan font-dark" style="font-size:.8rem;padding: 0;"></i>
+        留言
+    </div>
+   <!-- 签到码 / 签到 -->
+   {@if isself == 3 && is_join && is_refund == 2}
+   <div class="button no-border font-dark qr_code"
+        style="border-left: 1px solid #f6f6f9;height: 1rem;line-height: 1rem">
+       <i class="iconfont icon-QrCode-hll font-dark" style="padding: 0;"></i>
+       签到码
+   </div>
+   {@else if isself == 2}
+   <div class="button no-border font-dark qr_code"
+        style="border-left: 1px solid #f6f6f9;height: 1rem;line-height: 1rem">
+       <i class="iconfont icon-QrCode-hll font-dark" style="padding: 0;"></i>
+       签到
+   </div>
+   {@/if}
+    <!-- 活动参与人员 -->
+    {@if isself != 1}
+        <!-- 活动进行中 -->
+    {@if status == 1}
+        <!-- 是否已报名 -->
+    {@if !is_join}
+        <!-- 能否报名 -->
+        {@if is_full == 0}
+        <div class="button no-border font-green"
+            style="border-left: 1px solid #f6f6f9;height: 1rem;line-height: 1rem;" id="to-join">
+            <i class="iconfont icon-bm-hll font-green" style="padding: 0;"></i>
+            我要报名
+        </div>
+        {@else}
+        <div class="button no-border font-dark"
+            style="border-left: 1px solid #f6f6f9;height: 1rem;line-height: 1rem;" id="join_enough">
+            <i class="iconfont icon-bm-hll font-dark" style="padding: 0;"></i>
+            报名已满
+        </div>
+        {@/if}
+    {@else}
+        <!-- 判断当前用户是否退费申请中 -->
+        {@if is_refund == 3}
+            <div class="button no-border font-dark"
+                style="border-left: 1px solid #f6f6f9;height: 1rem;line-height: 1rem;">
+                <i class="iconfont icon-delete font-dark" style="padding: 0;font-size: 1.2rem"></i>
+                ${refund_desc}
+            </div>
+        {@else}
+            <div class="button no-border font-dark"
+                style="border-left: 1px solid #f6f6f9;height: 1rem;line-height: 1rem;" id="cancel-join">
+                <i class="iconfont icon-delete font-dark" style="padding: 0;font-size: 1.2rem"></i>
+                取消报名
+            </div>
+        {@/if}
+    {@/if}
+    {@else}
+        <!-- 活动审核中 -->
+        <!-- 活动已取消 -->
+    <div class="button no-border font-dark"
+         style="border-left: 1px solid #f6f6f9;height: 1rem;line-height: 1rem;">
+        <i class="iconfont icon-delete font-dark" style="padding: 0;font-size: 1.2rem"></i>
+        ${status_desc}
+    </div>
+    {@/if}
+    {@else}
+    <!-- 活动发起者 -->
+    <div class="button no-border font-green qr_code"
+         style="border-left: 1px solid #f6f6f9;height: 1rem;line-height: 1rem">
+        <i class="iconfont icon-QrCode-hll font-green" style="padding: 0;"></i>
+        签到
+    </div>
+    <div class="button no-border font-dark event_worker"
+         style="border-left: 1px solid #f6f6f9;height: 1rem;line-height: 1rem;">
+        <i class="iconfont icon-Personnel_hll font-dark" style="padding: 0;font-size: .8rem"></i>
+        工作人员
+    </div>
+    {@/if}
+
+    <!-- 咨询 -->
+   {@if isself == 3 && tel != ''}
+   <img src="http://pub.huilaila.net/phone.png" style="width: 2rem;height: 2rem;position: fixed;right: 8%;bottom: 12%;z-index: 100;-moz-box-shadow: 0px 0px 25px #ccc;
+    -webkit-box-shadow: 5px 2px 10px #999;
+    box-shadow: 5px 2px 10px #999;border-radius: 100%;" alt="" id="to-talk">
+   {@/if}
+</script>
+<!-- 删除按钮 -->
+<script id="deleteIcon" type="text/template">
+    {@if isself == 1}
+    <a class="iconfont icon-edit pull-right icon-white open-panel" id="tag"></a>
+    {@/if}
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/event-detail.js"></script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>设施管理</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>
+        $.config = {
+            routerFilter: function (i) {
+                return !!i.is("index.html")
+            }
+        }
+    </script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current" id="equip-care-list">
+        <!-- header -->
+        <header class="bar bar-nav" id="header">
+            <h1 class="title">设施养护</h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+        </header>
+        <!-- content -->
+        <div class="content content-no-padding" id="container">
+
+        </div>
+        <!-- nav -->
+    </div>
+</div>
+
+<script id="tpl" type="text/template">
+    {@if advice != ''}
+    <div class="white lg-margin lr-padding" style="width: 100%">
+        <h4 style="margin: 0 0 0 3rem;padding: .3rem 0;text-indent: -3rem;color: #EDA239">
+            养护建议:  ${advice}
+        </h4>
+    </div>
+    {@/if}
+    <div class="sm-margin white" style="height: auto;">
+        <div>
+            <div class="list-title lr-padding has-border-bottom">
+                <h3 class="icon-green">
+                    <i class="iconfont icon-laixin1 icon-green"
+                       style="font-size: 1.2rem;padding:.25rem.1rem;"></i>
+                    ${desc.name}${desc.model}
+                </h3>
+            </div>
+            {@if list && list.length > 0}
+            {@each list as item, index}
+            <div class="user-item-whole white has-border-bottom equip-detail" style="padding-left: 1.2rem;position: relative">
+                <h2>
+                    ${item.exec_content}
+                </h2>
+                <h5 style="width: 100%">
+                    {@if item.exec_date && item.exec_date != ''}
+                    保养:
+                    <span class="icon-green" style=";margin-right: .3rem">${item.exec_date}</span>
+                    {@/if}
+                    {@if item.exec_shop && item.exec_shop != ''}
+                    商家:
+                    <span style="color: #333338;margin-right: .3rem">${item.exec_shop}</span>
+                    {@/if}
+                    {@if item.exec_fee && item.exec_fee != ''}
+                    价格
+                    <span style="color: #333338">￥${item.exec_fee}</span>
+                    {@/if}
+                </h5>
+            </div>
+            {@/each}
+            {@/if}
+            <div style="clear: both"></div>
+        </div>
+    </div>
+</script>
+
+<script id="nav" type="text/template">
+    <nav class="bar bar-tab" id="add">
+        <a class="tab-item external">
+            <span class="font-white">添加养护信息</span>
+        </a>
+    </nav>
+</script>
+
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/equip-care-list.js"></script>
+
+</body>
+</html>

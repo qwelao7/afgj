@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>友邻</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current" id="address-list">
+        <header class="bar bar-nav" id="header">
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+            <a class="iconfont icon-search pull-right icon-white open-panel" id="search"></a></header>
+        <div class="content grey infinite-scroll" data-distance="1%">
+            <!--<div class="pull-to-refresh-layer">-->
+            <!--<div class="preloader"></div>-->
+            <!--<div class="pull-to-refresh-arrow"></div>-->
+            <!--</div>-->
+            <div id="container">
+                <div id="neighbors"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script id="admins" type="text/template">
+    <div class="white lg-margin" style="width: 100%;font-size: .7rem">
+        <div class="list-title has-border-bottom lr-padding">
+            公共信息
+            <span class="font-green" style="float: right" id="add">添加</span>
+        </div>
+        {@if pub_info.length > 0}
+        {@each pub_info as info}
+        <div class="lr-padding has-border-bottom" style=" height: 2.6rem">
+            <h3 style="margin: .3rem  0">${info.name}</h3>
+            <a class="font-green" style="margin: 0" href="tel:${info.phone}">${info.phone}</a>
+        </div>
+        {@/each}
+        <h5 class="lr-padding" style="height: 1.4rem;line-height: 1.4rem;margin: 0">
+            <span class="font-blue" style="float: right" id="error">
+                <i class="iconfont icon-bianji1 font-blue" style="padding:0;font-size:.8rem;"></i>
+                上报信息错误
+            </span>
+        </h5>
+        {@/if}
+    </div>
+    {@if forum.length > 0}
+    <div class="white">
+        {@if !(forum.length == 1 && forum[0].state == 2) }
+        <h5 class="has-border-bottom" style="margin: 0;padding: .3rem .6rem">
+            社团
+            <span class="font-green" style="float: right" id="create">新建</span>
+        </h5>
+        {@/if}
+        {@each forum as items}
+        {@if items.state != 2}
+        <div class="user-item lr-padding white last-noborder forum">
+            <div style="width: 85%;float:left;" class="href" data-id="${items.id}">
+                <div class="user-item-img">
+                    <img src="${items.thumbnail | bbsImg}" alt="">
+                </div>
+                <div class="user-item-content" style="width: 80%">
+                    <h2>${items.bbs_name}&nbsp;&nbsp;&nbsp;<span style="color: #888">${items.user_num}人</span></h2>
+                </div>
+            </div>
+            <div style="float:right;width: 15%;">
+                <h4 style="line-height: 2.8rem;margin: 0;text-align: right;">
+                    {@if items.state == 0 || items.state == 2}
+                <span class="iconfont icon-add2 icon-green open-panel join"
+                      style="font-size: 3rem;margin-right: -.3rem;padding: 0"
+                      data-id="${items.id}" data-state="${items.state}"></span>
+                    {@else}
+                    已加入
+                    {@/if}
+                </h4>
+            </div>
+        </div>
+        {@/if}
+        {@/each}
+    </div>
+    {@/if}
+    <!-- 自己 -->
+    <div>
+        <h5 class="lr-padding">
+            我
+        </h5>
+        <div class="user-item lr-padding white last-noborder" id="myself">
+            <div class="user-item-img">
+                <img src="${user[0].headimgurl}" alt="">
+            </div>
+            <div class="user-item-content">
+                <h2>
+                    我&nbsp;&nbsp;&nbsp;
+                    {@if user[0].desc}
+                    <span style="color: #888">(&nbsp;${user[0].address_desc | split})&nbsp;</span>
+                    {@/if}
+                </h2>
+            </div>
+        </div>
+    </div></script>
+<script id="tpl" type="text/template">
+    {@each list as item, index}
+    <h5 class="lr-padding">
+        ${index}栋
+    </h5>
+    <div>
+        {@each item as li}
+        <div class="user-item lr-padding white neighbour-detail last-noborder">
+            <div class="user-item-img">
+                <img src="${li.headimgurl}" alt="">
+            </div>
+            <div class="user-item-content">
+                <h2 class="skip" data-id="${li.ect_uid}">
+                    ${li.nickname}&nbsp;&nbsp;&nbsp;&nbsp;
+                    {@if li.house_num != ''}
+                    <span style="color: #888">({@if li.unit_num != ''}${li.unit_num}-{@/if}${li.house_num})</span>
+                    {@/if}
+                </h2>
+                <h4 class="follow">
+                    {@if li.state == 0}
+                <span class="iconfont icon-follow icon-green open-panel"
+                      style="font-size: 3rem;margin-right: -.3rem;padding: 0"
+                      data-id="${li.ect_uid}"></span>
+                    {@else if li.state == 1}
+                    已关注
+                    {@else}
+                    相互关注
+                    {@/if}
+                </h4>
+            </div>
+        </div>
+        {@/each}
+    </div>
+    {@/each}
+</script>
+<script id="special" type="text/template">
+    <div>
+        {@each items as item}
+        <div class="user-item lr-padding white neighbour-detail last-noborder">
+            <div class="user-item-img">
+                <img src="${item.headimgurl}" alt="">
+            </div>
+            <div class="user-item-content">
+                <h2 class="skip" data-id="${item.ect_uid}">
+                    ${item.nickname}&nbsp;&nbsp;&nbsp;&nbsp;
+                    {@if item.house_num != ''}
+                    <span style="color: #888">({@if item.unit_num != ''}${item.unit_num}-{@/if}${item.house_num})</span>
+                    {@/if}
+                </h2>
+                <h4 class="follow">
+                    {@if item.state == 0}
+                    <span class="iconfont icon-follow icon-green open-panel"
+                          style="font-size: 3rem;margin-right: -.3rem" data-id="${item.ect_uid}"></span>
+                    {@else if item.state == 1}
+                    已关注
+                    {@else}
+                    相互关注
+                    {@/if}
+                </h4>
+            </div>
+        </div>
+        {@/each}
+    </div>
+</script>
+<script id="total" type="text/template">
+    <h5 style="text-align: center" class="hide" id="count">-- 共${pagination.total}位邻居 --</h5>
+    <!-- 加载提示符 -->
+    <div class="infinite-scroll-preloader" style="text-align: center;margin-bottom: -20px;">
+        <div class="preloader"></div>
+    </div>
+</script>
+<script id="title" type="text/template">
+    <h1 class="title">${name}</h1>
+</script>
+
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/address-list.js"></script>
+</body>
+</html>

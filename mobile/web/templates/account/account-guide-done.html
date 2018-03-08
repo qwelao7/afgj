@@ -1,0 +1,15 @@
+<ion-view view-title="完成">
+    <ion-content scroll="false">
+        <div class="skill-complete">
+            <i class="icon-complete icon ion-checkmark-circled"></i>
+            <p style="margin-top: 50px">
+                <span>{{user.name}}</span>
+                <span ng-if="user.sex=='男'">先生</span>
+                <span ng-if="user.sex=='女'">女士</span>
+            </p>
+            <p>恭喜您完成个人信息填写,</p>
+            <p>欢迎加入回来啦社区的大家庭。</p>
+            <button class="button button-balanced button-complete-goback" ng-click="goto('base.home')">回到首页</button>
+        </div>
+    </ion-content>
+</ion-view>

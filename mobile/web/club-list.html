@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>广场</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="club-list">
+        <header class="bar bar-nav">
+            <h1 class="title">社群</h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+        </header>
+        <nav class="bar bar-tab" id="add">
+            <a class="tab-item external">
+                <span class="font-white">新建</span>
+            </a>
+        </nav>
+        <div class="content content-no-padding" id="content" style="bottom: 2.8rem;padding-bottom: 1.8rem;">
+
+        </div>
+    </div>
+</div>
+
+<script id="tpl" type="text/template">
+
+    {@if forum && forum.length > 0}
+        {@each forum as item}
+        <div class="white club-card" data-id="${item.id}" >
+            <!-- content -->
+            <div style="padding-bottom: .5rem">
+                <img class="head-img club-card-head" src="${item.thumbnail | imgCover}">
+                <!-- 成员等级 -->
+                {@if item.admin_level == 1 || item.admin_level == 2}
+                <i class="iconfont open-panel icon-edit pull-right font-green JPopup" data-level="${item.admin_level}"></i>
+                {@/if}
+                <h2 class="club-card-title">${item.bbs_name}</h2>
+                {@if item.announcement || item.link_qq || item.link_weixin || item.weixin_group_master || item.qq_qrcode}
+                <div class="club-card-container">
+                    {@if item.announcement && item.announcement != ''}
+                    <h4 class="font-white club-card-announce">
+                        社区公告
+                    </h4>
+                    <h3 style="margin: 0">${item.announcement}</h3>
+                    {@/if}
+                    {@if item.link_qq || item.link_weixin || item.weixin_group_master || item.qq_qrcode}
+                    <div class="row club-card-row">
+                        {@if item.link_qq && item.link_qq != ''}
+                        <h4 class="col-33 ccr-left">QQ群号:</h4>
+                        <h4 class="col-66 font-black ccr-right">${item.link_qq}</h4>
+                        {@/if}
+                        {@if item.link_weixin && item.link_weixin != ''}
+                        <h4 class="col-33" style="text-align: left;margin: .1rem  0">微信群名:</h4>
+                        <h4 class="col-66 font-black" style=";margin: .1rem 0">${item.link_weixin}</h4>
+                        {@/if}
+                        {@if item.weixin_group_master && item.weixin_group_master != ''}
+                        <h4 class="col-33" style="text-align: left;margin: .1rem  0">群主微信号:</h4>
+                        <h4 class="col-66 font-black" style=";margin: .1rem 0">${item.weixin_group_master}</h4>
+                        {@/if}
+                    </div>
+                    {@/if}
+                    {@if item.qq_qrcode && item.qq_qrcode != ''}
+                    <img src="${item.qq_qrcode | imgPath}" style="width: 3.7rem;height: 3.7rem;display: block;margin: .6rem auto 0">
+                    <h4 class="font-green" style="text-align: center;margin: 0;padding: .5rem 0;">【QQ群二维码】</h4>
+                    {@/if}
+                </div>
+                {@/if}
+            </div>
+        </div>
+        {@/each}
+    {@/if}
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/club-list.js"></script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<ion-view view-title="装修日志详情">
+    <ion-nav-buttons side="left">
+        <button class="button icon ion-ios-arrow-left button-clear button-positive" ng-click="goBack()"></button>
+    </ion-nav-buttons>
+    <ion-content class="grey">
+        <div class="list house-list" style="margin-bottom: 5px">
+            <a class="item item-thumbnail-left" ng-click="goto('decoration-detail', {id: houseInfo.id})">
+                <img ng-src="{{qiniuDomain + houseInfo.coverpic}}" ng-if="houseInfo.coverpic"/>
+                <h4><span>{{houseInfo.title}}</span></h4>
+                <p>预算 : {{houseInfo.budget}} 万元&nbsp;/&nbsp;面积 : {{houseInfo.area | number: 0}} 平方米</p>
+                <p>房型 : {{houseInfo.room}}</p>
+            </a>
+        </div>
+        <div class="grey" style="width: 100%;height: 10px;"></div>
+        <div class="brand-hall brand-promotion" style="background-color: #fff;margin: 5px 0px 0"
+             ng-repeat="item in msgList" ng-if="msgList.length > 0">
+            <div class="content" style="margin-top: 0;">
+                <p class="content-title-ch" style="padding-top: 5px;padding: 5px 8px 0;">{{item.title}}</p>
+                <p class="content-title-en" style="color: #6f6f70">{{item.publish_time}}</p>
+                <div class="content-article">
+                    <p class="content-article-content" style="font-size: 12px">
+                        {{item.content}}
+                    </p>
+                    <div class="news-images" style="width: 100%;margin: 30px 0 10px"
+                         ng-if="item.attachment_type == 1 && item.attachment_content">
+                        <div style="width: 100%" ng-repeat="keys in item.attachment_content track by $index"
+                             ng-if="keys.length > 0 && keys">
+                            <img style="width: 100%;margin: 0 auto"
+                                 ng-src="{{qiniuDomain + keys}}">
+                        </div>
+                    </div>
+                </div>
+                <div class="grey" style="width: 100%;height: 5px;"></div>
+
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

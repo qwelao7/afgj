@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>芝麻信用授权</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script src="//cdn.bootcss.com/echarts/3.4.0/echarts.min.js"></script>
+    <script src="weixin/src/js/lib/echarts-liquidfill.js"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="credit-auth">
+        <header class="bar bar-nav">
+            <h1 class="title">芝麻信用授权</h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+        </header>
+        <nav class="bar bar-tab" id="submit">
+            <a class="tab-item external">
+                <span class="font-white">立即授权</span>
+            </a>
+        </nav>
+        <div class="content content-no-padding" id="content">
+            <div class="ui-step-container">
+                <ol class="ui-step ui-step-3">
+                    <li class="step-start step-done">
+                        <div class="ui-step-line"></div>
+                        <div class="ui-step-cont">
+                            <span class="ui-step-cont-number">1</span>
+                            <span class="ui-step-cont-text">立即授权</span>
+                        </div>
+                    </li>
+                    <li class="step-start">
+                        <div class="ui-step-line"></div>
+                        <div class="ui-step-cont">
+                            <span class="ui-step-cont-number">2</span>
+                            <span class="ui-step-cont-text">同意协议</span>
+                        </div>
+                    </li>
+                    <li class="step-end">
+                        <div class="ui-step-line"></div>
+                        <div class="ui-step-cont">
+                            <span class="ui-step-cont-number">3</span>
+                            <span class="ui-step-cont-text">短信验证</span>
+                        </div>
+                    </li>
+                </ol>
+                <p>&nbsp;</p>
+            </div>
+
+
+            <form action="">
+                <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                    <div class="col-25 h3" style="color: #888">姓名</div>
+                    <div class="col-75" style="margin-left: 8%;position: relative">
+                        <input type="text" placeholder="请输入..." style="border: none;width: 100%;" name="name">
+                    </div>
+                </div>
+                <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                    <div class="col-25 h3" style="color: #888">身份证号</div>
+                    <div class="col-75" style="margin-left: 8%;position: relative">
+                        <input type="text" placeholder="请输入..." style="border: none;width: 100%;" name="idcard">
+                    </div>
+                </div>
+            </form>
+
+
+            <h5 class="lr-padding">以上信息用于确认您的身份</h5>
+            <br>
+            <h3 class="lr-padding">授权芝麻信用可享特权：</h3>
+            <h4 class="lr-padding" style="margin: 0"> 1. 博物图书馆单次借阅数量＋3本；</h4>
+            <h4 class="lr-padding" style="margin: 0"> 2. 免押金借用价值万元甲醛检测仪；</h4>
+            <h4 class="lr-padding" style="margin: 0"> 3. 免押金借用价值万元光谱检测仪。</h4>
+            <br>
+            <h5 class="lr-padding">注：</h5>
+            <h5 class="lr-padding">&nbsp;&nbsp;• 信用特权需芝麻信用650分以上方可享受。</h5>
+            <h5 class="lr-padding">&nbsp;&nbsp;• 平台保留调整芝麻信用分要求的权利。</h5>
+        </div>
+    </div>
+</div>
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/credit-auth.js"></script>
+</body>
+</html>

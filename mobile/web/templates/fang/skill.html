@@ -1,0 +1,15 @@
+<ion-modal-view>
+  <ion-header-bar class="bar bar-header">
+    <button class="button button-clear button-primary" ng-click="skillModal.hide()">取消</button>
+    <h1 class="title">{{skillEditInfo.title}}</h1>
+   <button class="button button-clear button-positive" ng-click="skillSubmit()">确定</button>
+   </ion-header-bar>
+   <ion-content class="" style="background-color: #e6e6e6;">
+   <div class="list">
+      <label class="item item-input">
+          <span class="input-label">个性标签</span>
+          <input ng-model="skillEditInfo.skill" maxlength="4" type="text" style="background-color: #fff;" placeholder="请输入个性标签..">
+      </label>
+   </div>
+ </ion-content>
+</ion-modal-view>

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>设施管理</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current" id="bbs-event-add">
+        <header class="bar bar-nav">
+            <h1 class="title">新建活动</h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+        </header>
+        <nav class="bar bar-tab" id="submit">
+            <a class="tab-item external">
+                <span class="font-white">提交</span>
+            </a>
+        </nav>
+        <div class="content content-no-padding" id="container">
+            <div class="list-block" style="margin:0">
+                <ul>
+                    <li class="">
+                        <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                            <div class="col-25 h3" style="color: #888">标题</div>
+                            <div class="col-75" style="margin-left: 8%;position: relative">
+                                <input type="text" placeholder="请输入标题.." style="font-size:.7rem;width: 88%;display: inline-block" id="title">
+                            </div>
+                        </div>
+                    </li>
+                    <li class="">
+                        <div class="item-content" style="padding-left: .6rem">
+                            <div class="item-inner"
+                                 style="height:auto;min-height:2.8rem;padding-top: 1rem;padding-bottom:1rem;overflow: visible">
+                                <div class="item-title label" style="padding: 0">封面</div>
+                                <div class="item-input">
+                                    <i class="iconfont icon-camera" style="padding:.55rem;border:1px dotted #a0a0a0" id="single"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="">
+                        <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                            <div class="col-25 h3" style="color: #888">报名截止</div>
+                            <div class="col-75" style="margin-left: 8%;position: relative">
+                                <input type="text"
+                                       style="font-size:.7rem;width: 88%;display: inline-block" id="signup-picker"
+                                       placeholder="请选择报名截止时间..">
+                                <i class="iconfont icon-right pull-right"
+                                   style="position: absolute;right: .2rem;top: .1rem;"></i>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="">
+                        <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                            <div class="col-25 h3" style="color: #888">活动时间</div>
+                            <div class="col-75" style="margin-left: 8%;position: relative">
+                                <input type="text"
+                                       style="font-size:.7rem;width: 88%;display: inline-block" id="event-picker"
+                                       placeholder="请选择活动开始时间..">
+                                <i class="iconfont icon-right pull-right"
+                                   style="position: absolute;right: .2rem;top: .1rem;"></i>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="">
+                        <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                            <div class="col-25 h3" style="color: #888">活动地点</div>
+                            <div class="col-75" style="margin-left: 8%;position: relative">
+                                <input type="text" placeholder="请输入地点.."
+                                       style="font-size:.7rem;width: 88%;display: inline-block" id="address">
+                            </div>
+                        </div>
+                    </li>
+                    <li class="">
+                        <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                            <div class="col-25 h3" style="color: #888">人数上限</div>
+                            <div class="col-75" style="margin-left: 8%;position: relative">
+                                <input type="text" placeholder="请输入人数上限，默认人数无限制"
+                                       style="font-size:.7rem;width: 88%;display: inline-block" id="person-num">
+                            </div>
+                        </div>
+                    </li>
+                    <li class="">
+                        <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                            <div class="col-25 h3" style="color: #888">费用/人</div>
+                            <div class="col-75" style="margin-left: 8%;position: relative">
+                                <input type="text" placeholder="请输入活动费用,默认为免费"
+                                       style="font-size:.7rem;width: 88%;display: inline-block" id="fee">
+                            </div>
+                        </div>
+                    </li>
+                    <li class="">
+                        <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                            <div class="col-25 h3" style="color: #888">短信通知</div>
+                            <div class="col-75 open-sms-list" style="margin-left: 8%;position: relative;">
+                                <!--选择短信通知对象后，显示头像-->
+                                <input type="text" style="font-size:.7rem;width: 88%;display: inline-block" placeholder="请选择.." readonly id="toCheck">
+                                <div id="checkedImgs">
+                                </div>
+                                <i class="iconfont icon-right pull-right"
+                                   style="position: absolute;right: .2rem;top: .1rem;"></i>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <div class="white" style="padding-bottom: .3rem">
+                    <textarea name="" id="" style="width: 100%;border: none;text-indent: .2rem" rows="5"
+                              placeholder="请输入描述内容..."></textarea>
+                    <div style="padding-left: .6rem">
+                        <div style="width: 2.2rem;height: 2.2rem;border: 1px dotted #a0a0a0;text-align: center;display:inline-block;margin-right: .6rem">
+                            <i class="iconfont icon-camera open-panel" style="font-size:1.4rem" id="more"></i>
+                        </div>
+                    </div>
+                    <div class="row" id="imgs-row" style="margin-top: .5rem;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- popup sms-list -->
+        <div class="popup popup-sms-list">
+            <div class="content-block">
+                <header class="bar bar-nav">
+                    <h1 class="title">短信通知</h1>
+                    <a class="iconfont icon-left pull-left icon-white open-panel close-sms-list"></a>
+                    <a class="iconfont icon-wt-hll pull-right icon-white open-panel open-sms-info"></a>
+                </header>
+                <nav class="bar bar-tab">
+                    <a class="tab-item external" id="checkUser">
+                        <span class="font-white">确定</span>
+                    </a>
+                </nav>
+                <div class="content content-no-padding infinite-scroll" data-distance="1%">
+                    <!-- 论坛用户列表 -->
+                    <div class="list-block" style="margin:0" id="userList">
+                    </div>
+                    <!-- 加载提示符 -->
+                    <div class="infinite-scroll-preloader">
+                        <div class="preloader">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- sms-list -->
+<script id="smsList" type="text/template">
+    <ul>
+        <li>
+            <label class="label-checkbox item-content">
+                <input type="checkbox" name="checkname">
+                <div class="item-media" id="selectAll"><i class="icon icon-form-checkbox"></i></div>
+                <div class="item-inner" style="float: left;margin-left: 0;padding-left: .75rem !important;" id="selectInner">
+                    <div class="item-title-row">
+                        <div style="display: inline-block; line-height: 2rem;font-size: .75rem;position: relative;overflow: hidden;white-space: nowrap;max-width: 100%;text-overflow: ellipsis;">
+                            全选
+                        </div>
+                    </div>
+                    <span style="font-size: .55rem;color:#a0a0a0;float: right"><span id="checkNum">0</span>/${remainder}</span>
+                </div>
+            </label>
+        </li>
+        {@each list as item,index}
+        <li>
+            <label class="label-checkbox item-content">
+                <input type="checkbox" name="checklist">
+                <div class="item-media check-item"><i class="icon icon-form-checkbox"></i></div>
+                <div class="item-inner check-item-inner" style="float: left;margin-left: 0;padding-left: .75rem !important;" tabIndex="${index}" data-uid="${item.account_id}">
+                    <div class="item-title-row">
+                        <img src="${item.headimgurl}"
+                             style="width:2rem;height: 2rem " class="check-head-img">
+                        <div style="display: inline-block; line-height: 2rem;font-size: .75rem;position: relative;overflow: hidden;white-space: nowrap;max-width: 90%;text-overflow: ellipsis;">
+                            ${item.nickname}
+                            <!--管理员为金色皇冠，副管理员为银色皇冠-->
+                            {@if item.user_role == 1}
+                            <img src="weixin/src/css/img/crown-gold.png" style="width: 1rem">
+                            {@else if item.user_role == 2}
+                            <img src="weixin/src/css/img/crown.png" style="width: 1rem">
+                            {@/if}
+                        </div>
+                    </div>
+                </div>
+            </label>
+        </li>
+        {@/each}
+    </ul>
+</script>
+<!-- sms-info -->
+<script id="smsInfo" type="text/template">
+    <div class="popup popup-sms-info">
+        <div class="content-block">
+            <header class="bar bar-nav">
+                <h1 class="title">短信通知说明</h1>
+                <a class="iconfont icon-left pull-left icon-white open-panel close-sms-info"></a>
+            </header>
+            <nav class="bar bar-tab">
+                <a class="tab-item external close-sms-info">
+                    <span class="font-white">关闭</span>
+                </a>
+            </nav>
+            <div class="content content-no-padding">
+                <div class="lr-padding white font-green has-border-bottom"
+                     style="line-height: 1.7rem;height: 1.7rem;font-size: .7rem">免费短信配额
+                </div>
+                <div class="white row normal-list lr-padding has-border-bottom" style="margin-bottom: 0">
+                    <h3 class="col-25" style="margin: 0">
+                        社长
+                        <img src="weixin/src/css/img/crown-gold.png" style="width: 1rem">
+                    </h3>
+                    <div class="col-75 h3">
+                        <h3 style="margin: 0;line-height: 2.2rem;float: right;color: #888;">50条/月</h3>
+                    </div>
+                </div>
+                <div class="white row normal-list lr-padding has-border-bottom" style="margin-bottom: 0">
+                    <h3 class="col-25" style="margin: 0">
+                        副社长
+                        <img src="weixin/src/css/img/crown.png" style="width: 1rem">
+                    </h3>
+                    <div class="col-75 h3">
+                        <h3 style="margin: 0;line-height: 2.2rem;float: right;color: #888;">30条/月</h3>
+                    </div>
+                </div>
+                <div class="white row normal-list lr-padding">
+                    <h3 class="col-25" style="margin: 0">
+                        社团成员
+                    </h3>
+                    <div class="col-75 h3">
+                        <h3 style="margin: 0;line-height: 2.2rem;float: right;color: #888;">10条/月</h3>
+                    </div>
+                </div>
+                <div style="margin-top: 1rem;padding: 0 1.7rem;font-size: .65rem;color: #888">
+                    短信通知是回来啦社区提供给社团成员的高级通知功能。只能在创建活动或投票时，向本社团成员发送。
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<!-- infinite -->
+<script id="tpl" type="text/template">
+    {@each list as model,index}
+    <li>
+        <label class="label-checkbox item-content">
+            <input type="checkbox" name="checklist">
+            <div class="item-media check-item"><i class="icon icon-form-checkbox"></i></div>
+            <div class="item-inner check-item-inner" style="float: left;margin-left: 0;padding-left: .75rem !important;" tabIndex="${index}" data-uid="${item.account_id}">
+                <div class="item-title-row">
+                    <img src="${model.headimgurl}"
+                         style="width:2rem;height: 2rem " class="check-head-img">
+                    <div style="display: inline-block; line-height: 2rem;font-size: .75rem;position: relative;overflow: hidden;white-space: nowrap;max-width: 90%;text-overflow: ellipsis;">
+                        ${model.nickname}
+                        <!--管理员为金色皇冠，副管理员为银色皇冠-->
+                        {@if model.user_role == 1}
+                        <img src="weixin/src/css/img/crown-gold.png" style="width: 1rem">
+                        {@else if model.user_role == 2}
+                        <img src="weixin/src/css/img/crown.png" style="width: 1rem">
+                        {@/if}
+                    </div>
+                </div>
+            </div>
+        </label>
+    </li>
+    {@/each}
+</script>
+<!-- headimg -->
+<script id="headImg" type="text/template">
+    {@each imgs as img}
+        <img src="${img}" style="width:1.6rem;height: 1.6rem;border-radius: 50%;vertical-align: middle">
+    {@/each}
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/bbs-event-add.js"></script>
+
+</body>
+</html>

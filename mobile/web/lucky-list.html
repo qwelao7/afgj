@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>红包-回来啦社区</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function () {
+            return false;
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current" id="lucky-list">
+        <header class="bar bar-nav red">
+            <h1 class="title">看看大家手气</h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+        </header>
+        <div class="content content-no-padding grey infinite-scroll" id="container" data-distance="100">
+        </div>
+    </div>
+</div>
+<script id="special" type="text/template">
+    <div>
+    <div class="list-title has-border-bottom font-red lr-padding white detail">
+        <span style="font-size: .7rem;line-height: 1.7rem">
+            <i class="iconfont icon-naozhonghll font-red" style="padding: 0"></i>
+            ${lastId.start_time}
+        </span>
+        <h5 style="display: inline-block;float: right;margin: 0;line-height: 1.7rem">已领取${lastId.taken_num}/${lastId.total_num}</h5>
+    </div>
+    {@each query as li}
+    <div class="user-item lr-padding white red-detail">
+        <div class="user-item-img">
+            <img src="${li.headimgurl}" style="border-radius: 50%">
+        </div>
+        <div class="user-item-content">
+            <h2 class="item-two-line-title">
+                ${li.nickname}
+            </h2>
+            <h5 class="item-two-line-right h2" style="margin: 0;line-height: 2.8rem">
+                ${li.remoney}元
+            </h5>
+            <h5 class="item-two-line-detail ellipsis-full">
+                ${li.taken_time}
+            </h5>
+            {@if li.is_most == true}
+            <img src="weixin/src/css/img/crown-gold.png"
+                 style="width: 1rem;position: absolute;top:.1rem;right: .4rem">
+            {@/if}
+        </div>
+    </div>
+    {@/each}
+    </div>
+</script>
+<script id="tpl" type="text/template">
+    {@each id as item}
+    <div>
+        <div class="lg-margin"></div>
+    <div class="list-title has-border-bottom font-red lr-padding white detail" id="detail${item.reid}" data-id="${item.reid}">
+        <span style="font-size: .7rem;line-height: 1.7rem">
+            <i class="iconfont icon-naozhonghll font-red" style="padding: 0"></i>
+            ${item.start_time}
+        </span>
+        <h5 style="display: inline-block;float: right;margin: 0;line-height: 1.7rem">已领取${item.taken_num}/${item.total_num}</h5>
+    </div>
+    </div>
+    {@/each}
+</script>
+<script id="history" type="text/template">
+    {@each query as li}
+    <div class="user-item lr-padding white red-detail">
+        <div class="user-item-img">
+            <img src="${li.headimgurl}" style="border-radius: 50%">
+        </div>
+        <div class="user-item-content">
+            <h2 class="item-two-line-title">
+                ${li.nickname}
+            </h2>
+            <h5 class="item-two-line-right h2" style="margin: 0;line-height: 2.8rem">
+                ${li.remoney}元
+            </h5>
+            <h5 class="item-two-line-detail ellipsis-full">
+                ${li.taken_time}
+            </h5>
+            {@if li.is_most == true}
+            <img src="weixin/src/css/img/crown-gold.png"
+                 style="width: 1rem;position: absolute;top:.1rem;right: .4rem">
+            {@/if}
+        </div>
+    </div>
+    {@/each}
+</script>
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script src="https://g.alicdn.com/aliww/h5.imsdk/4.0.1/scripts/yw/wsdk.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/lucky-list.js"></script>
+</body>
+</html>

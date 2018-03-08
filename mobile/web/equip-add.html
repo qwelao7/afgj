@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>设施管理</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current" id="equip-add">
+        <header class="bar bar-nav">
+            <h1 class="title">添加设施</h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+        </header>
+        <nav class="bar bar-tab" id="submit">
+            <a class="tab-item external">
+                <span class="font-white">提交</span>
+            </a>
+        </nav>
+        <div class="content content-no-padding" id="container">
+            <div class="list-block" style="margin:0">
+                <ul>
+                    <li class="first">
+                        <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                            <div class="col-25 h3" style="color: #888">归属房产</div>
+                            <div class="col-75" style="margin-left: 8%;position: relative" id="addressList">
+                                <i class="iconfont icon-down pull-right"
+                                   style="position: absolute;right: .2rem;top: .1rem;"></i>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="first">
+                        <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                            <div class="col-25 h3" style="color: #888">设备类型</div>
+                            <div class="col-75" style="margin-left: 8%;position: relative" id="classifyList">
+                                <i class="iconfont icon-down pull-right"
+                                   style="position: absolute;right: .2rem;top: .1rem;"></i>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="first">
+                        <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                            <div class="col-25 h3" style="color: #888">品牌</div>
+                            <div class="col-75" style="margin-left: 8%;position: relative">
+                                <input type="text" placeholder="请输入品牌.."
+                                style="font-size:.7rem;width: 88%;display: inline-block" id="brand">
+                            </div>
+                        </div>
+                    </li>
+                    <li class="first">
+                        <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                            <div class="col-25 h3" style="color: #888">型号</div>
+                            <div class="col-75" style="margin-left: 8%;position: relative">
+                                <input type="text" placeholder="请输入型号.."
+                                       style="font-size:.7rem;width: 88%;display: inline-block" id="model">
+                            </div>
+                        </div>
+                    </li>
+                    <li class="first">
+                        <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                            <div class="col-25 h3" style="color: #888">购买价格</div>
+                            <div class="col-75" style="margin-left: 8%;position: relative">
+                                <input type="number" placeholder="请输入购买价格.."
+                                       style="font-size:.7rem;width: 88%;display: inline-block" id="price">
+                            </div>
+                        </div>
+                    </li>
+                    <li class="first">
+                        <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                            <div class="col-25 h3" style="color: #888">购买时间</div>
+                            <div class="col-75" style="margin-left: 8%;position: relative">
+                                <input type="text" placeholder="请输入购买时间.."
+                                       style="font-size:.7rem;width: 88%;display: inline-block" data-toggle='date' readonly id="buy_date">
+                            </div>
+                        </div>
+                    </li>
+                    <li class="first">
+                        <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                            <div class="col-25 h3" style="color: #888">商家</div>
+                            <div class="col-75" style="margin-left: 8%;position: relative">
+                                <input type="text" placeholder="请输入商家名称.."
+                                       style="font-size:.7rem;width: 88%;display: inline-block" id="shop">
+                            </div>
+                        </div>
+                    </li>
+                    <li class="first">
+                        <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                            <div class="col-25 h3" style="color: #888">保修到期日</div>
+                            <div class="col-75" style="margin-left: 8%;position: relative">
+                                <input type="text" data-toggle='date' placeholder="请选择保修到期日.."
+                                       style="font-size:.7rem;width: 88%;display: inline-block" readonly id="guarantee_time">
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 小区 -->
+<script id="address" type="text/template">
+    <input type="text" placeholder="请选择" style="border: none;width: 100%;" readonly id="picker1" value="${num}">
+</script>
+<!-- 分类 -->
+<script id="tpl" type="text/template">
+    <input type="text" placeholder="请选择" style="border: none;width: 100%;" readonly id="picker2" value="${type}">
+</script>
+
+<script id="items" type="text/template">
+    {@each name as na}
+    <li>${na}</li>
+    {@/each}
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/equip-add.js"></script>
+
+</body>
+</html>

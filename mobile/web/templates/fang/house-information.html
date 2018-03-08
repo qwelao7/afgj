@@ -1,0 +1,32 @@
+<ion-view view-title="户型信息">
+    <ion-nav-buttons side="left">
+        <button class="button icon ion-ios-arrow-left button-clear button-positive" ng-click="goBack()"></button>
+    </ion-nav-buttons>
+    <ion-content>
+        <div class="list information">
+            <div class="item" ng-repeat="item in items">
+                <h2 class="title">户型{{item.name}}-<span>在售<span ng-repeat="list in item.selling">{{list.building_num}}# </span></span></h2>
+                <a class="row" ng-click="goto('house-picture', {id:item.decorate[0].service_id})">
+                    <div class="col">
+                        <img class="full-image" ng-src="{{qiniuDomain + item.pic}}-w320"/>
+                    </div>
+                    <div class="col" ng-if="item.decorate.length > 0">
+                        <img class="full-image" ng-src="{{qiniuDomain + item.decorate[0].thumbnail}}-w320"/>
+                    </div>
+                </a>
+                <div class="row">
+                    <div class="col">
+                        <p class="info">
+                            <span>{{item.fangxin}}</span>
+                            <span>{{item.area}}m²</span>
+                            <span class="font-color-5">{{item.type_total_price}}万起</span>
+                        </p>
+                    </div>
+                    <a class="col" ng-click="goto('hardcover-program', {id:item.id})" ng-show="item.decorate.length>0">
+                        <p class="next">{{item.decorate.length}}个装修方案<i class="icon icon-right ion-ios-arrow-right"></i></p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

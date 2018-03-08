@@ -1,0 +1,26 @@
+<ion-view view-title="{{items.title}}">
+    <ion-nav-buttons side="left">
+        <button class="button icon ion-ios-arrow-left button-clear button-positive" ng-click="goBack()"></button>
+    </ion-nav-buttons>
+    <ion-content class="grey" style="margin-bottom: 47px">
+        <div style="margin-bottom:15px;background-color: #fff">
+            <div data-ng-bind-html="items.description"></div>
+        </div>
+        <div class="item" ng-repeat="item in items.upgrade" style="background-color: #fff;">
+            <p style="height: 35px;line-height:35px;" ng-click="action.checked(items.upgrade, $index)">
+                <span style="margin-left: 8px">{{item.title}}</span>
+                <span style="margin-left: 30px" ng-if="item.price_unit==1">{{item.price}}万元/套</span>
+                <span style="margin-left: 30px" ng-if="item.price_unit==2">{{item.price}}万元/平方</span>
+                <i class="icon ion-chevron-up" ng-if="!item.checked" style="float:right;"></i>
+                <i class="icon ion-chevron-down" ng-if="item.checked" style="float:right;"></i>
+            </p>
+            <div class="upgrade-detail" ng-if="item.checked" style="width: 100%">
+                <div data-ng-bind-html="item.description"></div>
+            </div>
+        </div>
+    </ion-content>
+    <div class="button-bar bar-calm" style="position: absolute;bottom: 0">
+        <a class="button" style="background-color: #00a263;border-radius: 0" href="tel:{{items.hotline}}">电话咨询</a>
+        <a class="button" style="background-color: #24c584;border-radius: 0" ng-click="goto('decoration-order', {id:items.id})">立即预约</a>
+    </div>
+</ion-view>

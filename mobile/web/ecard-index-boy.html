@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>毕业联系卡</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+    <script type="text/javascript" src="http://cdn.webfont.youziku.com/wwwroot/js/wf/youziku.api.min.js"></script>
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current" id="ecard-index">
+        <div class="content grey" style="background-color: #29A9DA" id="container">
+        </div>
+    </div>
+</div>
+
+<script id="tpl" type="text/template">
+    <img src="weixin/src/css/img/ecard-banner-head.png" class="eb-banner-head">
+    <h1 class="font-white eb-name">“${info.kidname}小朋友”</h1>
+    <h1 class="eb-place" style="">${info.kindergarten}</h1>
+    <h1 class="eb-class" style="">${info.class}</h1>
+    <div class="eb-info-container" >
+        <div class="e_content" style="padding-top: 1rem;">
+            {@if info.mobilephone != ''}
+            <h3 class="eb-info-1st" >手机:<span class="e_number">${info.mobilephone}</span></h3>
+            {@/if}
+            {@if info.qq != ''}
+            <h3 class="eb-info-middle" >QQ:<span class="e_number">${info.qq}</span></h3>
+            {@/if}
+            {@if info.wechat != ''}
+            <h3 class="eb-info-middle" >微信:<span class="e_number">${info.wechat}</span></h3>
+            {@/if}
+            <h3 class="eb-info-message" >祝福语:${info.blessing}</h3>
+        </div>
+    </div>
+    <img src="weixin/src/css/img/ecard-pic-banner.png" style="width: 30%;margin: 1rem 35%;">
+
+    {@if info.pics.length == 1}
+        {@if parseFloat(info.pics[0].width / info.pics[0].height) >= 1.3}
+        <div class="ecard_container ecard-pic-1st-container1">
+            <img class="eb-pic" src="weixin/src/css/img/eb-pic-1st-1.png">
+        </div>
+        {@else}
+        <div class="ecard_container ecard-pic-1st-container1">
+            <img class="eb-pic" src="weixin/src/css/img/eb-pic-1st-2.png">
+        </div>
+        {@/if}
+    {@/if}
+
+    {@if info.pics.length > 1}
+    {@each info.pics as pic, index}
+        {@if index == 0}
+            {@if parseFloat(pic.width / pic.height) >= 1.3}
+            <div class="ecard_container ecard-pic-1st-container1">
+                <img class="eb-pic" src="weixin/src/css/img/eb-pic-1st-1.png">
+            </div>
+            {@else}
+            <div class="ecard_container ecard-pic-1st-container2">
+                <img class="eb-pic" src="weixin/src/css/img/eb-pic-1st-2.png">
+            </div>
+            {@/if}
+        {@else if index == info.pics.length - 1}
+            {@if parseFloat(pic.width / pic.height) >= 1.3}
+            <div class="ecard_container ecard-pic-last-container1">
+                <img class="eb-pic" src="weixin/src/css/img/eb-pic-last-1.png">
+            </div>
+            {@else}
+            <div class="ecard_container ecard-pic-last-container2">
+                <img class="eb-pic" src="weixin/src/css/img/eb-pic-last-2.png">
+            </div>
+            {@/if}
+        </div>
+        {@else}
+            {@if parseFloat(pic.width / pic.height) >= 1.3}
+            <div class="ecard_container ecard-pic-2nd-container1">
+                <img class="eb-pic" src="weixin/src/css/img/eb-pic-2nd-1.png">
+            </div>
+            {@else}
+            <div class="ecard_container ecard-pic-2nd-container2">
+                <img class="eb-pic" src="weixin/src/css/img/eb-pic-2nd-2.png">
+            </div>
+            {@/if}
+        </div>
+        {@/if}
+    </div>
+    {@/each}
+    {@/if}
+
+    <img id="detail" src="weixin/src/css/img/eb-pic-reverse.png" style="width:40%;padding-bottom: 1rem;margin: 0 30%">
+
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/ecard-index.js"></script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<ion-view view-title="楼盘资讯">
+    <ion-nav-buttons side="left">
+        <button class="button icon ion-ios-arrow-left button-clear button-positive" ng-click="goBack()"></button>
+    </ion-nav-buttons>
+    <ion-content class="grey" style="padding-top: 2px;">
+        <div class="news-focus" style="margin-bottom: 8px; display:block;" ng-if="arg">
+            <a class="item item-thumbnail-left" ng-click="goto('news-loupan')">
+                <img src="../../assets/img/loupan_news.png">
+                <h2>东方雅园</h2>
+                <p class="text">{{item.brief}}小小神童比赛等你来参加</p>
+                <p class="date">{{item.create_at}}2016-04-28</p>
+                <a class=" button button-outline button-small" ng-click="action.unfocus()">取消关注</a>
+            </a>
+        </div>
+        <div class="news-item">
+            <a class="item item-thumbnail-left">
+                <img src="../../assets/img/loupan_news.png">
+                <h2>楼盘新闻</h2>
+                <p class="text">{{item.brief}}53245345</p>
+                <p class="date">{{item.create_at}}2016-04-28</p>
+            </a>
+        </div>
+        <div class="news-item">
+            <a class="item item-thumbnail-left">
+                <img src="../../assets/img/news_growth.png">
+                <h2>楼盘成长日志</h2>
+                <p class="text">{{item.brief}}53245345</p>
+                <p class="date">{{item.create_at}}2016-04-28</p>
+            </a>
+        </div>
+        <div class="news-item">
+            <a class="item item-thumbnail-left">
+                <img src="../../assets/img/news_event.png">
+                <h2>楼盘活动</h2>
+                <p class="text">{{item.brief}}53245345</p>
+                <p class="date">{{item.create_at}}2016-04-28</p>
+            </a>
+        </div>
+        <div class="news-item">
+            <a class="item item-thumbnail-left">
+                <img src="../../assets/img/news_decoration.png">
+                <h2>装修日志</h2>
+                <p class="text">{{item.brief}}53245345</p>
+                <p class="date">{{item.create_at}}2016-04-28</p>
+            </a>
+        </div>
+    </ion-content>
+</ion-view>
+
+

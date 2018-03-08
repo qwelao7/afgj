@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>广场</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="square-building-log">
+        <header class="bar bar-nav">
+            <h1 class="title">成长日志</h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" href="javascript:history.go(-1);"></a>
+        </header>
+        <div class="content content-no-padding infinite-scroll" data-distance="1%">
+            <!-- content -->
+            <div id="content"></div>
+            <!-- loading -->
+            <div class="infinite-scroll-preloader" style="text-align:center;margin-bottom:-20px">
+                <div class="preloader"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script id="lists" type="text/template">
+    {@if list && list.length > 0}
+    {@each list as item}
+        <div class="white lg-margin square-building-log" style="overflow: hidden">
+            <h2 class="building-log-title">${item.title}</h2>
+            <h3 class="font-green" style="margin: 0">[ ${item.publish_time | format} ]</h3>
+            <h3 class="building-log-word">${item.content}</h3>
+            {@if item.attachment_type == 1}
+            {@each item.attachment_content as img}
+            <div class="building-log-img-container">
+                <img src="${img | imgPath}" style="width: 100%">
+                <img class="building-log-img-banner" src="${item.logo_pic | imgPath}">
+            </div>
+            {@/each}
+            {@/if}
+        </div>
+    {@/each}
+    {@/if}
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/square-building-log.js"></script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>活动</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no, email=no"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script src="weixin/src/css/fonts/iconfont.js"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<!-- 主页面 -->
+<div class="page-group">
+    <div class="page page-current" id="event-material">
+        <header class="bar bar-nav" id="header">
+            <h1 class="title" id="title">
+                购买测试片
+            </h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+        </header>
+        <div class="bar bar-tab buttons-row white no-border row" id="nav" style="background-color: #fff">
+            <div class="white font-black" style="width:66%;line-height: 2.5rem;text-align: center;display: inline-block;">
+                实付：
+                <span class="font-green order_amount">￥ <span class="JOrderAmount">0.00</span></span>
+            </div>
+            <div class="green font-white" id="submit" style="width:34%;line-height: 2.5rem;text-align: center;display: inline-block;">
+                提交
+            </div>
+        </div>
+        <!-- content -->
+        <div class="content content-no-padding" id="container">
+
+        </div>
+    </div>
+</div>
+
+<script id="tpl" type="text/template">
+    <div class=" white">
+        <div class="has-border-bottom row lr-padding to_goods" style="width: 100%;">
+            <h3 STYLE="margin-bottom: 0">
+                <span style="display: inline-block;width: 76% !important;" class="ellipsis">${goodsName}</span>
+                <span class="font-green" style="float: right">￥${unitPrice}元</span>
+            </h3>
+            <h4 style="margin: 0">
+                <h5> • 一个房间使用一片测试片，不可重复使用。若餐厅客厅相通，且面积低于50平米，一片测试片即可。</h5>
+                <h5> • 您可在回来啦平台购买，也可通过其他方式购买</h5>
+            </h4>
+        </div>
+    </div>
+    <div class="sm-margin white">
+        <div class="lr-padding order-stat has-border-bottom">
+            <h3 style="margin: 0;color: #888">
+                选择购买数量
+                <span style="color: #595757;float: right">
+                    <a class="button JBtn" data-type="minus"
+                       style="display: inline-block;padding: 0 .35rem;border-radius: 0;border:  1px solid #a0a0a0;font-size: .8rem;color: #a0a0a0">-</a>
+                    <span class="font-green JNumber" style="padding: 0 .3rem">${number}</span>
+                    <a class="button JBtn" data-type="plus"
+                       style="display: inline-block;padding: 0 .35rem;border-radius: 0;border:  1px solid #a0a0a0;font-size: .8rem;color: #a0a0a0">+</a>
+                </span>
+            </h3>
+        </div>
+
+        <div style="clear: both"></div>
+        <!-- 金额明细 -->
+        <div class="lr-padding has-border-bottom" style="margin-bottom: 2.4rem;">
+            <h4>
+                商品金额：<span class="font-green pull-right">￥ <span
+                    class="JGoodsAmount">${goodsAmount.toFixed(2)}</span></span>
+            </h4>
+            <h4>
+                运费：<span class="font-green pull-right">+￥${shippingFee.toFixed(2)}</span>
+            </h4>
+        </div>
+    </div>
+</script>
+
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/event-material.js"></script>
+</body>
+</html>

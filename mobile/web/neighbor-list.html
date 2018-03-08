@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>友邻列表</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function () {
+            return false;
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="neighbor-list">
+        <header class="bar bar-nav">
+            <h1 class="title">友邻</h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+        </header>
+        <div class="content grey pull-to-refresh-content" data-ptr-distance="1%">
+            <div class="pull-to-refresh-layer">
+                <div class="preloader"></div>
+                <div class="pull-to-refresh-arrow"></div>
+            </div>
+            <div id="container"></div>
+        </div>
+    </div>
+</div>
+<script id="neighbour" type="text/template">
+    <div>
+        {@each communitys as community}
+        <div class="user-item lr-padding white community-loupan last-noborder" data-loupan="${community.id}"
+             data-name="${community.name}">
+            <div class="user-item-img">
+                <img src="${community.thumbnail | bbsImg}">
+            </div>
+            <div class="user-item-content">
+                <h2>
+                    ${community.name}
+                </h2>
+                <h4>
+                    ${community.num}位邻居
+                    <a class="iconfont icon-right open-panel icon-grey"></a>
+                </h4>
+            </div>
+        </div>
+        <div style="clear: both"></div>
+        {@/each}
+    </div>
+    <!-- 邻居 -->
+    {@if neighbours}
+    {@each neighbours as neighbour, index}
+    <h5 class="lr-padding">
+        ${index}
+    </h5>
+    <div>
+        {@each neighbour as person}
+        <div class="user-item lr-padding white follow-neighbor last-noborder" data-user="${person.friend_id}"
+             data-person="${person.desc.desc | toString}">
+            <div class="user-item-img">
+                <img src="${person.avatar}">
+            </div>
+            <div class="user-item-content">
+                <h2 style="width: 100%;">${person.nickname}&nbsp;&nbsp;{@if person.desc != ''}<span
+                        style="color: #888;">(</span>&nbsp;<span
+                        style="display:inline-block;color: #888;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;max-width:75%;vertical-align: middle">${person.desc}</span>&nbsp;<span
+                        style="color: #888;">)</span>{@/if}
+                </h2>
+            </div>
+        </div>
+        {@/each}
+    </div>
+    {@/each}
+    {@/if}
+    <h5 style="text-align: center">-- 共${total_num}位关注邻居 --</h5>
+</script>
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/neighbor-list.js"></script>
+
+</body>
+</html>

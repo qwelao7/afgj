@@ -1,0 +1,30 @@
+<ion-view view-title="个性标签">
+    <ion-nav-buttons side="left">
+        <button class="button icon ion-ios-arrow-left button-clear button-positive" ng-click="goBack()"></button>
+    </ion-nav-buttons>
+    <ion-content class="grey">
+        <div class="row skill-row" id="selected-skill">
+            <div class="col-25 col-25 selected-col" ng-repeat="arr in fangServiceSelectedArr" ng-click='action.removeItem(arr)'>
+                <span>
+                    {{arr}}
+                    <i class='icon ion-close'></i>
+                </span>
+            </div>
+        </div>
+        <p class="select-skill-title">
+            <span>选择个性标签</span>
+            <button class="button button-balanced" ng-click="skillAdd()" style="">自定义标签</button>
+        </p>
+        <div class="row skill-row">
+            <div class="col-25 skill-options" ng-repeat="item in items">
+                <span ng-click="action.selectItem(item)"
+                      ng-class="{select:fangServiceSelectedArr.indexOf(item.skill)!=-1}">
+                    {{item.skill}}
+                </span>
+            </div>
+        </div>
+    </ion-content>
+    <div class="tabs button-bar bar-balanced" ng-if="'account-guide-gender'==referrer">
+        <a class="button" ng-click="goto('account-guide-done')">完成</a>
+    </div>
+</ion-view>

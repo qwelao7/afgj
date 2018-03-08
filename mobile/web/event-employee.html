@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>活动</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current" id="event-employee">
+        <header class="bar bar-nav">
+            <h1 class="title">工作人员</h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" href="javascript:void(history.go(-1))"></a>
+        </header>
+        <!-- content -->
+        <div class="content" id="content">
+            <div class="white lg-margin" style="padding: 2rem 0">
+                <div style="width: 9.5rem;height: 9.5rem;
+                background-image: url('weixin/src/css/img/event-qr-bg1.png');
+                background-size: cover;margin: 0rem auto;">
+                    <div id="qrcode" class="event_qrcode">
+                        <!-- 二维码 -->
+                    </div>
+                </div>
+                <h2 class="font-green" style="margin-bottom: 0;text-align: center">扫码成为该活动工作人员</h2>
+            </div>
+
+            <!--  工作人员列表 -->
+        </div>
+        >
+    </div>
+</div>
+
+<script id="list" type="text/template">
+    <div class="white lr-padding">
+        {@if list && list.length > 0}
+        {@each list as item}
+        <div class="user-item has-border-bottom white block" data-id="${item.user_id}">
+            <div class="user-item-img" style="width: 2rem">
+                <img class="head-img" src="${item.headimgurl}"
+                     style="width: 2rem;height: 2rem;margin-top: .4rem">
+            </div>
+            <div class="user-item-content">
+                <h2 class="item-two-line-title ellipsis-full" style="line-height: 2.8rem;margin: 0;display: inline-block">
+                    ${item.nickname}
+                </h2>
+                <a class="h3 employee-btn">
+                    <i class="iconfont icon-xiao10" style="padding:0;margin-top: -.3rem;line-height: 1.4rem"></i>
+                    删除
+                </a>
+            </div>
+        </div>
+        {@/each}
+        {@/if}
+    </div>
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/event-employee.js"></script>
+
+</body>
+</html>

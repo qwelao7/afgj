@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>友邻详情</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="neighbor-detail">
+        <header class="bar bar-nav" id="header">
+            <a class="iconfont icon-left pull-left icon-white open-panel" href="javascript:history.go(-1)"></a>
+            <h1 class="title">邻居信息</h1></header>
+        <div class="content grey" id="container"></div>
+    </div>
+</div>
+<script id="tpl" type="text/template">
+    {@if isFollow}
+    <div class="detail-drop-down unshow" id="tips">
+        <!--<h4 id="complaint">-->
+        <!--<a class="iconfont icon-Complaint1 icon-red" style="font-size: 1.2rem"></a>-->
+        <!--投诉该邻居-->
+        <!--</h4>-->
+        <h4 id="unfollow">
+            <a class="iconfont icon-cancel icon-grey"
+               style="font-size: .5rem;margin-right: .5rem;margin-left: .2rem"></a>
+            取消关注
+        </h4>
+    </div>
+    {@/if}
+    <!-- 个人信息 -->
+    <div>
+        <div class="user-item-detail lr-padding lg-margin white last-noborder">
+            <div class="user-item-detail-img">
+                <img style="border-radius: 50%" src="${avatar}">
+            </div>
+            <!-- 若有备注名显示备注名, 没有则显示昵称 -->
+            {@if remarkName != ""}
+            <div class="user-item-detail-content">
+                <h2>
+                    ${remarkName}
+                </h2>
+                <br>
+                <h4>昵称：${nickName}</h4>
+            </div>
+            {@else}
+            <div class="user-item-detail-content">
+                <h2>
+                    ${nickName}
+                </h2>
+            </div>
+            {@/if}
+        </div>
+    </div>
+    <!-- 如没有备注名则显示设置备注名, 若有则显示修改备注名 -->
+    {@if remarkName != ""}
+    <div class="normal-list lr-padding nick-name">
+        <h3>修改备注名
+        </h3>
+    </div>
+    {@else}
+    <div class="normal-list lr-padding nick-name">
+        <h3>
+            设置备注名
+        </h3>
+    </div>
+    {@/if}
+    <!-- 若有共同社区则显示 -->
+    {@if commonCommunitys.length > 1}
+    <div class="white row neighbor-detail-sharecom normal-list" style="height: auto;line-height: 1.4rem;">
+        <h3 class="col-25">共同小区</h3>
+        <div class="col-75 h3">
+            {@each commonCommunitys as community}
+
+            <h3 style="margin: 0">${community.address_desc}</h3>
+
+            {@/each}
+        </div>
+    </div>
+    {@else if commonCommunitys.length == 1}
+    <div class="white row neighbor-detail-sharecom normal-list">
+        <h3 class="col-25">共同小区</h3>
+        <div class="col-75 h3">
+            {@each commonCommunitys as community}
+
+            <h3 style="margin: 0">${community.address_desc}</h3>
+
+            {@/each}
+        </div>
+    </div>
+    {@/if}
+    <div>
+        <!-- 若有个性标签则显示 -->
+        {@if lables}
+        <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom: 0">
+            <div class="col-25 h3" style="color: #888">个性标签</div>
+            <div class="col-75">
+                {@each lables as it}
+                <h5 class="personal-label">${it}</h5>
+                {@/each}
+            </div>
+        </div>
+        {@/if}
+        <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom: 1rem; border-bottom: none;">
+            <div class="col-25 h3" style="color: #888">广场</div>
+        </div>
+    </div>
+
+    <button class="button btn-lg btn-confirm" style="margin-bottom: 1rem" id="sendMsg">发消息</button>
+
+    <!-- 如已关注,则不要显示 -->
+    {@if !isFollow}
+    <button class="button btn-lg btn-border" id="follow">关 注</button>
+    {@/if}</script>
+
+<!--下拉按钮-->
+<script id="tags" type="text/template">
+    {@if isFollow}
+    <a class="iconfont icon-edit pull-right icon-white open-panel" id="tag"></a>
+    {@/if}
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/neighbor-detail.js"></script>
+
+</body>
+</html>

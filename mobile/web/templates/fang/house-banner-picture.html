@@ -1,0 +1,22 @@
+<ion-view view-title="图集浏览" class="black">
+    <ion-nav-buttons side="left">
+        <button class="button icon ion-ios-arrow-left button-clear button-positive" ng-click="goBack()"></button>
+    </ion-nav-buttons>
+    <ion-content class="auto-scroll">
+        <div class="picture-box">
+            <ion-slide-box on-slide-changed="action.activeSlideIndex(index)" on-slide-changed="slideHasChanged(index)"
+                           auto-play="true" slide-interval="4000" delegate-handle="slideimgs" does-continue="true">
+                <ion-slide ng-repeat="img in params.imgs">
+                    <img class="full-image" ng-src="{{qiniuDomain + img['img']}}"/>
+                </ion-slide>
+            </ion-slide-box>
+        </div>
+    </ion-content>
+    <div class="bar bar-footer black" ng-click="addressSubmit()">
+        <div class="tabs tabs-picture">
+            <a class="tab-item" ng-class="params.key == key.word ? 'tab-item-active':''"
+               ng-click="action.activeSlide(key.word, key.index)" ng-repeat="key in params.keys">{{key.word}}</a>
+        </div>
+    </div>
+</ion-view>
+

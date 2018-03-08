@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>社团</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current" id="circle-detail">
+        <header class="bar bar-nav">
+            <h1 class="title">社团信息</h1>
+            <!--控制权限，只有团长才能看见按钮-->
+        </header>
+        <!--右上角菜单弹出层-->
+        <div class="modal-popup white" id="popup" style="display: none">
+        </div>
+        <!--遮罩层-->
+        <div class="modal-overlay"></div>
+
+        <div class="content content-no-padding infinite-scroll" id="container">
+        </div>
+    </div>
+</div>
+<script id="radio" type="text/template">
+    <a class="iconfont icon-left pull-left icon-white open-panel" id="back" data-bbsid="${cur.bbs_id}"></a>
+    {@if cur.user_role == 1}
+    <a class="iconfont icon-edit pull-right icon-white open-panel" id="tag"></a>
+    {@/if}
+</script>
+<script id="auth" type="text/template">
+    {@if cur.user_role == 1}
+    <p class="modal-p-list tips-border-bottom modify setup" data-bbsid="${cur.bbs_id}">
+        <i class="iconfont icon-equipment font-green" style="padding-top: .2rem;margin-right: .6rem"></i>
+        设置副社长
+    </p>
+    <p class="modal-p-list tips-border-bottom black" data-bbsid="${cur.bbs_id}">
+        <i class="iconfont icon-lh-hll" style="color: #595757;padding-top: .2rem;margin-right: .6rem"></i>
+        查看黑名单
+    </p>
+    {@if bbs.allow_del == 1}
+    <p class="modal-p-list tips-border-bottom delete-confirm" data-bbsid="${cur.bbs_id}">
+        <i class="iconfont icon-xiao10 font-red" style="padding-top: .2rem;margin-right: .6rem"></i>
+        解散社团
+    </p>
+    {@/if}
+    {@/if}
+</script>
+<script id="action" type="text/template">
+    {@if cur.user_role == 0}
+    <nav class="bar bar-tab" id="join" data-bbsId="${cur.bbs_id}">
+        <a class="tab-item external">
+            <span class="font-white">加入社团</span>
+        </a>
+    </nav>
+    {@else}
+    <nav class="bar bar-tab cancel" id="cancel" data-bbsid="${cur.bbs_id}">
+        <a class="tab-item external">
+            <span class="font-white">退出社团</span>
+        </a>
+    </nav>
+    {@/if}
+</script>
+<script id="tpl" type="text/template">
+    <ul style="margin-bottom: .6rem">
+        <li class="first">
+            <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                <div class="col-25 h3">社团名称</div>
+                <div class="col-75" style="margin-left: 8%;position: relative;font-size: .75rem">
+                    ${bbs.bbs_name}
+                </div>
+            </div>
+        </li>
+        <li class="first">
+            <div class="normal-list lr-padding has-border-bottom row"
+                 style="margin-bottom:0;height: auto;line-height: 1.2rem">
+                <div class="col-25 h3" style="line-height: 2.2rem">社团公告</div>
+                <div class="col-75"
+                     style="margin-left: 8%;position: relative;font-size: .75rem;overflow: visible;margin-top: .5rem;margin-bottom: .5rem">
+                    ${bbs.announcement | format}
+                </div>
+            </div>
+        </li>
+        {@if bbs.link_qq != ''}
+        <li class="first">
+            <div class="normal-list lr-padding has-border-bottom row"
+                 style="margin-bottom:0;height: auto;line-height: 1.2rem">
+                <div class="col-25 h3" style="line-height: 2.2rem">QQ群号</div>
+                <div class="col-75"
+                     style="margin-left: 8%;position: relative;font-size: .75rem;overflow: visible;margin-top: .5rem;margin-bottom: .5rem">
+                    ${bbs.link_qq}
+                </div>
+            </div>
+        </li>
+        {@/if}
+        {@if bbs.qq_qrcode != ''}
+        <li class="first">
+            <div class="normal-list lr-padding has-border-bottom row"
+                 style="margin-bottom:0;height: auto;line-height: 1.2rem">
+                <div class="col-33 h3" style="line-height: 2.2rem;margin-left: 0;">QQ群二维码</div>
+                <div class="col-66"
+                     style="margin-left: 8%;position: relative;font-size: .75rem;overflow: visible;margin-top: .5rem;margin-bottom: .5rem">
+                    <img src="${bbs.qq_qrcode | imgPath}?imageMogr2/thumbnail/!120x120r/gravity/center/crop/120x120" alt="">
+                </div>
+            </div>
+        </li>
+        {@/if}
+        {@if bbs.link_weixin != ''}
+        <li class="first">
+            <div class="normal-list lr-padding has-border-bottom row"
+                 style="margin-bottom:0;height: auto;line-height: 1.2rem">
+                <div class="col-25 h3" style="line-height: 2.2rem">微信群号</div>
+                <div class="col-75"
+                     style="margin-left: 8%;position: relative;font-size: .75rem;overflow: visible;margin-top: .5rem;margin-bottom: .5rem">
+                    ${bbs.link_weixin}
+                </div>
+            </div>
+        </li>
+        {@/if}
+        {@if bbs.weixin_group_master != ''}
+        <li class="first">
+            <div class="normal-list lr-padding has-border-bottom row"
+                 style="margin-bottom:0;height: auto;line-height: 1.2rem">
+                <div class="col-33 h3" style="line-height: 2.2rem;margin-left: 0;">微信群主微信号</div>
+                <div class="col-66"
+                     style="margin-left: 8%;position: relative;font-size: .75rem;overflow: visible;margin-top: .5rem;margin-bottom: .5rem">
+                    ${bbs.weixin_group_master}
+                </div>
+            </div>
+        </li>
+        {@/if}
+    </ul>
+    <div class="lr-padding white font-green has-border-bottom"
+         style="line-height: 1.7rem;height: 1.7rem;font-size: .7rem">社团成员
+    </div>
+</script>
+<script id="text" type="text/template">
+    {@each list as item}
+    <div class="user-item lr-padding white community-loupan last-noborder member" data-id="${item.account_id}">
+        <div class="user-item-img">
+            <img src="${item.headimgurl}">
+        </div>
+        <div class="user-item-content">
+            <h2>
+                ${item.nickname}
+                {@if item.user_role == 1}
+                <img src="weixin/src/css/img/crown-gold.png" style="width: 1rem">
+                {@else if item.user_role == 2}
+                <img src="weixin/src/css/img/crown.png" style="width: 1rem">
+                {@/if}
+            </h2>
+            {@if item.status == 3 && item.islocked > 0}
+            <h3 class="h4" style="margin: 0;line-height: 2.8rem;margin-left: .3rem">
+                禁言还剩${item.islocked}天
+            </h3>
+            {@if cur.user_role == 1 || cur.user_role == 2}
+            <a class="button font-green unblock-member" style="border:1px solid #009042;width:3rem;height: 1.2rem;display: inline-block;float: right;margin:.8rem 0" data-bbsid="${cur.bbs_id}" data-accountid="${item.account_id}" data-userrole="${item.user_role}">解禁</a>
+            {@/if}
+            {@/if}
+        </div>
+    </div>
+    <div style="clear: both"></div>
+    {@/each}
+</script>
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/circle-detail.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>故障上报</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current" id="error-report-success">
+        <header class="bar bar-nav"><h1 class="title">报障成功</h1><a
+                class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+        </header>
+        <div class="content lr-padding white login-success-content">
+            <a class="iconfont icon-pass login-success-icon" style="display:block"></a>
+            <h1 class="font-green">故障上报成功</h1>
+            <h3 style="color: #333338">工作人员将在2个小时内与您取得联系！</h3>
+            <h3 style="color: #333338">请保持手机畅通，谢谢！</h3>
+        </div>
+    </div>
+    <script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="unit.js"></script>
+    <script type="text/javascript" src="/js/error-report-success.js"></script>
+
+</body>
+</html>

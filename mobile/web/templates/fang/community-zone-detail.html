@@ -1,0 +1,136 @@
+<ion-view view-title="园区新鲜事" hide-nav-bar="true">
+    <ion-header class="reset-header">
+        <div class="bar bar-header">
+            <div class="dropdown">
+                <button id="dropdown" data-id="0" class="button">{{title}}</button>
+            </div>
+        </div>
+        <button class="button icon ion-ios-arrow-left button-clear button-light button-white button-back"
+                ng-click="goBack()"></button>
+    </ion-header>
+    <ion-content style="padding-top:2px;margin-top: 47px">
+        <div class="news-list">
+            <div class="news-info">
+                <a class="item item-avatar" ng-if="items.account_info.avatar">
+                    <img ng-src="{{qiniuDomain + items.account_info.avatar}}">
+                    <h2 style="max-width: 100%;">{{items.title}}</h2>
+                    <p class="text" style="color: #8CB7D2;display: block" ng-if="items.account_id > 0">{{items.account_info.nickname}}</p>
+                    <p class="text" style="color: red;display: block" ng-if="items.admin_id > 0">{{items.account_info.nickname}}</p>
+                    <p class="date" style="float: left;margin-left: -3%;margin-top: -1%">{{items.publish_time}}</p>
+                </a>
+            </div>
+            <p class="news-article">
+                {{items.content}}
+            </p>
+            <!-- putong -->
+            <div class="news-images row row-wrap" ng-if="items.attachment_type == 1"  ng-show="items.attachment_content.length==3||items.attachment_content.length>4">
+                <div class="col-33" ng-repeat="keys in items.attachment_content track by $index" ng-if="keys.length > 0">
+                    <img style="width:98%" ng-src="{{qiniuDomain + keys}}?imageView2/1/w/200/h/200"
+                         ng-click="goto('news-picture', {id:items.id})">
+                </div>
+            </div>
+            <div class="news-images row row-wrap" ng-if="items.attachment_type == 1" ng-show="items.attachment_content.length==2||items.attachment_content.length==4">
+                <div class="col-50" ng-repeat="keys in items.attachment_content track by $index" ng-if="keys.length > 0">
+                    <img style="width:98%" ng-src="{{qiniuDomain + keys}}?imageView2/1/w/200/h/200"
+                         ng-click="goto('news-picture', {id:items.id})">
+                </div>
+            </div>
+            <div class="news-images row row-wrap" ng-if="items.attachment_type == 1" ng-show="items.attachment_content.length==1">
+                <div class="col" ng-repeat="keys in items.attachment_content track by $index" ng-if="keys.length > 0">
+                    <img style="width:98%" ng-src="{{qiniuDomain + keys}}?imageView2/0/w/375"
+                         ng-click="goto('news-picture', {id:items.id})">
+                </div>
+            </div>
+            <!-- ARTICLE -->
+            <div class="news-images" ng-if="items.attachment_type == 3">
+                <img style="width: 98%;height:150px;margin-right: -5px" ng-src="{{qiniuDomain + items.fujian.thumbnail}}"
+                     ng-click="goto('news-article', {id:items.attachment_content})">
+                <div class="news-images-banner">&nbsp;&nbsp;{{items.fujian.title}}</div>
+            </div>
+            <!-- 活动附件 -->
+            <div class="item item-avatar event-share-content"
+            ng-if="items.attachment_type == 5" ng-click="goto('community-zone-event-detail', {'id':items.attachment_content, 'loupan_id':items.loupan_id})">
+                <img src="../../assets/css/images/icon_event.png">
+                <div class="share-content">
+                    <h2>{{items.fujian.name}}</h2>
+                    <p>截止日期：<span>{{items.fujian.signup_end}}</span></p>
+                    <p>报名人数：<span>{{items.fujian.person_num}}</span></p>
+                </div>
+            </div>
+            <!--投票附件-->
+            <div class="item item-avatar event-share-content"
+            ng-if="items.attachment_type == 4" ng-click="action.href(items)">
+                <img src="../../assets/css/images/icon_vote.png">
+                <div class="share-content">
+                    <h2>{{items.fujian.title}}</h2>
+                    <p>截止日期：<span>{{items.fujian.deadline}}</span></p>
+                    <p>投票人数：<span>{{items.voted_person_num}}</span></p>
+                </div>
+            </div>
+            <!-- 评论 -->
+            <div class="news-comments">
+                <div class="comment-numbers">
+                    <span>评论 {{commentList.length}}</span>
+                    <span>赞 {{praiseNum}}</span>
+                </div>
+                <div class="comment-note" ng-repeat="comment in commentList">
+                    <div class="comment-icon">
+                        <img ng-src="{{qiniuDomain + comment.account_info.avatar}}">
+                    </div>
+                    <div class="comment-detail">
+                        <p>
+                            <span>{{comment.account_info.nickname}}</span>
+                            <span>{{comment.created_at}}</span>
+                        </p>
+                        <p>
+                            {{comment.content}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </ion-content>
+    <!--<div class="item-inset" ng-show="params.isComment">-->
+    <!--<div class="item item-input">-->
+    <!--<input type="text" placeholder=" 添加评论..." ng-model="editInfo.content">-->
+    <!--<button class="button button-small submit-button" ng-click="editSubmit()">提交</button>-->
+    <!--</div>-->
+    <!--</div>-->
+    <div id="mask" class="mask" ng-click="action.unshare()"></div>
+    <!--<div class="row share-out" ng-if="isShare" id="share-out">-->
+    <!--<p>分享至</p>-->
+    <!--<table>-->
+    <!--<tr>-->
+    <!--<td>-->
+    <!--<img src="../../assets/img/icon_wx.png">-->
+    <!--<p>微信朋友</p>-->
+    <!--</td>-->
+    <!--<td>-->
+    <!--<img src="../../assets/img/icon_circle.png">-->
+    <!--<p>朋友圈</p>-->
+    <!--</td>-->
+    <!--<td>-->
+    <!--<img src="../../assets/img/icon_sina.png">-->
+    <!--<p>新浪微博</p>-->
+    <!--</td>-->
+    <!--</tr>-->
+    <!--</table>-->
+    <!--</div>-->
+    <div class="bar bar-footer">
+        <div class="button-bar">
+            <a class="button zone-bottom-button" ng-click="action.like(item)">
+                <img class="zone-comments-img" src="../../assets/img/icon_upthumb.png" class="like"
+                     ng-show="params.isLike">
+                <img class="zone-comments-img" src="../../assets/img/icon_thumb.png" class="like"
+                     ng-show="!params.isLike">
+                <span class="zone-comments-words">赞</span>
+            </a>
+            <a class="button zone-bottom-button"
+               ng-click="action.comment()">
+                <img class="zone-comments-img" src="../../assets/img/icon_comment.png">
+                <span class="zone-comments-words">评论</span>
+            </a>
+        </div>
+    </div>
+</ion-view>

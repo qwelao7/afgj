@@ -1,0 +1,60 @@
+request body = <VoiceVerify>
+                    <appId>8a48b5515388ec150153bffce1c954b9</appId>
+                    <verifyCode>2345</verifyCode>
+                    <playTimes>1</playTimes>
+                    <to>15601599269</to>
+                    <respUrl>121.40.57.187</respUrl>
+                    <displayNum></displayNum>
+                    <lang>zh</lang>
+                    <userData></userData>
+                  </VoiceVerify>
+request url = https://sandboxapp.cloopen.com:8883/2013-12-26/Accounts/8a48b5514b0b8727014b161c03bd082a/Calls/VoiceVerify?sig=34EE5C9D8F978ED02CF01EC24B0873C4
+response body = <?xml version="1.0" encoding="UTF-8" standalone="yes"?><Response><statusCode>000000</statusCode><VoiceVerify><callSid>1603291534164229000600150008465e</callSid><dateCreated>2016-03-29 15:34:16</dateCreated><orderId>CM6001520160329153416539168</orderId></VoiceVerify></Response>
+request body = <VoiceVerify>
+                    <appId>8a48b5515388ec150153bffce1c954b9</appId>
+                    <verifyCode>2345</verifyCode>
+                    <playTimes>2</playTimes>
+                    <to>15601599269</to>
+                    <respUrl>121.40.57.187</respUrl>
+                    <displayNum></displayNum>
+                    <lang>zh</lang>
+                    <userData></userData>
+                  </VoiceVerify>
+request url = https://sandboxapp.cloopen.com:8883/2013-12-26/Accounts/8a48b5514b0b8727014b161c03bd082a/Calls/VoiceVerify?sig=CC020BF363A10E6730F903C6FE97A28C
+response body = <?xml version="1.0" encoding="UTF-8" standalone="yes"?><Response><statusCode>000000</statusCode><VoiceVerify><callSid>16032916520001630006001500085585</callSid><dateCreated>2016-03-29 16:52:00</dateCreated><orderId>CM6001520160329165200545317</orderId></VoiceVerify></Response>
+request body = <VoiceVerify>
+                    <appId>8a48b5515388ec150153bffce1c954b9</appId>
+                    <verifyCode>138238</verifyCode>
+                    <playTimes>2</playTimes>
+                    <to></to>
+                    <respUrl>121.40.57.187</respUrl>
+                    <displayNum></displayNum>
+                    <lang>zh</lang>
+                    <userData></userData>
+                  </VoiceVerify>
+request url = https://sandboxapp.cloopen.com:8883/2013-12-26/Accounts/8a48b5514b0b8727014b161c03bd082a/Calls/VoiceVerify?sig=3F56C393D924CFF9F04E771DD04562F1
+response body = <?xml version="1.0" encoding="UTF-8" standalone="yes"?><Response><statusCode>111320</statusCode><statusMsg>【呼叫】语音验证码被叫电话号码为空</statusMsg></Response>
+request body = <VoiceVerify>
+                    <appId>8a48b5515388ec150153bffce1c954b9</appId>
+                    <verifyCode>528097</verifyCode>
+                    <playTimes>2</playTimes>
+                    <to></to>
+                    <respUrl>121.40.57.187</respUrl>
+                    <displayNum></displayNum>
+                    <lang>zh</lang>
+                    <userData></userData>
+                  </VoiceVerify>
+request url = https://sandboxapp.cloopen.com:8883/2013-12-26/Accounts/8a48b5514b0b8727014b161c03bd082a/Calls/VoiceVerify?sig=B58D0625FB8200DCE5A54F7411614C88
+response body = <?xml version="1.0" encoding="UTF-8" standalone="yes"?><Response><statusCode>111320</statusCode><statusMsg>【呼叫】语音验证码被叫电话号码为空</statusMsg></Response>
+request body = <VoiceVerify>
+                    <appId>8a48b5515388ec150153bffce1c954b9</appId>
+                    <verifyCode>473035</verifyCode>
+                    <playTimes>2</playTimes>
+                    <to>15601599269</to>
+                    <respUrl>121.40.57.187</respUrl>
+                    <displayNum></displayNum>
+                    <lang>zh</lang>
+                    <userData></userData>
+                  </VoiceVerify>
+request url = https://sandboxapp.cloopen.com:8883/2013-12-26/Accounts/8a48b5514b0b8727014b161c03bd082a/Calls/VoiceVerify?sig=1CF7781FB59AD96736BDA525E220B29D
+response body = <?xml version="1.0" encoding="UTF-8" standalone="yes"?><Response><statusCode>000000</statusCode><VoiceVerify><callSid>16032917330369210006001500085dd1</callSid><dateCreated>2016-03-29 17:33:03</dateCreated><orderId>CM6001520160329173303548716</orderId></VoiceVerify></Response>

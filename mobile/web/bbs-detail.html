@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>社团</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="bbs-detail">
+        <header class="bar bar-nav">
+
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+        </header>
+        <div class="bar bar-tab bar-white">
+            <div style="padding: .4rem 0;border-top: 1px solid #f6f6f9">
+                <div class="buttons-row white no-border" id="nav">
+                </div>
+            </div>
+        </div>
+        <div class="content content-no-padding" id="container">
+        </div>
+    </div>
+</div>
+<script id="title" type="text/template">
+    <h1 class="title">
+        {@if attachment_type == 1}
+        图片详情
+        {@else if attachment_type == 4}
+        投票详情
+        {@else if attachment_type == 5}
+        活动详情
+        {@else if attachment_type == 0}
+        新鲜事详情
+        {@/if}
+    </h1>
+</script>
+<script id="tab" type="text/template">
+    <div class="button no-border font-dark"
+         style="border-left: 1px solid #f6f6f9;height: 1rem;line-height: 1rem" id="comment">
+        <i class="iconfont icon-liuyan font-green" style="font-size:.8rem;padding: 0;"></i>
+        留言
+    </div>
+    {@if isPraise}
+    <div class="button no-border font-dark" style="border-left: 1px solid #f6f6f9;height: 1rem;line-height: 1rem"
+         id="praised">
+        <i class="iconfont icon-dianzanhll font-green" style="padding: 0;"></i>&nbsp;已赞
+    </div>
+    {@else}
+    <div class="button no-border font-dark" style="border-left: 1px solid #f6f6f9;height: 1rem;line-height: 1rem"
+         id="toPraise">
+        <i class="iconfont icon-zan1 font-dark" style="padding: 0;"></i>&nbsp;赞
+    </div>
+    {@/if}
+    <div class="button no-border font-dark"
+         style="border-left: 1px solid #f6f6f9;height: 1rem;line-height: 1rem" id="to_talk" data-owner="${isOwner}"
+         data-id="${msg.account_id}">
+        <i class="iconfont icon-hi font-green" style="font-size:1.2rem;padding: 0;"></i>
+        私聊
+    </div>
+</script>
+<script id="tpl" type="text/template">
+    <div class="sm-margin white" data-id="${msg.id}">
+        <div class="lg-margin-item has-border-bottom">
+            <div class="user-item decoration-item no-border lr-padding white" style="clear: both;">
+                <div class="user-item-img">
+                    <img src="${msg.accountInfo.headimgurl}" style="border-radius: 50%">
+                </div>
+                <div class="user-item-content">
+                    <h1 class="item-two-line-title">
+                        ${msg.accountInfo.nickname}
+                    </h1>
+                    {@if ((cur.user_role == 2 || cur.user_role == 1) && (cur.user_role < to_cur.user_role)) || isOwner
+                    == true}
+                    <h5 class="item-two-line-right click-more" data-cur="${cur.user_role}" data-self="${isOwner}" data-status="${msg.publisher_status}">
+                        <i class="iconfont icon-edit"></i>
+                    </h5>
+                    {@/if}
+                    <h5 class="item-two-line-detail">
+                        ${msg.publish_time | time}
+                    </h5>
+                </div>
+                <br style="clear: both">
+                <h3 style="padding-bottom: .6rem;margin-bottom: 0">
+                    ${msg.content}
+                </h3>
+            </div>
+            <div class="content-wrap">
+                <!-- 图片 -->
+                {@if msg.attachment_type == 1 && msg.attachment_content.length > 0}
+                <div class="row white lr-padding">
+                    {@each msg.attachment_content as pic, index}
+                    <a class="col col-33-img open-about pb-popup" data-index="${index}">
+                        <img src="${pic | imgPath}?imageMogr2/thumbnail/!300x300r/gravity/center/crop/200x200"
+                             class="decoration-img" style="margin:0;">
+                    </a>
+                    {@/each}
+                </div>
+                {@/if}
+                <!-- 活动 -->
+                {@if msg.attachment_type == 5 && msg.attachment_content > 0}
+                <div class="row white lr-padding to-detail" data-type="${msg.attachment_type}"
+                     data-id="${msg.attachment_content}">
+                    <img src="${msg.fujian.thumbnail | imgPath}?imageMogr2/thumbnail/!700x392r/gravity/center/crop/700x392"
+                         style="width: 100%">
+                    <div>
+                        <h2 style="margin: 0">「活动」${msg.fujian.name}</h2>
+                        <h5 class="lr-padding">
+                            截止时间：${msg.fujian.signup_end}
+                            报名人数：${msg.fujian.person_num}
+                        </h5>
+                    </div>
+                </div>
+                {@/if}
+                <!-- 投票 -->
+                {@if msg.attachment_type == 4 && msg.attachment_content > 0}
+                <div class="row white lr-padding to-detail" data-type="${msg.attachment_type}"
+                     data-id="${msg.attachment_content}">
+                    <img src="${msg.fujian.thumbnail | imgPath}?imageMogr2/thumbnail/!700x392r/gravity/center/crop/700x392"
+                         style="width: 100%">
+                    <div>
+                        <h2 style="margin: 0">「投票」${msg.fujian.title}</h2>
+                        <h5 class="lr-padding">
+                            截止时间：${msg.fujian.deadline}
+                            投票人数：${msg.voted_person_num}
+                        </h5>
+                    </div>
+                </div>
+                {@/if}
+            </div>
+        </div>
+    </div>
+</script>
+<script id="list" type="text/template">
+    <div id="ext">
+        <div class="buttons-tab lr-padding">
+            <a href="#tab2" class="tab-link active button">留言</a>
+            <a href="#tab3" class="tab-link button tab-zan" data-ispraise="${isPraise}">赞</a>
+        </div>
+        <div class="tabs">
+            <div id="tab2" class="tab active">
+                {@if comment.length > 0}
+                {@each comment as ul}
+                <div class="user-item decoration-item lr-padding white">
+                    <div class="user-item-img">
+                        <img class="head-img" src="${ul.accountInfo.headimgurl}">
+                    </div>
+                    <div class="user-item-content">
+                        <h1 class="item-two-line-title">
+                            ${ul.accountInfo.nickname}
+                        </h1>
+                        <h5 class="item-two-line-detail">
+                            ${ul.created_at | time}
+                        </h5>
+                    </div>
+                    <br style="clear: both">
+                    <h3 style="padding-bottom: .4rem;margin-top:.4rem;margin-bottom: 0;padding-left: 14%">
+                        ${ul.content}
+                    </h3>
+                </div>
+                {@/each}
+                {@else}
+                <h3 style='text-align: center;margin-top: 4rem;' id='noComment'>暂无评论!</h3>
+                {@/if}
+            </div>
+            <div id="tab3" class="tab">
+                {@if praise.length > 0}
+                {@each praise as li}
+                <div class="user-item lr-padding white to-praise" data-id="${li.id}">
+                    <div class="user-item-img">
+                        <img class="head-img" src="${li.accountInfo.headimgurl}">
+                    </div>
+                    <div class="user-item-content">
+                        <h2 class="item-two-line-title">
+                            ${li.accountInfo.nickname}
+                        </h2>
+                        <h5 class="item-two-line-detail">
+                            ${li.created_at | time}
+                        </h5>
+                    </div>
+                </div>
+                {@/each}
+                {@else}
+                <h3 style='text-align: center;margin-top: 4rem;' id='noPraise'>暂无点赞!</h3>
+                {@/if}
+            </div>
+        </div>
+    </div>
+</script>
+
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script src="//g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/bbs-detail.js"></script>
+</body>
+</html>

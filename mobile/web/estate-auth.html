@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>房产认证</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current" id="estate-auth">
+        <header class="bar bar-nav"><h1 class="title">房产认证</h1> <a
+                class="iconfont icon-left pull-left icon-white open-panel" href="javascript:history.go(-1)"></a>
+        </header>
+        <button class="bar bar-tab" id="submit" style="text-align: center;padding: .6rem;color: #fff;">
+            提交
+        </button>
+        <div class="content content-no-padding grey" id="container">
+            <div class="list-block" style="margin:0">
+                <ul>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner"
+                                 style="height:auto;min-height:2.8rem;margin:.5rem 0;overflow: visible">
+                                <div class="item-title label" style="width:50%;">上传可认证房产的图片</div>
+                                <div class="item-input">
+                                    <i class="iconfont icon-camera"
+                                       style="padding:.55rem;border:1px dotted #f6f6f9"
+                                       id="imgs"></i></div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div style="padding-left: 1rem">
+                <h3 style="color: #888">可认证房产的图片</h3>
+                <h5>1.快递单照片</h5>
+                <h5>2.物业费发票照片</h5>
+                <h5>3.水电煤账单照片</h5>
+                <h5>4.信用卡账单照片</h5>
+                <h5>5.其他能证明您为业主的照片</h5>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<script id="tpl" type="text/template">{@if url.type == 0}-->
+<!--&lt;!&ndash; 房主认证 &ndash;&gt;-->
+<!--<div>-->
+<!--<p>已认证业主</p>-->
+<!--{@each info.owners as items}-->
+<!--<div class="user-item lr-padding white">-->
+<!--<div class="user-item-img">-->
+<!--<img src="${items.desc.headimgurl}" alt="">-->
+<!--</div>-->
+<!--<div class="user-item-content">-->
+<!--<h2>-->
+<!--${items.desc.nickname}-->
+<!--{@if items.desc.mobile_phone}-->
+<!--（<span style="color: #888">${items.desc.mobile_phone}</span>）-->
+<!--{@/if}-->
+<!--</h2>-->
+<!--</div>-->
+<!--</div>-->
+<!--{@/each}-->
+<!--<p>请已认证业主帮我认证</p>-->
+<!--<textarea name="" id="desc" rows="10" style="width: 100%;padding:0 15px" placeholder="请输入..."></textarea>-->
+<!--<button class="button btn-lg btn-confirm estate-btn" id="subOwner">提交</button>-->
+<!--</div>-->
+<!--{@else if url.type == 1}-->
+<!--&lt;!&ndash; 管理员认证 &ndash;&gt;-->
+<!--<div>-->
+<!--&lt;!&ndash; 房产 &ndash;&gt;-->
+<!--<p>房产证认证</p>-->
+<!--<div>-->
+<!--<h3>示例</h3>-->
+<!--<img src="/img/estate_pic.png" class="estate-center">-->
+<!--</div>-->
+<!--<div class="wrap">-->
+<!--<div class="upload-icon-container imgs" data-msg="fang">-->
+<!--<i class="iconfont icon-camera"></i>-->
+<!--</div>-->
+<!--</div>-->
+<!--&lt;!&ndash; 示例 &ndash;&gt;-->
+<!--<p>身份证认证</p>-->
+<!--<div>-->
+<!--<h3>示例</h3>-->
+<!--<img src="/img/id_pic.png" class="estate-center">-->
+<!--</div>-->
+<!--<div class="wrap">-->
+<!--<div class="upload-icon-container imgs" data-msg="back">-->
+<!--<i class="iconfont icon-camera"></i>-->
+<!--</div>-->
+<!--</div>-->
+<!--<button class="button btn-lg btn-confirm estate-btn" id="subBack">提交</button>-->
+<!--</div>-->
+<!--{@/if}</script>-->
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/estate-auth.js"></script>
+
+</body>
+</html>

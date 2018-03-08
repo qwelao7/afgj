@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>来信</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function () {
+            return false;
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current" id="incoming-letter">
+        <header class="bar bar-nav">
+            <h1 class="title">来信</h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+        </header>
+        <div class="content content-no-padding white" id="container">
+        </div>
+    </div>
+</div>
+<script id="tpl" type="text/template">
+    <div class="user-item lr-padding white" id="news">
+        <div class="user-item-img">
+            <i class="icon iconfont icon-news" style="font-size: 1.6rem;padding: .5rem 1.8rem 1.6rem .2rem"></i>
+        </div>
+        <div class="user-item-content">
+            <h2 class="item-two-line-title">
+                资讯号
+            </h2>
+            <h5 class="item-two-line-right">
+                ${news.publish_time}
+            </h5>
+            <h5 class="item-two-line-detail ellipsis-full">
+                ${news.loupan_desc.name}：${news.title}
+            </h5>
+        </div>
+    </div>
+    <!-- 社团 -->
+    {@each bbs as item}
+    <div class="user-item lr-padding white" id="msg" data-id="${item.bbs_id}">
+        <div class="user-item-img">
+            <img src="${item.thumbnail | bbsImg}" alt="">
+        </div>
+        <div class="user-item-content">
+            <h2 class="item-two-line-title">
+                ${item.bbs_name}
+            </h2>
+            {@if item.msg}
+            <h5 class="item-two-line-right">
+                ${item.msg.publish_time}
+            </h5>
+            <h5 class="item-two-line-detail ellipsis-full">
+                ${item.msg.title}
+            </h5>
+            {@/if}
+        </div>
+    </div>
+    {@/each}</script>
+<script id="chat" type="text/template">{@each cnts as item}
+<div class="user-item lr-padding white chat" data-id="${item.uid}" data-nick="${item.nickname}">
+    <div class="user-item-img">
+        <img src="${item.avator | img}">
+    </div>
+    <div class="user-item-content">
+        <h2 class="item-two-line-title">
+            ${item.nickname}
+        </h2>
+        <h5 class="item-two-line-right">
+            ${item.time | format}
+        </h5>
+        <h5 class="item-two-line-detail">
+            ${item.msg[0][1] | trans}
+        </h5>
+    </div>
+</div>
+{@/each}</script>
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script src="https://g.alicdn.com/aliww/h5.imsdk/4.0.1/scripts/yw/wsdk.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/home.js"></script>
+</body>
+</html>

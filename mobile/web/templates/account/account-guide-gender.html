@@ -1,0 +1,17 @@
+<ion-view view-title="编辑性别">
+    <ion-nav-buttons side="right">
+        <button class="button icon button-clear button-positive" ng-click="goto('{{nextPage}}',{{nextPageParams}})">跳过</button>
+    </ion-nav-buttons>
+    <ion-content style="padding-top: 2px">
+		<label class="item item-input item-select">
+			<span class="input-label">性别</span>
+			<select ng-model="user.sex">
+				<option value="男">男</option>
+				<option value="女">女</option>
+			</select>
+		</label>
+    </ion-content>
+    <div class="tabs button-bar bar-balanced">
+        <a class="button" ng-click="nextStep()">下一步(2/3)</a>
+    </div>
+</ion-view>

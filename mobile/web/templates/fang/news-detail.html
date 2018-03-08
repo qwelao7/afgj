@@ -1,0 +1,91 @@
+<ion-view view-title="消息详情" hide-nav-bar="true">
+    <ion-header class="reset-header">
+        <div class="bar bar-header">
+            <div class="dropdown">
+                <button id="dropdown" data-id="0" class="button">{{title}}</button>
+            </div>
+        </div>
+        <button class="button icon ion-ios-arrow-left button-clear button-light button-back" ng-click="action.tiaozhuan()"></button>
+    </ion-header>
+
+    <ion-content style="padding-top: 2px;margin-top: 47px;margin-bottom: 50px;">
+        <div class="news-list">
+            <div class="news-info">
+                <a class="item item-avatar" ng-if="items.admin_info.avatar">
+                    <img ng-src="{{qiniuDomain + items.admin_info.avatar}}">
+                    <h2>{{items.title}}</h2>
+                    <p class="text">{{items.admin_info.nickname}}</p>
+                    <p class="date">{{items.publish_time}}</p>
+                </a>
+            </div>
+            <p class="news-article">
+                {{items.content}}
+            </p>
+            <!-- PUTONG -->
+            <div class="news-images row row-wrap" ng-if="items.attachment_type == 1" ng-show="items.attachment_content.length==3||items.attachment_content.length>4">
+                <div class="col-33" ng-repeat="keys in items.attachment_content track by $index" ng-if="keys.length > 0">
+                    <img style="width:98%;" ng-src="{{qiniuDomain + keys}}?imageView2/1/w/200/h/200"
+                         ng-click="goto('news-picture', {id:items.id})">
+                </div>
+            </div>
+            <div class="news-images row row-wrap" ng-if="items.attachment_type == 1" ng-show="items.attachment_content.length==2||items.attachment_content.length==4">
+                <div class="col-50" ng-repeat="keys in items.attachment_content track by $index" ng-if="keys.length > 0">
+                    <img style="width:98%;" ng-src="{{qiniuDomain + keys}}?imageView2/1/w/200/h/200"
+                         ng-click="goto('news-picture', {id:items.id})">
+                </div>
+            </div>
+            <div class="news-images row row-wrap" ng-if="items.attachment_type == 1" ng-show="items.attachment_content.length==1">
+                <div class="col" ng-repeat="keys in items.attachment_content track by $index" ng-if="keys.length > 0">
+                    <img style="max-width: 98%" ng-src="{{qiniuDomain + keys}}?imageView2/0/w/375"
+                         ng-click="goto('news-picture', {id:items.id})">
+                </div>
+            </div>
+            <!-- ARTICLE -->
+            <div class="news-images" ng-if="items.attachment_type == 3">
+                <img style="width: 98%;height:150px;margin-right: -5px" ng-src="{{qiniuDomain + items.fujian.thumbnail}}?imageView2/1/w/690/h/300"
+                     ng-click="goto('news-article', {id:items.attachment_content})">
+                <div class="news-images-banner">&nbsp;&nbsp;{{items.fujian.title}}</div>
+            </div>
+
+            <div class="news-comments">
+                <div class="comment-numbers">
+                    <span>评论 {{commentList.length}}</span>
+                    <span>赞 {{praiseNum}}</span>
+                </div>
+                <div class="comment-note" ng-repeat="comment in commentList">
+                    <div class="comment-icon">
+                        <img ng-src="{{comment.user.headimgurl}}">
+                    </div>
+                    <div class="comment-detail">
+                        <p>
+                            <span>{{comment.user.nickname}}</span>
+                            <span>{{comment.created_at}}</span>
+                        </p>
+                        <p>
+                            {{comment.content}}
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </ion-content>
+    <div id="mask" class="mask" ng-click="action.unshare()"></div>
+    <div class="bar bar-footer">
+        <div class="button-bar">
+            <a class="button" style="line-height:16px" ng-click="action.like()">
+                <img class="zone-comments-img"
+                     src="../../assets/img/icon_upthumb.png" class="like" ng-show="params.isLike">
+                <img class="zone-comments-img"
+                     src="../../assets/img/icon_thumb.png" class="like" ng-show="!params.isLike">
+                <span class="zone-comments-words">赞</span>
+            </a>
+            <a class="button" style="line-height:16px" ng-click="editShow({showComment:1,key: 'comment',title: '评论', name:comment.content})">
+                <img class="zone-comments-img"
+                     src="../../assets/img/icon_comment.png">
+                <span class="zone-comments-words">评论</span>
+            </a>
+        </div>
+    </div>
+</ion-view>

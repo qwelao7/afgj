@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>服务反馈</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta http-equiv="Expires" CONTENT="0">
+    <meta http-equiv="Cache-Control" CONTENT="no-cache">
+    <meta http-equiv="Pragma" CONTENT="no-cache">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="fault-feedback">
+        <header class="bar bar-nav">
+            <h1 class="title">
+                服务反馈
+            </h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+            <a class="iconfont icon-sz-hll pull-right icon-white open-panel" style="font-size: 1.2rem;" id="mine"></a>
+        </header>
+        <!-- 内容 -->
+        <div class="content content-no-padding" id="content">
+
+        </div>
+        <!-- 提交 -->
+        <nav class="bar bar-tab" id="submit">
+            <a class="tab-item external">
+                <span class="font-white">确定</span>
+            </a>
+        </nav>
+    </div>
+</div>
+
+<script id="tpl" type="text/template">
+    <form class="list-block media-list lg-margin" style="margin: 0 0 .6rem;">
+        <ul>
+            {@each info as item, index}
+            {@if item.type == 'string'}
+            <li class="">
+                <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                    <div class="col-33 h3" style="color: #888;margin-left: 0">${item.label}</div>
+                    <div class="col-66" style="margin-left: 4%;position: relative">
+                        <input type="text" name="${index}" placeholder="请输入${item.label}..."
+                               style="font-size:.7rem;width: 96%;display: inline-block">
+                    </div>
+                </div>
+            </li>
+            {@else if item.type == 'content'}
+            <li>
+                <div id="container" style="padding-bottom: 1rem;">
+                    <a style="font-size: .6rem;color:#3d4145;margin-left: 5%;display: inline-block;
+                            padding: .25rem .25rem;width: 2.5rem;height: 2.5rem;position: relative;" class="create-icon"
+                       id="pickfiles">
+                        <i class="iconfont icon-camera open-panel"
+                           style="font-size:1.4rem;position: absolute;top: .1rem;left: .4rem;z-index: 1;"></i>
+                    </a>
+                    <div class="row" id="rows" style="margin-top: .5rem;"></div>
+                </div>
+
+                <input type="hidden" name="${index}">
+            </li>
+            {@else if item.type == 'text'}
+            <li>
+                 <textarea style="width: 100%;border: none;text-indent: .2rem;font-size: .7rem;" rows="5"
+                           placeholder="请输入${item.label}..." name="${index}"></textarea>
+            </li>
+            {@else if item.type == 'time'}
+            <li class="">
+                <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                    <div class="col-33 h3" style="color: #888;margin-left: 0">${item.label}</div>
+                    <div class="col-66" style="margin-left: 8%;position: relative">
+                        <input type="text"
+                               style="font-size:.7rem;width: 88%;display: inline-block"
+                               placeholder="请选择${item.label}.."
+                               id="picker_${index}"
+                               name="${index}">
+                        <i class="iconfont icon-right pull-right"
+                           style="position: absolute;right: .2rem;top: .1rem;"></i>
+                    </div>
+                </div>
+            </li>
+            {@/if}
+            {@/each}
+        </ul>
+    </form>
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="http://cdn.staticfile.org/plupload/2.1.9/plupload.full.min.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script type="text/javascript" src="/js/fault-feedback.js"></script>
+</body>
+</html>

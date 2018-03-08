@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>客户信息</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="data-client-tag-search">
+        <!-- 头部 -->
+        <header class="bar bar-nav">
+            <div class="title title-search">
+                <input class="title-search-input wd100" type="text" name="search" id="search"
+                       placeholder="请输入要搜索标签名">
+            </div>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+            <a class="pull-right font-white" style="line-height: 2.2rem;font-size: .75rem" id="to-search">搜索</a>
+        </header>
+        <!--右上角菜单弹出层-->
+        <div class="title-search-popup white" id="popup" style="display: none">
+        </div>
+        <!--遮罩层-->
+        <div class="modal-overlay" id="modal"></div>
+        <!-- 内容 -->
+        <div class="content content-no-padding" id="content">
+
+
+        </div>
+    </div>
+</div>
+
+<!-- 图书类别 -->
+<script id="tpl" type="text/template">
+    {@each list as item}
+    <div class="account-item lr-padding white last-noborder tag" data-tagid="${item.id}" data-parentid="${item.parent_id}">
+        <div class="user-item-content" style="width: 100%">
+            <h2 class="ellipsis" style="line-height:2.2rem;margin:0;width: 93%">
+                ${item.tgname}
+                {@if item.tag_value!=='null'&&item.tag_value}
+                <span class="pull-right ellipsis tag-value" style="width: 30%;text-align: right">${item.tag_value}</span>
+                {@/if}
+            </h2>
+            <a class="iconfont icon-right open-panel icon-grey pull-right"></a>
+        </div>
+    </div>
+    {@/each}
+</script>
+
+
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/data-client-tag-search.js"></script>
+</body>
+</html>

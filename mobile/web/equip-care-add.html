@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>设施管理</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>
+        $.config = {
+            routerFilter: function (i) {
+                return !!i.is("index.html")
+            }
+        }
+    </script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current" id="equip-care-add">
+        <header class="bar bar-nav" id="header">
+            <h1 class="title">设施养护</h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+        </header>
+        <nav class="bar bar-tab" id="add">
+            <a class="tab-item external">
+                <span class="font-white">添加养护信息</span>
+            </a>
+        </nav>
+        <div class="content content-no-padding" id="container">
+        </div>
+    </div>
+</div>
+
+
+<script id="tpl" type="text/template">
+    <form action="">
+        <div class="sm-margin white" style="height: auto;">
+            <div class="list-title lr-padding has-border-bottom">
+                <h3>
+                    <svg class="icon" aria-hidden="true" style="width: 1rem;height: 1rem">
+                        <use xlink:href="#icon-Maintain2-hll"></use>
+                    </svg>
+                    养护内容
+                </h3>
+            </div>
+            {@if list && list.length > 0}
+            {@each list as item}
+            <div class="normal-list lr-padding has-border-bottom" style="margin-bottom: 0">
+                <label class="label-checkbox item-content">
+                    <input type="checkbox" name="extra_content" value="${item}">
+                    <div class="item-media">
+                        <i class="icon icon-form-checkbox"></i>
+                        <span style="margin-left: .2rem">${item}</span>
+                    </div>
+                </label>
+            </div>
+            {@/each}
+            {@/if}
+            <input type="hidden" name="content">
+            <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                <div class="col-33 h3" style="color: #888;margin-left: 0;width: 33%">${(list && list.length > 0) ? '其他' : '养护内容'}</div>
+                <div class="col-60" style="margin-left: 8%;position: relative">
+                    <input type="text"
+                           placeholder="请输入..."
+                           style="border: none;width: 100%;" name="custom_content">
+                </div>
+            </div>
+
+            <input type="hidden" name="content_name">
+        </div>
+        <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+            <div class="col-33 h3" style="color: #888;margin-left: 0;width: 33%">养护商家</div>
+            <div class="col-60" style="margin-left: 8%;position: relative">
+                <input type="text"
+                       placeholder="请输入..."
+                       style="border: none;width: 100%;" name="shop">
+            </div>
+        </div>
+        <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+            <div class="col-33 h3" style="color: #888;margin-left: 0;width: 33%">养护费用(元)</div>
+            <div class="col-60" style="margin-left: 8%;position: relative">
+                <input type="number"
+                       placeholder="请输入..."
+                       style="border: none;width: 100%;" name="fee">
+            </div>
+        </div>
+        <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+            <div class="col-33 h3" style="color: #888;margin-left: 0;width: 33%">养护日期</div>
+            <div class="col-60" style="margin-left: 8%;position: relative;width: 56%">
+                <i class="iconfont icon-right pull-right"
+                   style="position: absolute;right: .2rem;top: .1rem;"></i>
+                <input type="text"
+                       placeholder="请选择..."
+                       style="border: none;width: 100%;"
+                       data-toggle='date' name="last_date" readonly>
+            </div>
+        </div>
+        <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+            <div class="col-33 h3" style="color: #888;margin-left: 0;width: 33%">下次养护间隔月份</div>
+            <div class="col-60" style="margin-left: 8%;position: relative">
+                <input type="number"
+                       placeholder="请输入..."
+                       style="border: none;width: 100%;" name="next_month">
+            </div>
+        </div>
+    </form>
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/equip-care-add.js"></script>
+<script src="weixin/src/css/fonts/iconfont.js"></script>
+
+</body>
+</html>

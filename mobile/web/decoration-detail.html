@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>装修详情</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current" id="decoration-detail">
+        <header class="bar bar-nav" id="header">
+            <!-- header -->
+        </header>
+        <div class="content content-no-padding infinite-scroll" data-distance="1%">
+            <div class="buttons-tab fixed-tab" data-offset="44">
+                <a class="tab-link button">装修日志</a>
+                <a class="tab-link button">装修档案</a>
+                <a class="tab-link button">装修材料</a>
+            </div>
+            <div>
+                <div class="tabs">
+                    <div class="tab active">
+                        <div class="content-block infinite-scroll" style="margin-top: 0">
+                            <!-- 内容 -->
+                            <div id="container">
+
+                            </div>
+                            <!-- 无限加载 -->
+                            <div class="infinite-scroll-preloader" style="text-align:center;margin-bottom:-20px">
+                                <div class="preloader"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--popup-->
+    <div class="popup popup-about">
+        <div class="content-block" style="height: 100%;width: 100%;margin: 0">
+            <header class="bar bar-nav">
+                <a class="iconfont icon-left pull-left icon-white open-panel close-popup"></a>
+                <h1 class="title">图片浏览</h1>
+            </header>
+            <div id="pop1" style="height: 100%;background-color: #191f28"></div>
+        </div>
+    </div>
+    <div class="popup popup-about2">
+        <div class="content-block" style="height: 100%;width: 100%;margin: 0">
+            <header class="bar bar-nav">
+                <a class="iconfont icon-left pull-left icon-white open-panel close-popup"></a>
+                <h1 class="title">图片浏览</h1>
+            </header>
+            <div id="pop2" style="height: 100%;background-color: #191f28"></div>
+        </div>
+    </div>
+</div>
+
+<!--popup-->
+<script id="pop1Tpl" type="text/template">
+    <div class="swiper-container" data-space-between='10' style="height: 100%;">
+        <div class="swiper-wrapper" style="height: 100%;">
+            {@each pics as pic}
+            <div class="swiper-slide" style="height: 100%;display: table;">
+                <div style="display: table-cell;vertical-align: middle">
+                    <img src="${pic | imgPath}" alt="" style="width: 100%;">
+                </div>
+            </div>
+            {@/each}
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+</script>
+
+<!-- 装修日志列表 -->
+<script id="listTpl" type="text/template">
+    {@each list as item}
+    <div class="user-item decoration-item lr-padding lg-margin white">
+        <div class="user-item-img">
+            <img src="${item.account.headimgurl}" class="head-img">
+        </div>
+        <div class="user-item-content">
+            {@if item.account.nickname != ''}
+            <h1 class="item-two-line-title">
+                ${item.account.nickname}
+            </h1>
+            {@else}
+            <h1 class="item-two-line-title">
+                ${item.account.user_name}
+            </h1>
+            {@/if}
+            <h5 class="item-two-line-detail">
+                ${item.publish_time}
+            </h5>
+        </div>
+        <br style="clear: both">
+        {@if item.content != '' && item.content != null}
+        <h3>${item.content}</h3>
+        {@/if}
+        {@if item.attachment_content.length > 0}
+        {@each item.attachment_content as part}
+        <img src="${part | imgPath}" style="width: 100%;overflow: hidden;background: #ccc;height: auto;min-height: 5rem;">
+        {@/each}
+        {@/if}
+    </div>
+    {@/each}</script>
+
+<!-- 顶部标题 -->
+<script id="title" type="text/template">
+    <h1 class="title">${title}</h1>
+</script>
+
+<!-- 装修档案 -->
+<script id="docTpl" type="text/template">
+    {@if contact.length > 0}
+    <div class="lg-margin white">
+        <div class="list-title lr-padding  has-border-bottom">
+            <h3>项目联系人</h3>
+        </div>
+        {@each contact as user}
+        <div class="user-item lr-padding white">
+            <div class="user-item-img">
+                <img src="${user.headimgurl}" class="head-img">
+            </div>
+            <div class="user-item-content">
+                <h2>
+                    ${user.nickname}&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #888">(${user.user_role | trans})</span>
+                </h2>
+                {@if user.mobile_phone != 0}
+                <a class="iconfont icon-iphone icon-green open-panel decoration-icon-phone"
+                   href="tel:${user.mobile_phone}"></a>
+                {@else}
+                <a class="iconfont icon-iphone icon-grey open-panel decoration-icon-phone"
+                   href="javascript:void(0);"></a>
+                {@/if}
+            </div>
+        </div>
+        {@/each}
+    </div>
+    {@/if}
+    {@if pics}
+    {@each pics as pic, index}
+    <div class="lg-margin white">
+        <div class="list-title lr-padding has-border-bottom">
+            <h3>${index}</h3>
+        </div>
+        <div class="row lr-padding white">
+            {@if pic.length ==1}
+            {@each pic as graphic }
+            <a class="col col open-about" data-index="${index}">
+                <img src="${graphic | imgPath}" class="decoration-img">
+            </a>
+            {@/each}
+            {@/if}
+            {@if pic.length >1}
+            {@each pic as graphic }
+            <a class="col col-33-img open-about" data-index="${index}">
+                <img src="${graphic | imgPath}?imageMogr2/thumbnail/!300x300r/gravity/center/crop/200x200"
+                     class="decoration-img">
+            </a>
+            {@/each}
+            {@/if}
+        </div>
+    </div>
+    {@/each}
+    {@/if}
+</script>
+
+<!-- 装修材料列表 -->
+<script id="matTpl" type="text/template">
+    {@each info as list, index}
+    <div class="lg-margin white"
+         style="height: auto;min-height: 90px;">
+        <div class="list-title lr-padding has-border-bottom">
+            <h3 class="icon-green">
+                <i class="iconfont icon-laixin1 icon-green"
+                   style="font-size: 1.2rem;padding:.25rem.1rem;"></i>
+                ${index}
+            </h3>
+        </div>
+        {@each list as mat}
+        <div class="user-item-whole decoration-padding white has-border-bottom" style="position: relative"
+             data-name="${mat.brand_name}${mat.model_name}${mat.name}"
+             data-id="${mat.id}"
+             data-cat_id="${mat.cat_id}">
+            <h2>
+                ${mat.brand_name}${mat.model_name}${mat.name}
+            </h2>
+            <h5 style="width: 90%;">
+                区域:<span style="color:#595757;margin-right: .3rem">${mat.area}</span>
+                质保:
+                <span style="color:#595757;"> ${mat.quality_guarantee_end_date | split}</span>
+                {@if mat.state == 0}
+                <span class="icon-green">(在保)</span>
+                {@else}
+                <span class="icon-red">(过保)</span>
+                {@/if}
+            </h5>
+            <h3 style="margin:0;line-height:2.8rem;position: absolute;right: .6rem;top: 0;" class="complain-route">
+                <i class="iconfont icon-Repair-hll font-green open-panel" style="font-size: 1.2rem"></i>
+            </h3>
+        </div>
+        <div style="clear: both"></div>
+        {@/each}
+    </div>
+    {@/each}
+</script>
+
+<!-- 头部 -->
+<script id="nav" type="text/template">
+    <a class="iconfont icon-left pull-left icon-white open-panel" href="decoration-manage.html"></a>
+    {@if is_prototyperoom == 0}
+    <a class="iconfont icon-sz-hll pull-right icon-white open-panel" style="font-size: 1.2rem;"
+       id="to-edit"></a>
+    {@/if}
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script src="//g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/decoration-detail.js"></script>
+
+</body>
+</html>

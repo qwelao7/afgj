@@ -1,0 +1,53 @@
+<ion-view view-title="{{detail.title}}服务预约">
+    <ion-nav-buttons side="right">
+        <button class="button button-clear" ng-click="showService()">服务介绍</button>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="left">
+        <button class="button icon ion-ios-arrow-left button-clear button-positive" ng-click="goBack()"></button>
+    </ion-nav-buttons>
+    <ion-content class="page-service-detail">
+        <ion-list class="server-list">
+          <ion-item ng-repeat="item in detail.quote">
+              <div class="row server-item">
+                  <div class="col col-67">
+                      <div>{{item.title}}</div>
+                      <div class="price">{{item.price | number : 2}} 元/{{item.unit}}</div>
+                  </div>
+                  <div class="col col-33 col-right">
+                    <div class="number">
+                        <div class="number-btn" ng-click="reduce(item)"><span class="ui-icon icon-minus"></span></div>
+                        <div class="num">{{item.num?item.num:0}}</div>
+                        <div class="number-btn" ng-click="add(item)"><span class="ui-icon icon-plus"></span></div>
+                    </div>
+                  </div>
+              </div>
+          </ion-item>
+          <div class="row">
+              <div class="col col-33">
+              </div>
+              <div class="col col-33 col-right">
+                  <div>总计：</div>
+              </div>
+              <div class="col col-33 col-right">
+                  ¥ {{detail.total | number : 2}}元
+              </div>
+          </div>
+        </ion-list>
+        <ion-list>
+          <ion-item class="item item-icon-right item-icon-prefix" ng-click="addressListShow()">
+              <i class="icon ion-ios-location icon-accessory icon-prefix"></i>
+              <div class="text-green">{{addressListEidtInfo.mansion?addressListEidtInfo.mansion:'请设置服务地址'}}</div>
+              <h4 class="text-black">{{addressListEidtInfo.contact_to}} {{addressListEidtInfo.mobile}}</h4>
+              <i class="icon ion-chevron-right icon-accessory"></i>
+          </ion-item>
+          <ion-item class="item item-icon-right item-icon-prefix" ng-click="datetimeSelectShow()">
+              <i class="icon ion-clock icon-accessory icon-prefix"></i>
+              <div class="text-green">{{datetimeSelectInfo.date}}{{datetimeSelectInfo.time}}</div>
+              <i class="icon ion-chevron-right icon-accessory"></i>
+          </ion-item>
+        </ion-list>
+    </ion-content>
+    <div class="bar bar-footer bar-balanced">
+        <div class="title" ng-click="submit()">提交</div>
+    </div>
+</ion-view>

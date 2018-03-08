@@ -1,0 +1,36 @@
+<ion-view view-title="首页" hide-nav-bar="true">
+    <ion-content class="page-home grey" scroll="false">
+        <div class="carousel-container">
+            <!--<ion-slide-box class="carousel-slide-box" show-pager="false" auto-play="true" slide-interval="4000"-->
+                           <!--delegate-handle="slideimgs" does-continue="true"-->
+                           <!--on-slide-changed="action.activeSlideIndex(index)">-->
+                <!--<ion-slide class="carousel-slide" ng-repeat="img in params.imgs">-->
+                    <!--<img class="carousel-img" ng-src="{{qiniuDomain + img['img']}}">-->
+                <!--</ion-slide>-->
+            <!--</ion-slide-box>-->
+            <!--<div class="carousel-logo">-->
+                <!--<img ng-src="{{qiniuDomain + key.logo}}" ng-repeat="key in params.keys" ng-click="go('key.url')"-->
+                     <!--ng-show="params.key == key.word">-->
+            <!--</div>-->
+            <!--<div style="width: 100%;text-align: center">-->
+                <!--<img style="width:38%;margin-top: 5%" src="../../assets/css/images/home_logo.png">-->
+            <!--</div>-->
+
+            <div class="row home-button-group">
+                <div class="col-25" ng-click="goto('house-list')">
+                    <img class="home-button" src="../../assets/css/images/004_button1.png">
+                </div>
+                <div class="col-25" ng-click="goto('base.community')">
+                    <img class="home-button" src="../../assets/css/images/004_button2.png">
+                </div>
+                <div class="col-25" ng-click="goto('decoration-list', {id:2})">
+                    <img class="home-button" src="../../assets/css/images/004_button3.png">
+                </div>
+                <div class="col-25" ng-click="goto('base.service')">
+                    <img class="home-button" src="../../assets/css/images/004_button4.png">
+                </div>
+            </div>
+        </div>
+
+    </ion-content>
+</ion-view>

@@ -1,0 +1,99 @@
+<ion-view view-title="装修服务">
+    <ion-nav-buttons side="left">
+        <button class="button icon ion-ios-arrow-left button-clear button-positive" ng-click="goBack()"></button>
+    </ion-nav-buttons>
+    <ion-content class="grey decoration-service">
+        <div class="ds-section">
+            <img style="width: 100%" src="../../assets/css/images/decoration_banner.png">
+            <div class="tabs-icon-top">
+                <a class="tab-item" ng-click="goto('decoration-set')">
+                    <img class="icon" src="../../assets/css/images/icon_set.png"/>
+                    套餐
+                </a>
+                <a class="tab-item" ng-click="goto('journal-list')">
+                    <img class="icon" src="../../assets/css/images/icon_diary.png"/>
+                    日志
+                </a>
+                <!--<a class="tab-item" href="#">-->
+                    <!--<img class="icon" src="../../assets/css/images/icon_seller.png"/>-->
+                    <!--商家-->
+                <!--</a>-->
+            </div>
+        </div>
+        <div class="ds-section">
+            <div class="ds-sec-title">
+                <span>
+                    推荐套餐 | PACKAGE
+                </span>
+                <span ng-click="goto('decoration-set')">
+                    全部套餐&nbsp;
+                    <i class="icon ion-ios-arrow-right"></i>
+                </span>
+            </div>
+            <div class="ds-sec-content" ng-repeat="decorate in decoration" ng-click="goto('decoration-set-detail', {id: decorate.id})">
+                <img style="width: 100%" ng-src="{{qiniuDomain + decorate.thumbnail}}">
+                <div class="ds-content-text">
+                    <span>
+                        【{{decorate.type}}】{{decorate.house_type_name}}户型{{decorate.title}}
+                    </span>
+                    <span>
+                        {{decorate.price}}万 / {{decorate.name}} / {{decorate.area}}m² / {{decorate.room_num}}居
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="ds-section">
+            <div class="ds-sec-title">
+                <span>
+                    精选日志 | JOURNAL
+                </span>
+                <span ng-click="goto('journal-list')">
+                    全部日志&nbsp;
+                    <i class="icon ion-ios-arrow-right"></i>
+                </span>
+            </div>
+            <div class="ds-sec-content" ng-repeat="list in journal" ng-click="goto('journal-detail', {'id':list.address_id})">
+                <img style="width: 100%" ng-src="{{qiniuDomain + list.coverpic}}">
+                <div class="ds-content-text">
+                    <span>
+                        {{list.title}}
+                    </span>
+                    <span>
+                        {{list.budget}}万&nbsp;/&nbsp;{{list.loupan.name}}&nbsp;/&nbsp;{{list.area|number:0}}m²&nbsp;/&nbsp;{{list.room}}
+                    </span>
+                </div>
+            </div>
+        </div>
+        <!--<div class="ds-section">-->
+            <!--<div class="ds-sec-title">-->
+                <!--<span>-->
+                    <!--推荐商家 | BUSINESS-->
+                <!--</span>-->
+                <!--<span>-->
+                    <!--全部商家&nbsp;-->
+                    <!--<i class="icon ion-ios-arrow-right"></i>-->
+                <!--</span>-->
+            <!--</div>-->
+            <!--<div class="list">-->
+                <!--<a class="item item-thumbnail-left" href="#">-->
+                    <!--<img src="../../assets/css/images/icon_09.png">-->
+                    <!--<h2>绿城厚木</h2>-->
+                    <!--<p>-->
+                        <!--<span>套餐数：10</span>-->
+                        <!--<span style="margin-left: 20px">预约：100</span>-->
+                    <!--</p>-->
+                <!--</a>-->
+                <!--<a class="item item-thumbnail-left" href="#">-->
+                    <!--<img src="../../assets/css/images/icon_09.png">-->
+                    <!--<h2>绿城厚木</h2>-->
+                    <!--<p>-->
+                        <!--<span>套餐数：10</span>-->
+                        <!--<span style="margin-left: 20px">预约：100</span>-->
+                    <!--</p>-->
+                <!--</a>-->
+            <!--</div>-->
+        <!--</div>-->
+
+    </ion-content>
+
+</ion-view>

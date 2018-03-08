@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>设施管理</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>
+        $.config = {
+            routerFilter: function (i) {
+                return !!i.is("index.html")
+            }
+        }
+    </script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current" id="equip-list">
+        <header class="bar bar-nav" id="header">
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+            <a class="iconfont icon-add pull-right icon-white open-panel" id="create"></a>
+        </header>
+        <div class="content content-no-padding" id="container">
+        </div>
+    </div>
+</div>
+
+<!--列表-->
+<script id="tpl" type="text/template">
+    {@if unfinish == true}
+    <div class="list-title white sm-margin lr-padding" id="unfinish">
+        <h3>
+            <i class="iconfont icon-shalou icon-green" style="padding: 0"></i>
+            <span class="font-green">待完善信息</span>
+            <span style="float: right;color: #888">
+                ${num}
+                <i class="iconfont icon-right" style="padding: 0"></i>
+            </span>
+        </h3>
+    </div>
+    {@/if}
+
+    <div class="sm-margin white" style="height: auto;min-height: 90px;">
+        {@each list as items, index}
+        <div>
+            <div class="list-title lr-padding has-border-bottom">
+                <h3 class="icon-green">
+                    <i class="iconfont icon-laixin1 icon-green"
+                       style="font-size: 1.2rem;padding:.25rem.1rem;"></i>
+                    ${index}
+                </h3>
+            </div>
+            {@each items as item}
+            <div class="user-item-whole white has-border-bottom" style="padding-left: 1.2rem;position: relative">
+                <div class="item_left left equip-detail" data-id="${item.id}" style="width: 80%;">
+                    <h2 class="ellipsis-full wd100" style="margin: .3rem 0 0 0;">
+                        ${item.name}&nbsp;${item.model}
+                    </h2>
+                    <h5 class="ellipsis-full wd100">
+                        商家:
+                        <span style="color: #333338;margin-right: .3rem">${item.shop}</span>
+                        质保:
+                        <span style="color:#333338">${item.guarantee_time}</span>
+                        {@if !item.out_date}
+                        <span class="icon-green">(在保)</span>
+                        {@else}
+                        <span class="icon-red">(过保)</span>
+                        {@/if}
+                    </h5>
+                </div>
+
+                <div class="inline_b equip-notice" data-id="${item.id}" data-len="${item.equipment_info.id}">
+                    {@if !item.equipment_info.id}
+                    <div class="equip-label-safe" style="">
+                        <span class="h5 equip-label-none" style="color: #a0a0a0;">无养护计划</span>
+                    </div>
+                    {@else if item.equipment_info.alert_status == 0}
+                    <div class="equip-label-safe" style="">
+                        <span class="h5" style="color: #a0a0a0;">下次养护余${item.equipment_info.left_date}天</span>
+                    </div>
+                    {@else if item.equipment_info.alert_status == 1}
+                    <div class="equip-label-alert">
+                        <span class="h5" style="color: #fff">需要养护</span>
+                    </div>
+                    {@/if}
+                </div>
+            </div>
+            {@/each}
+            <div style="clear: both"></div>
+        </div>
+        {@/each}
+    </div>
+
+</script>
+
+<!--标题-->
+<script id="title" type="text/template">
+    <h1 class="title">
+        {@if length > 1 }
+        <input type="text" id="picker" style="background-color: #009042;border: none;text-align: center;width:80%;"
+               value="${name}" readonly>
+        {@else}
+        ${name}
+        {@/if}
+    </h1>
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/equip-list.js"></script>
+
+</body>
+</html>

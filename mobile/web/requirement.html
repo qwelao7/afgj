@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>首页</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function () {
+            return false;
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current" id="requirement" style="position: relative;">
+        <div class="content content-no-padding white" id="container" style="background-image: url('weixin/src/css/img/houmu_bg.JPG');background-size: cover;
+    background-position: center center;height: 100%;position: fixed;top: 0;left: 0;width: 100%;">
+            <div style="display: block;position: fixed;top: 2rem;left: 0;z-index: 10;width: 100%">
+                <div style="margin: 0 1rem">
+                    <div style="border-top: 2px solid #82898a;border-bottom: 1px solid #a3a8a9;text-align: center">
+                        <p style="font-size: 2rem;color: #000000;">精装需求反馈表</p>
+                        <p style="font-size:.6rem;color: #586568;">Online Survey & Questionnaire</p>
+                    </div>
+                </div>
+            </div>
+            <form id="form" method="post" action="" class="grey lr-padding"
+                  style="width: 90%;margin:20.2rem 5% 2rem;line-height: 2.5rem;position:relative;z-index: 100">
+                <p class="h3" style="line-height: 1.5rem">&nbsp; &nbsp; &nbsp;
+                    厚木装饰源承绿城集团精装修管理团队，是绿城集团精装修设计、施工全过程管理及实施团队。公司具有丰富的会所、别墅、公寓的精装修设计和施工管理经验，其完善的工程实施、维保体系，可高效承接毛坯房装修、旧房出新、精装修房改造、房屋维修等工程，更可为每一位客户提供高端私人定制服务。</p>
+                <p class="h3" style="line-height: 1.5rem">&nbsp; &nbsp; &nbsp;
+                    为了给您提供更好的服务，希望您能抽出几分钟时间，将您的装修需求告诉我们！现在我们就马上开始吧！</p>
+
+                <p class="h3">1.您所在的城市 <span class="font-red">*</span></p>
+                <input type="text" class="h3" id='area_name' style="width: 100%" placeholder="请选择城市" readonly/>
+
+                <p class="h3">2.您家小区的名字 <span class="font-red">*</span></p>
+                <input type="text" class="h3 input-change" style="width: 100%" placeholder="请输入小区名"
+                       id="community_name"/>
+
+                <p class="h3">3.您期望的装修类型 <span class="font-red">*</span></p>
+                <input type="text" class="h3" id="decorate_type" placeholder="请选择装修类型" readonly style="width: 100%"/>
+
+                <p class="h3">4.您的房屋面积(m²) <span class="font-red">*</span></p>
+                <input type="number" class="h3 input-change" placeholder="请输入房屋面积" style="width: 100%" id="house_area"/>
+
+                <p class="h3">5.您的户型 <span class="font-red">*</span></p>
+                <input type="text" class="h3" id="house_type" readonly placeholder="请选择您的户型" style="width: 100%"/>
+
+                <p class="h3">6.您的姓名 <span class="font-red">*</span></p>
+                <input type="text" class="h3 input-change" placeholder="请输入姓名" style="width: 100%" id="cust_name"/>
+
+                <p class="h3">7.您的联系方式 <span class="font-red">*</span></p>
+                <h5 style="line-height: 1rem;margin: 0">收到您的反馈信息后，我们的设计师将尽快与您取得联系</h5>
+                <input type="number" class="h3 input-change input-tel" placeholder="请输入您的电话号码" style="width: 100%" id="cust_phone"/>
+                <p><a class="button button-fill" style="width: 30%;margin: 1rem auto" id="submit">提交</a></p>
+                <br>
+            </form>
+
+        </div>
+    </div>
+</div>
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script src="https://g.alicdn.com/aliww/h5.imsdk/4.0.1/scripts/yw/wsdk.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/requirement.js"></script>
+<script type="text/javascript" src="//g.alicdn.com/msui/sm/0.6.2/js/sm-city-picker.min.js" charset="utf-8"></script>
+
+
+</body>
+</html>

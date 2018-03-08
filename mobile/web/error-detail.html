@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>故障处理</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current" id="error-detail">
+        <!-- header -->
+        <header class="bar bar-nav">
+            <h1 class="title">故障详情</h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+        </header>
+        <!-- nav -->
+        <!-- container -->
+        <div class="content content-no-padding error_content" id="container">
+        </div>
+    </div>
+</div>
+
+<!-- tpl -->
+<script id="tpl" type="text/template">
+    {@if work_id == 1}
+    <div class="normal-list lr-padding has-border-bottom row error_item">
+        <div class="col-40 h3" style="color: #888;margin-left: 0">联系人</div>
+        <div class="col-60">
+            <span class="h3">${detail.contact_name}</span>
+        </div>
+    </div>
+    <div class="normal-list lr-padding has-border-bottom row error_item">
+        <div class="col-40 h3" style="color: #888;margin-left: 0">联系电话</div>
+        <div class="col-60">
+            <span class="h3">${detail.contact_phone}</span>
+        </div>
+    </div>
+    <div class="normal-list lr-padding has-border-bottom row error_item">
+        <div class="col-40 h3" style="color: #888;margin-left: 0">状态</div>
+        <div class="col-60">
+            <span class="h3">${detail.status_name}</span>
+        </div>
+    </div>
+    <div class="normal-list lr-padding has-border-bottom row error_item">
+        <div class="col-40 h3" style="color: #888;margin-left: 0">房产</div>
+        <div class="col-60">
+            <span class="h3">${detail.address_desc}</span>
+        </div>
+    </div>
+    <div class="normal-list lr-padding has-border-bottom row error_item">
+        <div class="col-40 h3" style="color: #888;margin-left: 0">故障材料分类</div>
+        <div class="col-60">
+            <span class="h3">${detail.cate_name}</span>
+        </div>
+    </div>
+    <div class="normal-list lr-padding has-border-bottom row error_item">
+        <div class="col-40 h3" style="color: #888;margin-left: 0">故障材料</div>
+        <div class="col-60 ">
+            <span class="h3 ">${detail.name}</span>
+        </div>
+    </div>
+    <div class="normal-list lr-padding has-border-bottom row error_item">
+        <div class="col-40 h3" style="color: #888;margin-left: 0">故障原因</div>
+        <div class="col-60">
+            <span class="h3">${detail.failure_cause}</span>
+        </div>
+    </div>
+    {@if detail.failure_pics && detail.failure_pics.length > 0}
+    <div class="error-img-row row white lr-padding sm-margin">
+        {@each detail.failure_pics as pic}
+        <div class="error-img-container" data-link="${result | imgPath}">
+            <img src="${pic | imgPath}">
+        </div>
+        {@/each}
+    </div>
+    {@/if}
+    {@else if work_id == 2 || work_id == 3 || work_id == 4}
+    <div class="normal-list lr-padding has-border-bottom row error_item">
+        <div class="col-40 h3" style="color: #888;margin-left: 0">状态</div>
+        <div class="col-60">
+            <span class="h3">${detail.status_name}</span>
+        </div>
+    </div>
+    {@each detail.content as item, index}
+    {@if item.type != 'content'}
+    {@if item.type != 'text'}
+    <div class="normal-list lr-padding has-border-bottom row error_item">
+        <div class="col-40 h3" style="color: #888;margin-left: 0">${item.label}</div>
+        <div class="col-60">
+            <span class="h3">${item.value}</span>
+        </div>
+    </div>
+    {@else}
+    <div class="normal-list lr-padding has-border-bottom row error_item" style="height: auto;">
+        <div class="col-40 h3" style="color: #888;margin-left: 0">${item.label}</div>
+        <div class="col-60">
+            <p class="h3" style="padding: .5rem 0;line-height: 1.2rem;">${item.value}</p>
+        </div>
+    </div>
+    {@/if}
+    {@else if item.type == 'content'}
+    {@if item.value && item.value.length > 0}
+    <div class="error-img-row row white lr-padding sm-margin">
+        {@each item.value as result}
+        <div class="error-img-container" data-link="${result | imgPath}">
+            {@if result.indexOf('png') != -1 || result.indexOf('jpg') != -1}
+            <img src="${result | imgPath}" style="width: 4rem;height: auto;">
+            {@else}
+            <img src="http://jssdk.demo.qiniu.io/images/default.png" style="width: 4rem;height: auto;">
+            <p style="font-size: .6rem;text-align: center;margin-top: .5rem;" class="ellipsis-full">
+                ${decodeURIComponent(result)}</p>
+            {@/if}
+        </div>
+        {@/each}
+    </div>
+    {@/if}
+    {@/if}
+    {@/each}
+    {@/if}
+
+    {@if flow && flow.length > 0}
+    <div class="list-title white has-border-bottom lr-padding error_log">
+        <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-OperationHistory_hll"></use>
+        </svg>
+        <span class="h2">操作历史</span>
+    </div>
+    <div class="white lg-margin error-detail-history">
+        {@each flow as log}
+        <h3 data-logid=${log.id}>
+            ${log.time} ${log.nickname} <span class="font-green">${log.flow_name}</span>
+            {@if log.is_self}
+            <span class="right font-green to-edit" style="font-size: .6rem;position: relative;top: .1rem;">修改</span>
+            {@/if}
+        </h3>
+        {@if log.comment != ''}
+        <div class="grey error-history-detail">
+            <h5>${log.comment}</h5>
+        </div>
+        <div class="error-img-row row white lr-padding sm-margin">
+            {@each log.img as pic}
+            <div class="error-img-container" data-link="${pic | imgPath}">
+                <img src="${pic | imgPath}">
+            </div>
+            {@/each}
+        </div>
+        {@/if}
+        {@/each}
+    </div>
+    {@/if}
+</script>
+
+<!-- nav -->
+<script id="nav" type="text/template">
+    {@if detail.is_handle == 0}
+    <nav class="bar bar-tab" id="submit">
+        <a class="tab-item external">
+            <span class="font-white">已处理</span>
+        </a>
+    </nav>
+    {@/if}
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/error-detail.js"></script>
+<script src="weixin/src/css/fonts/iconfont.js"></script>
+
+</body>
+</html>

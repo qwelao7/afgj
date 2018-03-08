@@ -1,0 +1,41 @@
+<ion-view view-title="提交">
+    <ion-nav-buttons side="left">
+        <button class="button icon ion-ios-arrow-left button-clear button-positive" ng-click="goBack()"></button>
+    </ion-nav-buttons>
+    <ion-content>
+        <div class="house-service">
+            <div class="service-list">
+                <div class="list" ng-repeat="item in items | filter:{parent_id:'0'}:true">
+                    <div class="item item-divider">
+                        {{item.name}}
+                    </div>
+                    <div class="item" ng-repeat="item2 in items | filter:{parent_id:item.id}:true">
+                        {{item2.name}}
+                    </div>
+                </div>
+            </div>
+            <ion-item class="item item-icon-right item-icon-prefix" ng-click="addressListShow()">
+                <i class="icon ion-ios-location icon-accessory icon-prefix"></i>
+                <div class="text-green">{{addressListEidtInfo.mansion?addressListEidtInfo.mansion + addressListEidtInfo.building_house_num :'请设置服务地址'}}</div>
+                <h4 class="text-black">{{addressListEidtInfo.contact_to}} {{addressListEidtInfo.mobile}}</h4>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </ion-item>
+            <div class="depict-wrap">
+                <div class="title">更多问题描述</div>
+                <div class="depict-box">
+                    <textarea class="input-text" rows="3" ng-model="params.desc" placeholder="请输入描述内容..."></textarea>
+                    <div class="depict-list">
+                        <div class="item-box" ng-repeat="(index, img) in params.imgs">
+                            <img ng-src="{{img}}-100x100" />
+                            <a class="btn-del icon ion-close-circled" ng-click="action.deleteImg(index)"></a>
+                        </div>
+                        <div class="button-camera" ng-click="action.addImg()"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+    <div class="tabs button-bar bar-balanced">
+        <a class="button" ng-click="action.submit()">提交</a>
+    </div>
+</ion-view>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>博物图书馆</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="library-book-search">
+        <!-- 头部 -->
+        <header class="bar bar-nav">
+            <div class="title title-search">
+                <!--<span class="white title-search-span" id="tag">-->
+                    <!--<span id="curCategory">所有图书</span>-->
+                    <!--<i class="iconfont icon-down" style="padding: 0"></i>-->
+                <!--</span>-->
+                <input class="title-search-input wd100" type="text" name="search" placeholder="请输入要搜索的书本名">
+            </div>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+            <a class="pull-right font-white" style="line-height: 2.2rem;font-size: .75rem" id="search">确定</a>
+        </header>
+        <!--右上角菜单弹出层-->
+        <div class="title-search-popup white" id="popup" style="display: none">
+        </div>
+        <!--遮罩层-->
+        <div class="modal-overlay" id="modal"></div>
+        <!-- 内容 -->
+        <div class="content content-no-padding infinite-scroll" data-distance="1%">
+            <!-- 展示列表 -->
+            <div id="container">
+                <!-- tabs -->
+                <div class="buttons-tab fixed-tab lr-padding" data-issearch=true data-offset="44">
+                    <a class="tab-link button active">评价↓</a>
+                    <a class="tab-link button">借阅数↓</a>
+                    <a class="tab-link button">离我最近↓</a>
+                </div>
+                <div class="tabs">
+                    <div id="tab1" class="tab active">
+                        <div class="content-block" id="content">
+                        </div>
+                        <!-- 加载提示符 -->
+                        <div class="infinite-scroll-preloader">
+                            <div class="preloader">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 图书类别 -->
+<script id="classify" type="text/template">
+    <p class="modal-p-list modify has-border-bottom" style="color: #3d4145;padding-left:0;text-align: center"
+       data-id="0">
+        所有图书
+    </p>
+    {@each book_type as book, index}
+    <p class="modal-p-list modify" style="color: #3d4145;padding-left:0;text-align: center" data-id="${index}">
+        ${book}
+    </p>
+    {@/each}
+</script>
+
+<!-- list -->
+<script id="tpl" type="text/template">
+    {@each list as item}
+    <div class="user-item decoration-item lr-padding white book-list"
+         style="height: 3.7rem!important;" data-id="${item.id}">
+        <div class="user-item-img">
+            <img src="${item.thumbnail}" style="margin-top: .7rem">
+        </div>
+        <div class="user-item-content">
+            <h2 class="item-two-line-title" style="width: 100%;line-height: 1rem">
+                <span class="ellipsis-full" style="width: 100%;display: inline-block;">${item.book_name}</span>
+            </h2>
+            <h5 class="item-two-line-detail">
+                <span class="${classify == 1 ? 'font-green' : ''}">评价：${item.avg_rate_star}星</span>
+                <span class="${classify == 2 ? 'font-green' : ''}">借阅数：${item.borrow_num}</span>
+                <span>类别：${item.category_content}</span>
+            </h5>
+            <h5 class="item-two-line-detail ${classify == 3 ? 'font-green' : ''}" style="margin-top: 0">
+                地址：${item.library_name}
+                <span class="h5 ellipsis-full ${classify == 3 ? 'font-green' : ''}" style="font-size: .6rem;margin-left: .5rem;">(&nbsp;约${item.distance | distance}&nbsp;)</span>
+            </h5>
+        </div>
+        <br style="clear: both">
+    </div>
+    {@/each}
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/library-search.js"></script>
+</body>
+</html>

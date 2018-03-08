@@ -1,0 +1,24 @@
+<ion-view view-title="{{user.phone?'变更手机号码':'绑定手机号码'}}" hide-nav-bar="true">
+    <ion-modal-view>
+        <ion-header-bar class="bar bar-header">
+            <button class="button button-clear button-primary" ng-click="goBack()">取消</button>
+            <h1 class="title">{{user.phone?'变更手机号码':'绑定手机号码'}}</h1>
+            <button class="button button-clear button-positive" ng-click="action.bindMobile()">提交</button>
+        </ion-header-bar>
+  <ion-content class="page-bind-mobile">
+      <form name="myForm" novalidate>
+      <div class="list list-inset">
+          <div class="item item-input">
+              <input type="tel" name="phone" placeholder="请输入您的手机号码" ng-model="data.phone">
+          </div>
+          <div class="item item-input padding-right">
+              <input type="text" name="captchaphone" placeholder="请输入手机验证码" ng-model="data.captchaphone">
+              <button class="button button-small" style="width: 5rem;" ng-click="action.getPhoneCaptcha()">
+                  {{data.waitTime?data.waitTime+'秒后重发':'获取验证码'}}
+              </button>
+          </div>
+      </div>
+      </form>
+  </ion-content>
+    </ion-modal-view>
+</ion-view>

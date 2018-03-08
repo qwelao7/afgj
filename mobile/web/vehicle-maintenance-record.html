@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>我家</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current" id="vehicle-maintenance-record">
+        <!-- header -->
+        <header class="bar bar-nav">
+            <h1 class="title">维保记录</h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+        </header>
+        <!-- container -->
+        <div class="content content-no-padding infinite-scroll" id="content" data-distance="1%">
+            <div id="container">
+
+            </div>
+
+            <!-- 加载提示符 -->
+            <div class="infinite-scroll-preloader">
+                <div class="preloader">
+                </div>
+            </div>
+
+        </div>
+        <!-- nav -->
+
+    </div>
+</div>
+
+<script id="tpl" type="text/template">
+    {@if list && list.length > 0}
+    {@each list as item}
+    <div class="user-item-whole white lr-padding has-border-bottom">
+        <h2 class="ellipsis-full wd100" style="margin: .3rem 0 0 0;">
+            ${item.notification_name}
+        </h2>
+        <h5 class="ellipsis-full wd100">
+            维保:
+            <span class="font-green" style="margin-right: .3rem">${item.last_date}</span>
+            {@if item.exec_shop && item.exec_shop != ''}
+            商家:
+            <span style="color: #333338;margin-right: .3rem">${item.exec_shop}</span>
+            {@/if}
+            {@if item.exec_fee && item.exec_fee != '0.00'}
+            价格:
+            <span style="color: #333338;">￥${item.exec_fee}</span>
+            {@/if}
+        </h5>
+    </div>
+    {@/each}
+    {@/if}
+</script>
+
+<script id="nav" type="text/template">
+    <nav class="bar bar-tab" id="submit">
+        <a class="tab-item external">
+            <span class="font-white">添加维保信息</span>
+        </a>
+    </nav>
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/vehicle-maintenance-record.js"></script>
+
+</body>
+</html>

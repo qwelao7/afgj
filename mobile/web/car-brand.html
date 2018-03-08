@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>品牌列表</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="car-brand">
+        <header class="bar bar-nav">
+            <input class="title header-input" type="text" placeholder="车辆品牌名或首字母" id="search">
+            <a class="iconfont icon-left pull-left icon-white" href="javascript:history.go(-1);"></a>
+            <a class="font-white pull-right" style="line-height:2.2rem " id="submit">搜索</a>
+        </header>
+        <div class="content lr-padding grey neighbor-list-content infinite-scroll" data-distance="1%">
+            <div id="container">
+            </div>
+            <!-- 加载提示符 -->
+            <div class="infinite-scroll-preloader" style="text-align: center;margin-bottom: -20px;">
+                <div class="preloader"></div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-overlay"></div>
+    <div class="panel panel-right panel-cover grey" id="panel-right">
+        <div class="content-block" style="margin: 0;padding: 0;" id="side">
+        </div>
+    </div>
+</div>
+
+<!--列表-->
+<script id="tpl" type="text/template">
+    {@each list as item, index}
+    <h5 class="lr-padding font-green">
+        ${index}
+    </h5>
+    <div>
+        {@each item as data}
+        <div class="user-item lr-padding white follow-neighbor last-noborder car-brand" style="height: 2.2rem"
+             data-id="${data.id}">
+            <div class="user-item-content" style="float: left;height: 2.2rem">
+                <h2>
+                    ${data.name}
+                </h2>
+            </div>
+        </div>
+        {@/each}
+    </div>
+    {@/each}
+</script>
+
+<!--特殊列表-->
+<script id="special" type="text/template">
+    {@each list as item}
+    <div class="user-item lr-padding white follow-neighbor last-noborder open-panel special${num} car-brand"
+         style="height: 2.2rem" data-id="${item.id}">
+        <div class="user-item-content" style="float: left;height: 2.2rem">
+            <h2>
+                ${item.name}
+            </h2>
+        </div>
+    </div>
+    {@/each}
+</script>
+
+<!--车型列表-->
+<script id="cars" type="text/template">
+    {@each list as item}
+    <div class="ride-item white" style="text-align: center;border-bottom: 1px solid #f6f6f9;" data-id="${item.id}" data-brand = "${item.brand_id}">
+        <span>
+            ${item.name}
+        </span>
+    </div>
+    {@/each}
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/car-brand.js"></script>
+
+</body>
+</html>

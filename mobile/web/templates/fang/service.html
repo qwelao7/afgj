@@ -1,0 +1,25 @@
+<ion-view view-title="维修">
+    <ion-nav-buttons side="left">
+        <button class="button icon ion-ios-arrow-left button-clear button-positive" ng-click="goBack()"></button>
+    </ion-nav-buttons>
+    <ion-content style="margin-bottom: 48px;">
+        <div class="house-service">
+            <div class="title">
+                请选择房屋问题
+            </div>
+            <div class="list" ng-repeat="item in items | filter:{parent_id:'0'}:true">
+                <div class="item item-divider">
+                    {{item.name}}
+                </div>
+                <a class="button button-small button-outline" ng-class="{select:fangServiceSelectedArr.indexOf(item2.id)!=-1}"
+                   ng-repeat="item2 in items | filter:{parent_id:item.id}"
+                   ng-click="action.selectItem(item2)">
+                    {{item2.name}}
+                </a>
+            </div>
+        </div>
+    </ion-content>
+    <div class="tabs button-bar bar-balanced">
+        <a class="button" ng-click="goto('service-submit')">下一步</a>
+    </div>
+</ion-view>

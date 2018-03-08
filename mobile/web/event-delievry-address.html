@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>活动</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name = "format-detection" content ="telephone=no, email=no" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script src="weixin/src/css/fonts/iconfont.js"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<!-- 主页面 -->
+<div class="page-group">
+    <div class="page page-current" id="event-delievry-address">
+        <header class="bar bar-nav" id="header">
+            <h1 class="title" id="title">
+                收件信息
+            </h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+        </header>
+        <nav class="bar bar-tab next-step">
+            <a class="tab-item external">
+                <span class="font-white">下一步</span>
+            </a>
+        </nav>
+        <!-- content -->
+        <div class="content content-no-padding" id="container">
+        </div>
+    </div>
+</div>
+
+<script id="tpl" type="text/template">
+    <div class="sm-margin white JAddressList" data-address_id="${address_id}">
+        <div class="has-border-bottom row lr-padding address_check" style="width: 100%;">
+            <div class="col-25" style="height: 100%;width: 10%">
+                <i class="iconfont icon-dz_hll" style="font-size: 1.2rem;padding: 0;margin: 1rem auto"></i>
+            </div>
+            <div class="col-75" style="height:100%;display: inline-block;margin-left: 0;width: 80%;">
+                <h3 STYLE="margin-bottom: 0" >
+                    <span>收货人:${consignee}</span>&nbsp;&nbsp;
+                    <span>${mobile}</span>
+                    {@if is_default == 1}
+                    <a class="font-green" style="border-radius: .05rem;border: 1px solid #009042;padding: 0 .1rem">默认</a>
+                    {@/if}
+                </h3>
+                <h3 class="order-address" style="color: #888">
+                    收货地址：<span>${province} ${city} ${district} ${address}</span>
+                </h3>
+            </div>
+            <div class="col-25" style="height: 100%;width: 10%">
+                <i class="iconfont icon-right open-panel"
+                   style="font-size: 1.2rem;padding: 0;margin: 1rem auto;float: right"></i>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/event-delievry-address.js"></script>
+</body>
+</html>

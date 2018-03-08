@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>活动</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current" id="event-edit">
+        <header class="bar bar-nav">
+            <h1 class="title">编辑活动</h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" href="javascript:history.go(-1)"></a>
+        </header>
+        <nav class="bar bar-tab" id="submit">
+            <a class="tab-item external">
+                <span class="font-white">提交</span>
+            </a>
+        </nav>
+        <div class="content content-no-padding" id="container">
+            <!-- form -->
+        </div>
+    </div>
+</div>
+
+<script id="tpl" type="text/template">
+    <form class="list-block" style="margin:0;margin-bottom: .4rem">
+        <ul>
+            <li class="">
+                <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                    <div class="col-25 h3" style="color: #888">主题</div>
+                    <div class="col-75" style="margin-left: 8%;position: relative">
+                        <input type="text" name="title"
+                               placeholder="请输入主题.."
+                               style="font-size:.7rem;width: 88%;display: inline-block"
+                               value="${info.events.title}"
+                               id="title">
+                    </div>
+                </div>
+            </li>
+            <!-- 封面 -->
+            <li class="">
+                <div class="item-content" style="padding-left: .6rem">
+                    <div class="item-inner"
+                         style="height:auto;min-height:2.8rem;padding-top: 1rem;padding-bottom:1rem;overflow: visible">
+                        <div class="item-title label" style="padding: 0">封面</div>
+                        <div class="item-input">
+                            <i class="iconfont icon-camera add-pic-single hide" style="padding:.55rem;border:1px dotted #a0a0a0" data-nums="single"></i>
+                            <div style="position: relative" id="thumbnail">
+                                <img src="${info.events.thumbnail | imgBig}">
+                                <i class="iconfont icon-cancel cancel-thumbnail" style="position: absolute;left: 8.2rem;top:-.8rem;color: red;z-index: 2;"></i>
+                            </div>
+                        </div>
+                        <input type="hidden" name="thumbnail" value="${info.events.thumbnail}">
+                    </div>
+                </div>
+            </li>
+            <!-- 地点 -->
+            <li class="">
+                <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                    <div class="col-25 h3" style="color: #888">地点</div>
+                    <div class="col-75" style="margin-left: 8%;position: relative">
+                        <input type="text" name="address"
+                               placeholder="请输入地点.."
+                               style="font-size:.7rem;width: 88%;display: inline-block"
+                                value="${info.events.address}">
+                    </div>
+                </div>
+            </li>
+            <!-- 是否免费 -->
+            <li class="">
+                <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                    <div class="col-25 h3" style="color: #888">是否免费</div>
+                    <div class="col-75" style="margin-left: 8%;position: relative">
+                        <div class="row">
+                            <div class="col-33">
+                                <label class="label-checkbox item-content check-isfree" style="height: 2.2rem;padding-left: 0;">
+                                    {@if info.events.free == 1}
+                                    <input type="radio" name="free" value="1" checked>
+                                    {@else}
+                                    <input type="radio" name="free" value="1">
+                                    {@/if}
+                                    <div class="item-media">
+                                        <i class="icon icon-form-checkbox"></i>
+                                        <span style="margin-left: .3rem">免费</span>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="col-33">
+                                <label class="label-checkbox item-content check-isfree" style="height: 2.2rem;padding-left: 0;">
+                                    {@if info.events.free == 0}
+                                    <input type="radio" name="free" value="0" checked>
+                                    {@else}
+                                    <input type="radio" name="free" value="0">
+                                    {@/if}
+                                    <div class="item-media">
+                                        <i class="icon icon-form-checkbox"></i>
+                                        <span style="margin-left: .3rem">收费</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <!-- 费用 -->
+            <li class="item-fee">
+                <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                    <div class="col-25 h3" style="color: #888">元/人</div>
+                    <div class="col-75" style="margin-left: 8%;position: relative">
+                        <input type="text" name="fee"
+                               placeholder="请输入活动费用"
+                               style="font-size:.7rem;width: 88%;display: inline-block" id="fee"
+                               value="${(info.events.fee != 0) ? info.events.fee : ''}">
+                    </div>
+                </div>
+                <!-- points -->
+                <div id="points_use">
+                    <!-- 是否接受友元 -->
+                    <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                        <div class="col-33 h3" style="color: #888;margin-left: 0">是否接受友元</div>
+                        <div class="col-66" style="margin-left: 4%;position: relative">
+                            <div class="row">
+                                <div class="col-33">
+                                    <label class="label-checkbox item-content check-points" style="height: 2.2rem;padding-left: 0;">
+                                        {@if info.events.accept_point == 1}
+                                        <input type="radio" name="accept_point" value="1" checked>
+                                        {@else}
+                                        <input type="radio" name="accept_point" value="1">
+                                        {@/if}
+
+                                        <div class="item-media">
+                                            <i class="icon icon-form-checkbox"></i>
+                                            <span style="margin-left: .3rem">是</span>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="col-33">
+                                    <label class="label-checkbox item-content check-points" style="height: 2.2rem;padding-left: 0;">
+                                        {@if info.events.accept_point == 0}
+                                        <input type="radio" name="accept_point" value="0" checked>
+                                        {@else}
+                                        <input type="radio" name="accept_point" value="0">
+                                        {@/if}
+                                        <div class="item-media">
+                                            <i class="icon icon-form-checkbox"></i>
+                                            <span style="margin-left: .3rem">否</span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 友元使用范围 -->
+                    <div class="normal-list lr-padding has-border-bottom row points-area" style="margin-bottom:0">
+                        <div class="col-100 h3" style="color: #888;margin-left: 0">接受哪些小区赠送友元支付</div>
+                    </div>
+                    <div class="lr-padding has-border-bottom row points-area" style="margin-bottom:0">
+                        <div class="col-100 h3" style="color: #888;margin-left: 0">
+                            <div class="row">
+                                {@each points.name as name, index}
+                                <div class="col-50">
+                                    <label class="label-checkbox item-content point_check_label" style="height: 2.2rem;padding-left: 0;">
+                                        {@if info.events.accept_point_community_id.indexOf(points['id'][index]) != -1}
+                                        <input type="checkbox" name="point_checkbox" value="${points['id'][index]}" checked>
+                                        {@else}
+                                        <input type="checkbox" name="point_checkbox" value="${points['id'][index]}">
+                                        {@/if}
+                                        <div class="item-media">
+                                            <i class="icon icon-form-checkbox"></i>
+                                            <span style="margin-left: .3rem">${name}</span>
+                                        </div>
+                                    </label>
+                                </div>
+                                {@/each}
+                            </div>
+                        </div>
+                        <p style="font-size: .6rem;" class="icon-green lr-padding">注: 友元不可提现，且有消费时限</p>
+                    </div>
+                    <!-- input -->
+                    <input type="hidden" name="accept_point_community_id">
+                </div>
+            </li>
+            <!-- 活动开始时间 -->
+            <li class="">
+                <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                    <div class="col-25 h3" style="color: #888">开始时间</div>
+                    <div class="col-75" style="margin-left: 8%;position: relative">
+                        <input type="text"
+                               style="font-size:.7rem;width: 88%;display: inline-block" id="begin-picker"
+                               placeholder="请选择开始时间.." value="${info.events.begin_time}" readonly>
+                        <input type="hidden" name="events_begin" value="${info.events.begin_time}">
+                        <i class="iconfont icon-right pull-right"
+                           style="position: absolute;right: .2rem;top: .1rem;"></i>
+                    </div>
+                </div>
+            </li>
+            <!-- 活动结束时间 -->
+            <li class="">
+                <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                    <div class="col-25 h3" style="color: #888">结束时间</div>
+                    <div class="col-75" style="margin-left: 8%;position: relative">
+                        <input type="text"
+                               style="font-size:.7rem;width: 88%;display: inline-block" id="end-picker"
+                               placeholder="请选择结束时间.." value="${info.events.end_time}" readonly>
+                        <input type="hidden" name="events_end" value="${info.events.end_time}">
+                        <i class="iconfont icon-right pull-right"
+                           style="position: absolute;right: .2rem;top: .1rem;"></i>
+                    </div>
+                </div>
+            </li>
+            <!-- 报名截止时间 -->
+            <li class="">
+                <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                    <div class="col-25 h3" style="color: #888">报名截止</div>
+                    <div class="col-75" style="margin-left: 8%;position: relative">
+                        <input type="text"
+                               style="font-size:.7rem;width: 88%;display: inline-block" id="signup-picker"
+                               placeholder="请选择结束时间.." value="${info.events.deadline}" readonly>
+                        <input type="hidden" name="apply_end" value="${info.events.deadline}">
+                        <i class="iconfont icon-right pull-right"
+                           style="position: absolute;right: .2rem;top: .1rem;"></i>
+                    </div>
+                </div>
+            </li>
+            <!-- 活动人数 -->
+            <li class="">
+                <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                    <div class="col-25 h3" style="color: #888">人数</div>
+                    <div class="col-75" style="margin-left: 8%;position: relative">
+                        <input type="text" name="events_num"
+                               placeholder="请输入人数上限，默认人数无限制"
+                               value="${(info.events.events_num == 0) ? '无限制' : info.events.events_num}"
+                               style="font-size:.7rem;width: 88%;display: inline-block" id="person-num">
+                    </div>
+                </div>
+            </li>
+            <!-- 是否公开 -->
+            <li class="">
+                <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                    <div class="col-25 h3" style="color: #888">活动范围</div>
+                    <div class="col-75" style="margin-left: 8%;position: relative">
+                        <input type="text"
+                               style="font-size:.7rem;width: 88%;display: inline-block" id="range-picker"
+                               placeholder="请选择活动范围.." readonly value="${(info.community) ? info.community.name : '公开活动'}">
+                        <i class="iconfont icon-right pull-right"
+                           style="position: absolute;right: .2rem;top: .1rem;"></i>
+                    </div>
+                    <input type="hidden" name="auth_way" value="${(info.events.auth_way == 'public') ? 0 : info.community.community_id}">
+                </div>
+            </li>
+            <!-- 发起人手机号 -->
+            <li class="">
+                <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                    <div class="col-25 h3" style="color: #888">发起者手机</div>
+                    <div class="col-75" style="margin-left: 8%;position: relative">
+                        <input type="text"
+                               placeholder="请输入发起人手机号码" name="tel"
+                               value="${info.events.tel}"
+                               style="font-size:.7rem;width: 88%;display: inline-block">
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <!-- 报名详情 -->
+        <div class="white" style="padding-bottom: .3rem">
+                    <textarea id="" style="width: 100%;border: none;text-indent: .2rem" rows="5"
+                              placeholder="请输入描述内容..." name="content">${info.events.content | getContent}</textarea>
+            <div style="padding-left: .6rem">
+                <div style="width: 2.2rem;height: 2.2rem;border: 1px dotted #a0a0a0;text-align: center;display:inline-block;margin-right: .6rem">
+                    <i class="iconfont icon-camera open-panel add-pic-more" style="font-size:1.4rem" data-nums="more"></i>
+                </div>
+            </div>
+            <div class="row" id="imgs-row" style="margin-top: .5rem;">
+            </div>
+            <input type="hidden" name="img">
+        </div>
+    </form>
+    <!-- 扩展信息 -->
+    <div class="white lg-margin">
+        <h3 class="lr-padding has-border-bottom" style="margin: 0;line-height:2.2rem;">收集报名信息(可选)</h3>
+        <div class="row has-border-bottom" style="padding:.4rem 0!important;" id="extra-option">
+            <!-- 扩展信息列表 -->
+            <div class="col-50">
+                <label class="label-checkbox item-content">
+                    <input type="checkbox" name="extra" data-attr="_name" id="input_name">
+                    <div class="item-media">
+                        <i class="icon icon-form-checkbox"></i>
+                        <span style="margin-left: .2rem">姓名</span>
+                    </div>
+                </label>
+            </div>
+            <div class="col-50">
+                <label class="label-checkbox item-content">
+                    <input type="checkbox" name="extra" data-attr="_mobile" id="input_mobile">
+                    <div class="item-media">
+                        <i class="icon icon-form-checkbox"></i>
+                        <span style="margin-left: .2rem;line-height: 100%">手机号</span>
+                    </div>
+                </label>
+            </div>
+            <div class="col-50">
+                <label class="label-checkbox item-content">
+                    <input type="checkbox" name="extra" data-attr="_fang" id="input_fang">
+                    <div class="item-media">
+                        <i class="icon icon-form-checkbox"></i>
+                        <span style="margin-left: .2rem">房号</span>
+                    </div>
+                </label>
+            </div>
+            <div class="col-50">
+                <label class="label-checkbox item-content">
+                    <input type="checkbox" name="extra" data-attr="_num" id="input_num">
+                    <div class="item-media">
+                        <i class="icon icon-form-checkbox"></i>
+                        <span style="margin-left: .2rem">人数</span>
+                    </div>
+                </label>
+            </div>
+            <div class="col-50">
+                <label class="label-checkbox item-content">
+                    <input type="checkbox" name="extra" data-attr="_idcard" id="input_idcard">
+                    <div class="item-media">
+                        <i class="icon icon-form-checkbox"></i>
+                        <span style="margin-left: .2rem">身份证号</span>
+                    </div>
+                </label>
+            </div>
+        </div>
+        <h2 style="text-align: center;margin: 0;line-height: 2.2rem" id="add-extra">
+            +新增信息
+        </h2>
+    </div>
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/event-edit.js"></script>
+
+</body>
+</html>

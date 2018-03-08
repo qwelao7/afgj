@@ -1,0 +1,54 @@
+<ion-view view-title="{{title.bbs_name}}">
+    <ion-nav-buttons side="left">
+        <button class="button icon ion-ios-arrow-left button-clear button-positive" ng-click="goBack()"></button>
+    </ion-nav-buttons>
+
+    <ion-content class="grey" style="margin-bottom: 47px;">
+        <div class="list" style="background-color:#fff">
+            <label class="item item-input item-stacked-label">
+                <span class="input-label">标题</span>
+                <input type="text" placeholder="请输入标题内容.." ng-model="params.title">
+            </label>
+            <div class="depict-wrap">
+                <div class="title" style="border-bottom: none">内容</div>
+                <div class="depict-box">
+                    <textarea class="input-text" style="border: none" rows="10" ng-model="params.desc"
+                              placeholder="请输入描述内容..."></textarea>
+                    <div class="depict-list">
+                        <!-- 图片附件 -->
+                        <div class="item-box" ng-repeat="(index,img) in params.imgs" ng-show="type==1">
+                            <img ng-src="{{img}}-100x100"/>
+                            <a class="btn-del icon ion-close-circled" ng-click="action.deleteImg(index,1, false)"></a>
+                        </div>
+                        <div class="button-camera" ng-click="action.addImg(1, false)" ng-show="type == 0|| type==1"></div>
+                        <!-- 活动附件按钮 -->
+                        <div class="button-event" ng-click="editShow({showActivity: 1, title: '活动', pics: []})" ng-show="type==0"></div>
+                        <!-- 投票附件按钮 -->
+                        <div class="button-vote" ng-click="voteShow({title: '投票'})" ng-show="type==0"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- 活动附件 -->
+            <div class="item item-avatar event-share-content" style="margin-bottom:50px;" ng-if="activity_id">
+                <img style="" ng-src="{{edit.thumbnail}}">
+                <div class="share-content">
+                    <h2>{{edit.name}}</h2>
+                    <p>截止日期：<span>{{edit.signup_end.toLocaleDateString()}}</span></p>
+                    <img src="../../assets/css/images/delete.png" alt="" ng-click="action.deleteAttach(activity_id, 'activity')" style="float:right;margin-top:-45px;width:40px;">
+                </div>
+            </div>
+            <!-- 投票附件 -->
+            <div class="item item-avatar event-share-content" style="margin-bottom:50px;" ng-if="vote_id">
+                <img style="" src="../assets/css/images/icon_vote.png">
+                <div class="share-content">
+                    <h2>{{voteInfo.name}}</h2>
+                    <p>截止日期：<span>{{voteInfo.signup_end.toLocaleDateString()}}</span></p>
+                    <img src="../../assets/css/images/delete.png" alt="" ng-click="action.deleteAttach(vote_id,'vote')" style="float:right;margin-top:-45px;width:40px;">
+                </div>
+            </div>
+        </div>
+    </ion-content>
+    <div class="tabs button-bar bar-balanced">
+        <a class="button" ng-click="action.submit()">提交</a>
+    </div>
+</ion-view>

@@ -1,0 +1,29 @@
+<ion-view view-title="成长日志详情">
+    <ion-nav-buttons side="left">
+        <button class="button icon ion-ios-arrow-left button-clear button-positive" ng-click="goBack()"></button>
+    </ion-nav-buttons>
+    <ion-content class="grey">
+        <div class="list house-list" style="margin-bottom: 15px;background-color: #fff">
+            <a class="item item-thumbnail-left">
+                <img ng-src="{{qiniuDomain + loupanInfo.thumbnail}}" ng-if="loupanInfo.thumbnail"/>
+                <h3><span>{{loupanInfo.name}}</span><span class="price">{{loupanInfo.avg_price}}</span></h3>
+                <p>{{loupanInfo.address}}</p>
+                <div class="tag-list">
+                    <span ng-repeat="tag in loupanInfo.tag" class="{{keyMap['loupanTag'][tag]['class']}}">{{keyMap['loupanTag'][tag]['name']}}</span>
+                </div>
+            </a>
+        </div>
+        <div class="brand-hall brand-promotion" style="background-color: #fff" ng-repeat="item in msgList">
+            <div class="content" style="margin-top: 0;margin-bottom: -15px">
+                <p class="content-title-ch" style="padding-top: 26px;">{{item.title}}</p>
+                <p class="content-title-en">{{item.publish_time}}</p>
+                <div class="content-article" style="margin: 15px 35px"><p class="content-article-content" style="font-size: 12px">{{item.content}}</p></div>
+                <div class="news-images " style="margin-top: 5px" ng-if="item.attachment_type == 1 && item.attachment_content" >
+                    <div ng-repeat="keys in item.attachment_content track by $index" ng-if="keys.length > 0">
+                        <img style="width: 100%;padding:5px 12px ;" ng-src="{{qiniuDomain + keys}}" ng-if="keys">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

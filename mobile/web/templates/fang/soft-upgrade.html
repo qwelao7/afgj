@@ -1,0 +1,63 @@
+<ion-view view-title="北欧风情">
+    <ion-nav-buttons side="left">
+        <button class="button icon ion-ios-arrow-left button-clear button-positive" ng-click="goBack()"></button>
+    </ion-nav-buttons>
+    <ion-content style="margin-bottom: 48px;">
+        <div class="house-item">
+            <h3>{{item.title}}</h3>
+            <!--<p class="text" data-ng-bind-html="item.service.description"></p>-->
+        </div>
+        <div class="house-item">
+            <h3>样例图片</h3>
+            <div class="row">
+                <div class="col" ng-repeat="img in item.service.pics">
+                    <a ng-click="goto('house-picture', {id:item.service_id})">
+                      <img class="full-image" ng-src="{{qiniuDomain + img[0]}}"/>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="house-item">
+            <h3>个性升级包</h3>
+            <a ng-click="goto('house-picture', {id:upgrade.service_id})" ng-repeat="upgrade in item.upgrade|filter:{price_unit:'2'}:true">
+                <p> {{upgrade.title}}<span>{{upgrade.price}}元/套</span></p>
+                <div class="row">
+                    <div class="col" ng-repeat="pic in upgrade.service.pics">
+                        <img class="full-image" ng-src="{{qiniuDomain + pic[0]}}" alt=""/>
+                    </div>
+                </div>
+            </a>
+            <a ng-click="goto('house-picture', {id:upgrade.service_id})" ng-repeat="upgrade in item.upgrade|filter:{price_unit:'1'}:true">
+                <p> {{upgrade.title}}<span>{{upgrade.price}}元/米</span></p>
+                <div class="row">
+                    <div class="col" ng-repeat="pic in upgrade.service.pics">
+                        <img class="full-image" ng-src="{{qiniuDomain + pic[0]}}" alt=""/>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="house-item">
+            <h3 class="name">装修套餐估价</h3>
+            <h3 class="title">房屋建筑面积</h3>
+            <div class="list list-inset">
+                <label class="item item-input">
+                    <input ng-model="params.area" type="text" placeholder="请输入您的软装面积">
+                </label>
+            </div>
+            <h3>个性升级包选择</h3>
+            <div class="list row" id="select-list">
+            <a class="col button button-small button-outline" ng-class="{select:fangSoftUpgradeSelectedArr.indexOf(upgrade.id)!=-1}"
+               ng-click="action.setPrice(upgrade)" ng-repeat="upgrade in item.upgrade">
+                {{upgrade.title}}
+            </a>
+        </div>
+            <div class="price">
+                <span>估价</span>
+                <span class="number" id="price">{{params.total| currency:'￥'}}</span>
+            </div>
+        </div>
+    </ion-content>
+    <div class="tabs button-bar bar-orange">
+        <a class="button" href="tel:{{item.service.hotline}}">装修热线</a>
+    </div>
+</ion-view>

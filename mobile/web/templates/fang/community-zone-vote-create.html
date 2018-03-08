@@ -1,0 +1,79 @@
+<ion-modal-view>
+    <ion-header-bar class="bar bar-header">
+        <button class="button button-clear button-primary" ng-click="action.back()">取消</button>
+        <h1 class="title">新建{{voteInfo.title}}</h1>
+        <button class="button button-clear button-positive" ng-click="voteSubmit()">提交</button>
+    </ion-header-bar>
+    <ion-content style="background-color: #e6e6e6;">
+        <div class="list" style="background-color: #fff">
+            <label class="item item-input">
+                <span class="input-label">投票名称</span>
+                <input type="text" placeholder="请输入投票名称" ng-model="voteInfo.name">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">截止时间</span>
+                <input type="datetime-local" ng-model="voteInfo.signup_end">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">投票描述</span>
+                <textarea name="" id="" cols="30" rows="5" ng-model="voteInfo.content"></textarea>
+            </label>
+        </div>
+        <div class="list" id="vote-list" style="background-color: #fff" ng-repeat="item in voteInfo.vote">
+            <div class="vote-number">
+                <div id="options-list">
+                    <p style="margin-left: 15px;line-height: 40px;margin-bottom: 0;font-weight: bold">
+                        问题{{item.index}}</p>
+                    <label class="item item-input">
+                        <span class="input-label">问题标题</span>
+                        <input type="text" placeholder="请输入问题标题" ng-model="item.title"">
+                    </label>
+                    <div class="vote-method">
+                        <span class="input-label input-vote">投票方式</span>
+                        <label style="margin:0 10px 0 5px">
+                            <input style="display: inline-block" name="option{{item.index}}" type="radio" value='1'
+                                   ng-click="action.check(item, 1)" checked/> 单选
+                        </label>
+                        <label>
+                            <input style="display: inline-block" name="option{{item.index}}" type="radio" value='2'
+                                   ng-click="action.check(item, 2)"/> 多选
+                        </label>
+                        <div ng-repeat="list in item.options">
+                            <div class="item item-input item-icon-right" style="border-bottom: none">
+                                <div class="row">
+                                    <span class="input-label col col-33"
+                                          style="float: left;width:15%;margin-left: -12px">选项{{list.id}}</span>
+                                    <input class="col col-67" type="text" placeholder="请输入选项内容"
+                                           ng-model="list.option_desc" style="margin-left:12px;float:left;width:65%;">
+                                    <a class="icon icon-img" ng-click="action.addImg(3, list)" ng-show="list.pic==''"></a>
+                                </div>
+                            </div>
+                            <div style="position: relative" ng-show="list.pic!=''" ng-repeat="(index,img) in list.pic">
+                                <img ng-src="{{img}}" style="width:100px;height:100px;margin-bottom: 8px;display:inline-block;"
+                                     class="col col-67 col-offset-33">
+                                <a style="font-size: 40px;color: red;position: relative;top:-70px;left: -20px"
+                                   class="icon ion-close-circled"
+                                   ng-click="action.deleteImg(index,3, list)"></a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="item item-input">
+                        <a class="input-label" style="color: #299a15" ng-click="action.addOptions(item)">
+                            <i class="icon ion-ios-plus-outline"></i>
+                            &nbsp;添加选项
+                        </a>
+                        <a class="input-label" style="color: #299a15" ng-if="item.options.length > 2" ng-click="action.deleteOptions(item)">
+                            <i class="icon ion-ios-minus-outline"></i>
+                            &nbsp;删除选项
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p class="item item-input" ng-click="action.addVotes()"
+           style="margin: 0 auto 50px;text-align: center;padding-left: 0;line-height: 40px;color: #222328">
+            <span style="margin: 0 auto">+ 添加问题</span>
+        </p>
+    </ion-content>
+</ion-modal-view>

@@ -1,0 +1,57 @@
+<ion-view view-title="活动详情">
+    <ion-nav-buttons side="left">
+        <button class="button icon ion-ios-arrow-left button-clear button-light button-white" ng-click="goBack()"></button>
+    </ion-nav-buttons>
+    <ion-content class="" style="background-color: #e6e6e6;margin-bottom: 47px">
+        <div class="list">
+            <label class="item item-input">
+                <span class="input-label">标题</span>
+                <input type="text" value="{{items.name}}">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">报名截止时间</span>
+                <input type="text" value="{{items.signup_end}}">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">活动时间</span>
+                <input type="text" value="{{items.begin}}">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">活动地点</span>
+                <input type="text" value="{{items.address}}">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">人数</span>
+                <input type="text" value="{{items.person_num}}">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">费用</span>
+                <input type="text" value="{{items.fee}}">
+            </label>
+            <div style="background-color:#fff">
+                <p style="padding: 20px 15px;line-height: 30px;">
+                    {{items.content}}
+                </p>
+                <!-- putong -->
+                <div class="news-images row row-wrap" ng-if="items.pics">
+                    <div class="col-33" ng-repeat="keys in items.pics track by $index" ng-if="keys.length> 0">
+                        <img style="width:98%" ng-src="{{qiniuDomain + keys}}" ng-click="goto('community-zone-event-pictures', {id:items.id})"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="background-color: #fff;font-weight: bold">
+            <p style="padding:10px 15px;">已报名邻居({{activitys.length}}名)</p>
+            <a class="item item-avatar" ng-repeat="activity in activitys">
+                <img ng-src="{{qiniuDomain + activity.account_info.avatar}}">
+                <h2 style="margin:0;line-height: 40px">{{activity.account_info.nickname}}( <span style="color:#2c8d43;">{{activity.address}}</span> )</h2>
+            </a>
+        </div>
+    </ion-content>
+    <div class="bar bar-footer" style="background-color: #299a15;color: #fff" ng-show="!isJoin">
+        <div class="title" ng-click="action.join(false)" >我要报名</div>
+    </div>
+    <div class="bar bar-footer" style="background-color: grey;color: #fff" ng-show="isJoin">
+        <div class="title" ng-click="action.join(true)">取消报名</div>
+    </div>
+</ion-view>

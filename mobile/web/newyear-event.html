@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>红包</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function () {
+            return false;
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current" id="newyear-event">
+        <div class="content content-no-padding" id="container" style="background-color: #f4efe9">
+        </div>
+    </div>
+</div>
+
+<script id="tpl" type="text/template">
+    <img src="http://pub.huilaila.net/newyear-1.jpg" style="width: 100%">
+    <img src="http://pub.huilaila.net/newyear-2.jpg" style="width: 100%;margin-bottom: 1rem">
+    <!-- 任务 -->
+    <div style="padding: 0 1.25rem;margin-bottom: 1rem">
+        <p style="font-size: .75rem"><span style="color:#133286;" id="home">任务一：我家在这里</span>（共${activity['1']}人完成）</p>
+        <div style="background-size:contain;" class="activity-item">
+            <h3 style="margin: 0;">在“我家”-“房产管理”里面添加一套房产，并通过“房主认证”。</h3>
+        </div>
+    </div>
+    <div style="padding: 0 1.25rem;margin-bottom: 1rem">
+        <p style="font-size: .75rem"><span style="color:#133286;" id="neighbor">任务二：邻居你好啊</span>（共${activity['2']}人完成）</p>
+        <div style="background-size:contain" class="activity-item">
+            <h3 style="margin: 0;">完成任务一后，在“友邻”中所在小区内查看邻居信息，并关注一名邻居</h3>
+        </div>
+    </div>
+    <div style="padding: 0 1.25rem;margin-bottom: 1.4rem">
+        <p style="font-size: .75rem"><span style="color:#133286;" id="forum">任务三：给您拜年啦</span>（共${activity['3']}人完成）</p>
+        <div style="background-size:contain" class="activity-item">
+            <h3 style="margin: 0;">完成任务一后，在“来信”中找到小区论坛，给邻居朋友们发一条拜年贴</h3>
+        </div>
+    </div>
+    <img src="http://pub.huilaila.net/newyear-3.jpg" style="height: 1.2rem;display: block;margin: 0 auto 1rem">
+    <h3 style="text-align: center;padding: 0 1.25rem">
+        初五早上8点，平台在所有已完成三项任务的参与人员中抽取中奖者，并通过微信派发现金红包
+    </h3>
+    <h3 style="text-align: center;padding: 0 1.25rem;font-weight: bold">
+        一等奖 1 名： 288元现金
+    </h3>
+    <h3 style="text-align: center;padding: 0 1.25rem;font-weight: bold">
+        二等奖 5 名： 88元现金
+    </h3>
+    <h3 style="text-align: center;padding: 0 1.25rem;font-weight: bold;margin-bottom: 1.6rem">
+        三等奖 50 名： 8元现金
+    </h3>
+    {@if list.length != 0}
+    <img src="http://pub.huilaila.net/newyear-5.jpg" style="width: 100%;margin-bottom: 1rem">
+    {@each list as item, index}
+    <div style="margin: 0 1rem 1rem;border-bottom: 1px solid #be0b21;">
+        <h3 class="font-red" style="text-align: center;font-weight: bold">${index | transNum}等奖</h3>
+        {@each item as man}
+        <div class="user-item forum" style="border: none">
+            <div style="width: 80%;float:left;" class="href">
+                <div class="user-item-img"><img
+                        src="${man.headimgurl}" class="head-img">
+                </div>
+                <div class="user-item-content" style="width: 80%">
+                    <h3>${man.nickname}</h3>
+                </div>
+            </div>
+            <div style="float:right;width: 20%;">
+                <h3 style="line-height: 2.8rem;margin: 0;text-align: right;">
+                    ￥${index | transAward}元
+                </h3>
+            </div>
+        </div>
+        {@/each}
+    </div>
+    {@/each}
+    {@/if}
+    <img src="http://pub.huilaila.net/newyear-6.png" style="display: block;width: 100%;padding: 0 .6rem;margin-bottom: 1.4rem">
+    <h3 style="text-align: center">
+        点右上角“…”按钮，分享到朋友圈 <br>
+        让亲朋好友们一起来“赢”财神
+    </h3>
+    <img src="http://pub.huilaila.net/newyear-7.png" style="width:5rem;display: block;margin: 0 auto">
+    <h3 style="text-align: center">
+        回来啦社区 <br>
+        <span class="font-red">一个有温度的生活服务平台</span>
+    </h3>
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/newyear-event.js"></script>
+</body>
+</html>

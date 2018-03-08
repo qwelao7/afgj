@@ -1,0 +1,53 @@
+<ion-view view-title="成长日志" hide-nav-bar="true">
+    <ion-header class="reset-header">
+        <div class="bar bar-header">
+            <div class="dropdown">
+                <button id="dropdown" data-id="0" class="button" ng-click="params.drop = !params.drop">{{params.title}}
+                </button>
+                <i class="icon ion-arrow-down-b" ng-show="!params.drop"></i>
+                <i class="icon ion-arrow-up-b" ng-show="params.drop"></i>
+            </div>
+        </div>
+        <ul class="dropdown-menu" ng-show="params.drop">
+            <li ng-click="params.drop=0;goto('base.loupan-journal', {id:sub.id})" name="dropdown" ng-repeat="sub in title"><a href="">{{sub.name}}</a>
+            </li>
+        </ul>
+    </ion-header>
+    <div class="tabs-striped  tabs-color-balanced tabs-top">
+        <div class="tabs" style="height: 40px;line-height: 40px;padding: 0 8px">
+            <a class="tab-item news-loupan-tab"
+               ng-click="goto('base.news-loupan', {id:params.id,message_type:0})">
+                全部
+            </a>
+            <a class="tab-item news-loupan-tab tab-group-news"   ng-click="goto('base.news-loupan', {id:params.id,message_type:1})">
+                <span class="news-tab news-tab-news" ></span>
+                新闻
+            </a>
+            <a class="tab-item news-loupan-tab"  ng-click="goto('base.news-loupan', {id:params.id,message_type:2})">
+                <span class="news-tab news-tab-activity" ></span>
+                活动
+            </a>
+            <a class="tab-item news-loupan-tab active">
+                <span class="news-tab news-tab-journal active" ></span>
+                成长日志
+            </a>
+        </div>
+    </div>
+    <ion-content ng-class="0==items.length?'':'grey'" style="margin-top: 83px">
+        <div class="no-content" ng-show="1==sysOp.page&&!sysOp.moreDataFlag">
+            <img ng-src="../../assets/css/images/blank_news.png">
+            <p>抱歉，该楼盘尚无信息~</p>
+        </div>
+        <div class="list house-list" style="margin-bottom: 15px;background-color: #fff">
+            <a class="item item-thumbnail-left"
+               ng-click="goto('base.loupan-journal-detail', {id:item.id})" ng-repeat="item in items">
+                <img ng-src="{{qiniuDomain + item.thumbnail}}"/>
+                <h3><span>{{item.name}}</span><span class="price">{{item.avg_price}}</span></h3>
+                <p>{{item.address}}</p>
+                <div class="tag-list">
+                    <span ng-repeat="tag in item.tag" class="{{keyMap['loupanTag'][tag]['class']}}">{{keyMap['loupanTag'][tag]['name']}}</span>
+                </div>
+            </a>
+        </div>
+    </ion-content>
+</ion-view>

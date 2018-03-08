@@ -1,0 +1,80 @@
+<ion-modal-view>
+  <ion-header-bar class="bar bar-header">
+    <button class="button button-clear button-primary" ng-click="orderCommentModal.hide()">取消</button>
+    <h1 class="title">订单评价</h1>
+    <!--<button class="button button-clear button-positive" ng-click="action.orderCommentSubmit(item)">确定</button>-->
+  </ion-header-bar>
+  <ion-content class="page-order page-order-detail page-order-comment">
+    <div class="list">
+        <ion-item>
+            <div class="row header">
+                <div class="col col-25 col-center">{{item.service.title}}</div>
+                <div class="col col-center text-gray">{{item.servicetime.date_time.substr(0, 15)}}</div>
+                <div class="col col-25 col-center text-orange" ng-switch="item.userstatus">
+                    <span ng-switch-when="0">待执行</span>
+                    <span ng-switch-when="1">待评价</span>
+                    <span ng-switch-when="2">已完成</span>
+                    <span ng-switch-when="3">已取消</span>
+                    <span ng-switch-when="4">已终止</span>
+                </div>
+            </div>
+            <div class="row content" ng-click="goto('base.order-detail', {orderId:item.id})"  style="border-bottom-width: .4rem;    border-bottom-color: #e6e6e6;">
+                <div class="col col-20 col-center">
+                    <span class="ui-icon icon-wash"></span>
+                </div>
+                <div class="col col-80">
+                    <div class="row" ng-repeat="quote in item.quote">
+                        <div class="col col-50">
+                            {{quote.servicequote.title}}
+                        </div>
+                        <div class="col col-right text-gray">x{{quote.quality}}</div>
+                        <div class="col col-33 col-right">¥ {{quote.amount | number:2}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-offset-50 col-right">总额:</div>
+                        <div class="col col-33 col-right">¥ {{item.amount | number:2}}</div>
+                    </div>
+                </div>
+            </div>
+        </ion-item>
+        <div class="comment-box">
+            <div class="box-header row">
+                <div class="col col-33">服务质量</div>
+                <div class="col col-right stars">
+                    <span class="ui-icon icon-star" ng-class="{active:comment.quality_star>=1}" ng-click="action.setCommentLevel('quality_star', 1)"></span>
+                    <span class="ui-icon icon-star" ng-class="{active:comment.quality_star>=2}" ng-click="action.setCommentLevel('quality_star', 2)"></span>
+                    <span class="ui-icon icon-star" ng-class="{active:comment.quality_star>=3}" ng-click="action.setCommentLevel('quality_star', 3)"></span>
+                    <span class="ui-icon icon-star" ng-class="{active:comment.quality_star>=4}" ng-click="action.setCommentLevel('quality_star', 4)"></span>
+                    <span class="ui-icon icon-star" ng-class="{active:comment.quality_star>=5}" ng-click="action.setCommentLevel('quality_star', 5)"></span>
+                </div>
+            </div>
+            <div class="box-header row">
+                <div class="col col-33">服务态度</div>
+                <div class="col col-right stars">
+                    <span class="ui-icon icon-star" ng-class="{active:comment.attitude_star>=1}" ng-click="action.setCommentLevel('attitude_star', 1)"></span>
+                    <span class="ui-icon icon-star" ng-class="{active:comment.attitude_star>=2}" ng-click="action.setCommentLevel('attitude_star', 2)"></span>
+                    <span class="ui-icon icon-star" ng-class="{active:comment.attitude_star>=3}" ng-click="action.setCommentLevel('attitude_star', 3)"></span>
+                    <span class="ui-icon icon-star" ng-class="{active:comment.attitude_star>=4}" ng-click="action.setCommentLevel('attitude_star', 4)"></span>
+                    <span class="ui-icon icon-star" ng-class="{active:comment.attitude_star>=5}" ng-click="action.setCommentLevel('attitude_star', 5)"></span>
+                </div>
+            </div>
+            <div class="box-header row">
+                <div class="col col-33">管家服务</div>
+                <div class="col col-right stars">
+                    <span class="ui-icon icon-star" ng-class="{active:comment.service_star>=1}" ng-click="action.setCommentLevel('service_star', 1)"></span>
+                    <span class="ui-icon icon-star" ng-class="{active:comment.service_star>=2}" ng-click="action.setCommentLevel('service_star', 2)"></span>
+                    <span class="ui-icon icon-star" ng-class="{active:comment.service_star>=3}" ng-click="action.setCommentLevel('service_star', 3)"></span>
+                    <span class="ui-icon icon-star" ng-class="{active:comment.service_star>=4}" ng-click="action.setCommentLevel('service_star', 4)"></span>
+                    <span class="ui-icon icon-star" ng-class="{active:comment.service_star>=5}" ng-click="action.setCommentLevel('service_star', 5)"></span>
+                </div>
+            </div>
+            <div class="box-content">
+                <textarea name="" id="" cols="30" rows="10" placeholder="请输入评价内容..." ng-model="comment.context"></textarea>
+            </div>
+        </div>
+    </div>
+  </ion-content>
+    <div class="bar bar-footer bar-balanced" ng-click="action.orderCommentSubmit(item)">
+        <div class="title">发表评价</div>
+    </div>
+</ion-modal-view>

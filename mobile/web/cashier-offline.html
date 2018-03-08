@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>收银台</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="cashier-offline">
+        <header class="bar bar-nav" id="header">
+            <h1 class="title">收银台</h1></header>
+        <div class="bar bar-tab buttons-row white no-border row" style="background-color: #fff" id="submit">
+            <div class="white font-black" style="width:66%;line-height: 2.5rem;text-align: center" id="commentBtn">
+                <span class="font-green" id="order_amount">
+                    ￥0.00
+                </span>
+            </div>
+            <div class="green font-white" style="width:34%;line-height: 2.5rem;text-align: center">
+                确认支付
+            </div>
+        </div>
+        <div class="content grey" id="container">
+            <div class="points-index-banner" id="container1">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script id="tpl" type="text/template">
+    {@each list as item,index}
+    <div class="has-border-bottom row lr-padding white" style="width: 100%;height: 4rem" data-id="${index}">
+        <div class="col col-25" style="height: 100%;width: 18%">
+            <img style="width: 2.8rem;height: 2.8rem;margin: .6rem 0"
+                 src="${item.goods_thumb}">
+        </div>
+        <div class="col col-75 order-info">
+            <h2 style="margin:.4rem 0 0 0">
+                ${item.goods_name} ${item.attr_value}
+            </h2>
+            <h4 style="margin: 0">
+                销量: ${item.sale_num} 库存: ${item.goods_number}
+            </h4>
+            <h2 style="margin: 0">
+                <span class="font-green">￥${item.shop_price}</span>
+                <span style="float: right">
+                    <i class="iconfont icon-Reduce-hll font-green" style="padding: 0 .3rem;;visibility: hidden"></i>
+                    <span style="visibility: hidden" class="buy_num">${item.current_num}</span>
+                    <i class="iconfont icon-AddTo-hll font-green" style="padding: 0 .3rem;"></i>
+                </span>
+            </h2>
+        </div>
+    </div>
+    {@/each}
+</script>
+
+<script id="tpl1" type="text/template">
+    <h3 style="display:table-cell;height:100px;vertical-align:middle;font-size: .75rem;color:#fff;">
+        <img src="${logo | imgPath}" class="head-img" style="width: 3.9rem;height: 3.95rem;"><br>
+        <span>${name}</span>
+    </h3>
+</script>
+
+<script id="button" type="text/template">
+
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/cashier-offline.js"></script>
+
+</body>
+</html>

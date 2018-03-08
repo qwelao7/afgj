@@ -1,0 +1,45 @@
+<ion-view view-title="个人信息">
+    <ion-nav-buttons side="left">
+        <button class="button icon ion-ios-arrow-left button-clear button-positive" ng-click="goBack()"></button>
+    </ion-nav-buttons>
+    <ion-content class="has-header" scroll="false">
+        <div class="list  account-manage-list">
+            <a class="item item-icon-right" ng-click="action.addImg()">
+                <span class="account-name">头像</span>
+                <img class="account-head-icon" ng-src="{{params.img[0]}}?imageView2/1/w/30/h/30" alt="">
+            </a>
+
+            <a class="item" ng-click="editShow({key: 'nick',title: '昵称', name:user.nick})">
+                昵称
+                <span class="item-note">
+                    {{user.nick}}
+                </span>
+            </a>
+            <a class="item" ng-click="editShow({key: 'name',title: '姓名', name:user.name})">
+                真实姓名
+                <span class="item-note">
+                    {{user.name}}
+                </span>
+            </a>
+            <a class="item"
+               ng-click="editShow({showSelect:1, key: 'sex',title: '性别', name:user.sex, params:[{key:'男',val:'男'},{key:'女',val:'女'}]});">
+                性别
+                <span class="item-note">
+                    {{user.sex}}
+                </span>
+            </a>
+            <a class="item" ng-click="goto('bind-mobile')">
+                手机号
+                <span class="item-note">
+                    {{user.phone?user.phone:'单击绑定手机号码'}}
+                </span>
+            </a>
+            <a class="item" ng-click="goto('account-skill')">
+                个性标签
+                <div class="item-note item-skill">
+                    <span class="label"  ng-repeat="skill in skills">{{skill.skill}}</span>
+                </div>
+            </a>
+        </div>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>确认</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="confirm-tpl">
+        <!-- header -->
+        <header class="bar bar-nav">
+
+        </header>
+        <!-- content -->
+        <div class="content lr-padding white login-success-content" id="container">
+        </div>
+        <!-- nav -->
+
+    </div>
+</div>
+
+<script id="tpl" type="text/template">
+    {@if type == 1}
+    <a class="iconfont icon-wt-hll login-success-icon"></a>
+    <h1>确定加入<br>
+        ${content.title}活动工作组么?</h1>
+    {@else if type == 2}
+    {@if remark}
+    <div class="white" style="padding-top: 2rem;">
+        {@each remark as item}
+        {@if item.type != 'pics'}
+        <div class="normal-list lr-padding has-border-bottom row error_item">
+            <div class="col-40 h3" style="color: #888;margin-left: 0">${item.label}</div>
+            <div class="col-60">
+                <span class="h3">${item.value}</span>
+            </div>
+        </div>
+        {@else if item.type == 'pics'}
+        {@if item.value && item.value.length > 0}
+        <div class="error-img-row row white lr-padding has-border-bottom">
+            {@each item.value as pic}
+            <div class="error-img-container" data-link="${pic | imgPath}">
+                <img src="${pic | imgPath}" style="width: 4rem;height: auto;">
+            </div>
+            {@/each}
+        </div>
+        {@/if}
+        {@/if}
+        {@/each}
+    </div>
+    {@/if}
+    {@else if type == 4}
+    <a class="iconfont icon-wt-hll login-success-icon"></a>
+    <h1>确定加入<br>
+        ${address_desc}么?</h1>
+    {@/if}
+</script>
+
+<script id="nav" type="text/template">
+    {@if type == 1}
+    <!-- 活动工作组 -->
+    <nav class="bar bar-tab" id="submit" data-pass="${hasPass}">
+        <a class="tab-item external">
+            {@if !hasPass}
+            <span class="font-white">确定加入</span>
+            {@else}
+            <span class="font-white">已加入</span>
+            {@/if}
+        </a>
+    </nav>
+    <!-- 加入房产确认 -->
+    {@else if type == 4}
+    <!-- 活动工作组 -->
+    <nav class="bar bar-tab" id="joinFang" data-pass="${hasPass}">
+        <a class="tab-item external">
+            {@if !hasPass}
+            <span class="font-white">确定加入</span>
+            {@else}
+            <span class="font-white">已加入</span>
+            {@/if}
+        </a>
+    </nav>
+    {@else if type == 2}
+    <!-- 活动审核 -->
+    <nav class="bar bar-tab">
+        {@if is_handle == 0}
+        <a class="tab-item external auth_success">
+            <span class="font-white">审核通过</span>
+        </a>
+        <a class="tab-item external grey auth_fail">
+            <span class="font-dark">审核不通过</span>
+        </a>
+        {@else}
+        <a class="tab-item external">
+            {@if check_status == 1}
+            <span class="font-white">审核已通过</span>
+            {@else if check_status == 2}
+            <span class="font-white">审核未通过 | ${fail_reason}</span>
+            {@/if}
+        </a>
+        {@/if}
+    </nav>
+    {@else if type == 3}
+    <!-- 退费审核 -->
+    <nav class="bar bar-tab">
+        {@if !params.is_handle}
+        <a class="tab-item external con_success">
+            <span class="font-white">允许退费</span>
+        </a>
+        <a class="tab-item external grey con_fail">
+            <span class="font-dark">拒绝退费</span>
+        </a>
+        {@else}
+        <a class="tab-item external">
+            {@if refund.status == 2}
+            <span class="font-white">退费申请通过</span>
+            {@else if refund.status == 3}
+            <span class="font-white">退费申请被拒绝 | ${refund.check_reason}</span>
+            {@/if}
+        </a>
+        {@/if}
+    </nav>
+    {@/if}
+</script>
+
+<!-- 退费审核 -->
+<script id="refund" type="text/template">
+    <div class="white" style="height: 4rem;">
+        <img class="top-head-3q" src="${user.headimgurl}" style="top: 1rem;">
+    </div>
+    <div class="white" style="text-align: center;padding: .3rem 0 1.2rem">
+        <h3 style="margin: 0">
+            ${user.nickname}
+        </h3>
+    </div>
+
+    <div class="normal-list lr-padding has-border-bottom row error_item">
+        <div class="col-40 h3" style="color: #888;margin-left: 0">活动名称</div>
+        <div class="col-60">
+            <span class="h3">${refund.title}</span>
+        </div>
+    </div>
+    <div class="normal-list lr-padding has-border-bottom row error_item">
+        <div class="col-40 h3" style="color: #888;margin-left: 0">活动费用</div>
+        <div class="col-60">
+            <span class="h3">¥&nbsp;${apply.total_fee}</span>
+        </div>
+    </div>
+    <div class="normal-list lr-padding has-border-bottom row error_item">
+        <div class="col-40 h3" style="color: #888;margin-left: 0">报名时友元抵扣</div>
+        <div class="col-60">
+            <span class="h3">¥&nbsp;${apply.youyuan_fee}</span>
+        </div>
+    </div>
+    <div class="normal-list lr-padding has-border-bottom row error_item">
+        <div class="col-40 h3" style="color: #888;margin-left: 0">实际缴费</div>
+        <div class="col-60">
+            <span class="h3">¥&nbsp;${apply.cash_fee}</span>
+        </div>
+    </div>
+    <div class="normal-list lr-padding has-border-bottom row error_item">
+        <div class="col-40 h3" style="color: #888;margin-left: 0">申请退费金额</div>
+        <div class="col-60">
+            <span class="h3 font-green">¥&nbsp;${refund.fee | getMoney, refund.point}</span>
+        </div>
+    </div>
+</script>
+
+<!-- title -->
+<script id="title" type="text/template">
+    {@if type == 1}
+    <h1 class="title">加入工作组</h1>
+    {@else if type == 2}
+    <h1 class="title">活动审核</h1>
+    {@else if type == 3}
+    <h1 class="title">退费审核</h1>
+    {@else if type == 4}
+    <h1 class="title">加入房产</h1>
+    {@/if}
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js' charset='utf-8'></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/confirm-tpl.js"></script>
+
+</body>
+</html>

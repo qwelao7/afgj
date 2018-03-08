@@ -1,0 +1,20 @@
+<ion-view view-title="品牌馆">
+    <ion-nav-buttons side="left">
+        <button class="button icon ion-ios-arrow-left button-clear button-positive"
+                ng-click="goto('base.home')"></button>
+    </ion-nav-buttons>
+    <ion-content>
+        <img src="../../assets/css/images/pinpai_banner.png" style="width: 100%" ng-click="goto('brand-hall')">
+        <div class="list house-list">
+            <a class="item item-thumbnail-left" ng-repeat="item in items"
+               ng-click="goto('floor-information', {id:item.id})">
+                <img ng-src="{{qiniuDomain + item.thumbnail}}"/>
+                <h3><span>{{item.name}}</span><span class="price">{{item.avg_price}}</span></h3>
+                <p>{{item.address}}</p>
+                <div class="tag-list">
+                    <span ng-repeat="tag in item.tag" class="{{keyMap['loupanTag'][tag]['class']}}">{{keyMap['loupanTag'][tag]['name']}}</span>
+                </div>
+            </a>
+        </div>
+    </ion-content>
+</ion-view>

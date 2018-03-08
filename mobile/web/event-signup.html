@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>活动</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta http-equiv="Expires" CONTENT="0">
+    <meta http-equiv="Cache-Control" CONTENT="no-cache">
+    <meta http-equiv="Pragma" CONTENT="no-cache">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="event-signup">
+        <header class="bar bar-nav">
+            <h1 class="title">
+                活动报名
+            </h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+        </header>
+        <!-- 内容 -->
+        <div class="content content-no-padding" id="container">
+        </div>
+    </div>
+</div>
+
+<!-- 选项 -->
+<script id="items" type="text/template">
+    {@if events_type == 'sessions'}
+    <!-- 活动多场次 -->
+    <div class="list-block media-list lg-margin" style="margin: 0 0 .6rem;">
+        <ul>
+            {@each sessions as item}
+            <li data-id="${item.id}" data-canjoin="${item.sessions_num | computed, item.joined_num}">
+                <label class="label-checkbox item-content">
+                    <input type="radio" name="my-radio">
+                    <div class="item-media"><i class="icon icon-form-checkbox"></i></div>
+                    <div class="item-inner" style="padding: 0 .6rem .3rem 0">
+                        <div class="item-title-row">
+                            <div class="item-title list-title" style="padding: 0;font-size: .75rem;color: #333338">
+                                ${item.title}
+                            </div>
+                            <div class="item-after font-green" style="line-height: 1.4rem;font-size: .55rem">
+                                ${item.joined_num}/${item.sessions_num}人
+                            </div>
+                        </div>
+                        <div class="item-text"
+                             style="height: auto;overflow: visible;text-overflow: clip;-webkit-line-clamp: 8;font-size: .65rem;color: #888">
+                            ${item.content}
+                        </div>
+                    </div>
+                </label>
+            </li>
+            {@/each}
+        </ul>
+    </div>
+
+    {@/if}
+</script>
+
+<!-- 预留信息 -->
+<script id="info" type="text/template">
+    <form id="remark" class="list-block" style="margin: 0;">
+        {@each ext_fields as field, index}
+        {@if field.type != 'pics' && field.type != 'selector'}
+        <div class="white row neighbor-detail-sharecom normal-list has-border-bottom" style="margin-bottom: 0">
+            <h3 class="col-33" style="margin-left: 0">${field.label}</h3>
+            <div class="col-66 h3">
+                <input type="${field.type | filter}" placeholder="请输入.." style="border: none" value="" name="${index}"
+                    data-type="${field.type}">
+            </div>
+        </div>
+        {@else if field.type == 'pics'}
+        <div class="white row">
+            <div class="item-content" style="padding-left: .6rem;overflow: hidden;clear: both;" data-label="${index}">
+                <div class="item-inner"
+                     style="height:auto;min-height:2.8rem;padding-bottom:1rem;overflow: visible">
+                    <h3 class="col-33 left" style="padding: 0;font-size: .7rem;color: #888;margin-left: 0;">${field.label}</h3>
+                    <div class="col-66 left" style="padding: .5rem 0;">
+                        <i class="iconfont icon-camera" style="padding:.55rem;border:1px dotted #a0a0a0"></i>
+                    </div>
+                </div>
+            </div>
+            <!-- 图片预览 -->
+            <input type="hidden" name="${index}">
+            <div class="row" style="position: relative;"></div>
+        </div>
+        {@else if field.type == 'selector'}
+        <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+            <div class="col-33 h3" style="color: #888;margin-left: 0">${field.label}</div>
+            <div class="col-66" style="margin-left: 4%;position: relative">
+                <input type="text"
+                       style="font-size:.7rem;width: 96%;display: inline-block"
+                       placeholder="请选择${field.label}.." class="event_selector" id="${index}_picker"
+                       data-arr="${field.value}"
+                        data-label="${field.label}">
+                <input type="hidden" name="${index}" value="">
+                <i class="iconfont icon-right pull-right"
+                   style="position: absolute;right: .2rem;top: .1rem;"></i>
+            </div>
+        </div>
+        {@/if}
+        {@/each}
+        <!-- 活动报名缴费 -->
+        {@if free == 0}
+        <br>
+        <div class="sm-margin white">
+            <div class="lr-padding order-stat has-border-bottom">
+                <h3 style="margin: 0;color: #888" id="red_coupon">
+                    人数
+                    <span style="color: #595757;float: right">
+                        <span class="num_reduce num_btn" style="font-size: 1rem;font-weight: bold;margin-right: .5rem;">－</span>
+                        <span id="join_num">1</span>
+                        <span class="num_add num_btn"
+                              style="font-size: 1rem;font-weight: bold;margin-left: .5rem;">＋</span>
+                    </span>
+                </h3>
+            </div>
+            <div style="clear: both"></div>
+            <div class="lr-padding order-stat has-border-bottom">
+                <h3 style="margin: 0;color: #888">
+                    报名费
+                    <span style="color: #595757;float: right">
+                    <span>￥<span id="join_amount">${fee}</span></span>
+                </span>
+                </h3>
+            </div>
+            <div style="clear: both"></div>
+            {@if accept_point == 1 && point && point != 0}
+            <div class="lr-padding order-stat has-border-bottom">
+                <h3 style="margin: 0;color: #888">
+                    <span>可用<span>${point}</span>友元抵￥</span><span id="usedPoints"></span>
+                    <label class="label-switch" style="float: right;margin: .4rem auto;">
+                        <input type="checkbox" name="points" checked>
+                        <div class="checkbox"></div>
+                    </label>
+                </h3>
+            </div>
+            {@/if}
+            <div style="clear: both"></div>
+            <div class="lr-padding order-stat has-border-bottom">
+                <h2 style="margin: 0;color: #595757;float: right">
+                    实付：
+                    <span class="font-green">￥<span id="total_amount"></span></span>
+                </h2>
+            </div>
+        </div>
+        {@/if}
+        {@if apply_tip != ''}
+        <h3 style="padding: 0 .5rem;color: #c0c0c0;">${apply_tip}</h3>
+        {@/if}
+    </form>
+</script>
+
+<!-- 提交 -->
+<script id="tpl" type="text/template">
+    <nav class="bar bar-tab" id="submit-btn">
+        <a class="tab-item external">
+            <span class="font-white">确定</span>
+        </a>
+    </nav>
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script type="text/javascript" src="/js/event-signup.js"></script>
+</body>
+</html>

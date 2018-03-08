@@ -1,0 +1,35 @@
+<ion-modal-view>
+    <ion-header-bar class="bar bar-header">
+        <button class="button button-clear button-primary" ng-click="cityModal.hide()">取消</button>
+        <h1 class="title">城市区域选择</h1>
+        <!--<button class="button button-clear button-positive" ng-click="datetimeSelectSubmit()">确定</button>-->
+    </ion-header-bar>
+    <ion-content class="">
+        <div class="list">
+            <ion-radio ng-repeat="item in cityAction.provinceData"
+                       ng-value="item.name"
+                       ng-model="cityAction.province"
+                       ng-click="cityAction.setProvince(item)"
+                       ng-show="cityAction.step==0"
+                       name="city-0">
+                {{ item.name }}
+            </ion-radio>
+            <ion-radio ng-repeat="item in cityAction.cityData"
+                       ng-value="item.name"
+                       ng-model="cityAction.city"
+                       ng-click="cityAction.setCity(item)"
+                       ng-show="cityAction.step==1"
+                       name="city-1">
+                {{ item.name }}
+            </ion-radio>
+            <ion-radio ng-repeat="item in cityAction.areaData"
+                       ng-value="item.name"
+                       ng-model="cityAction.area"
+                       ng-show="cityAction.step==2"
+                       ng-click="cityAction.setArea(item)"
+                       name="city-2">
+                {{ item.name }}
+            </ion-radio>
+        </div>
+    </ion-content>
+</ion-modal-view>

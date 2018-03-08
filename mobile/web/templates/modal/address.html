@@ -1,0 +1,39 @@
+<ion-modal-view>
+    <ion-header-bar class="bar bar-header">
+        <button class="button button-clear button-primary" ng-click="addressModal.hide()">取消</button>
+        <h1 class="title">{{addressEditInfo.title}}</h1>
+        <button class="button button-clear button-positive" ng-click="addressSubmit()">提交</button>
+    </ion-header-bar>
+    <ion-content class="" style="background-color: #e6e6e6;">
+        <div class="list">
+            <label class="item item-input">
+                <span class="input-label">城市区域</span>
+                <input ng-model="addressEditInfo.area" placeholder="请选择城市区域.." type="text" ng-click="cityAction.select(addressEditInfo.area)"
+                       ng-readonly="1" style="background-color: #fff;">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">小区或大厦名字</span>
+                <input ng-model="addressEditInfo.mansion" placeholder="请填写小区大厦名字.." type="text">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">楼号门牌号</span>
+                <input ng-model="addressEditInfo.building_house_num" placeholder="请填写楼号门牌号.." type="text">
+            </label>
+            <ion-toggle class="item item-toggle-default" ng-model="settingDefault.checked"
+                        ng-checked="settingDefault.checked" ng-change="defaultChange()">
+                {{ settingDefault.text }}
+            </ion-toggle>
+            <label class="item item-input">
+                <span class="input-label">联系人</span>
+                <input ng-model="addressEditInfo.contact_to" type="text">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">联系电话</span>
+                <input ng-model="addressEditInfo.mobile" type="tel">
+            </label>
+        </div>
+    </ion-content>
+    <div class="bar bar-footer bar-balanced" style="background-color: #009042" ng-show="addressEditInfo.recoverFang">
+        <div class="title" ng-click="action.recover()">{{'启用虚拟房产'}}</div>
+    </div>
+</ion-modal-view>

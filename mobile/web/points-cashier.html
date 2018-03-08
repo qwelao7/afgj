@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>收银台</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="points-cashier">
+        <header class="bar bar-nav" id="header">
+            <h1 class="title">收银台</h1></header>
+        <div class="content grey" id="container">
+        </div>
+    </div>
+</div>
+
+<script id="tpl" type="text/template">
+    <div class="points-index-banner">
+        <h3 style="display:table-cell;height:100px;vertical-align:middle;font-size: .75rem;color:#fff;">
+            <img src="${logo | imgPath}" class="head-img" style="width: 3.9rem;height: 3.95rem;"><br>
+            <span>${name}</span>
+        </h3>
+    </div>
+
+    <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+        <div class="col-33 h3" style="color: #888">消费金额(元)</div>
+        <div class="col-66">
+            <input type="text" placeholder="请输入金额" style="border: none;width: 100%" name="input_pay">
+        </div>
+    </div>
+
+    <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0;height: 2.8rem">
+        <div class="col-33 h4" style="color: #888">备注(选填):</div>
+        <div class="col-66">
+            <textarea name="remarks" style="width:100%;line-height: .8rem;margin: .3rem 0;border: none" rows="2"></textarea>
+        </div>
+    </div>
+</script>
+
+<script id="button" type="text/template">
+    <button class="bar bar-tab" id="submit" style="text-align: center;padding: .6rem;color: #fff;">
+        确定支付
+    </button>
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/points-cashier.js"></script>
+
+</body>
+</html>

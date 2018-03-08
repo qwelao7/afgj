@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>博物图书馆</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="library-book-search">
+        <!-- 头部 -->
+        <header class="bar bar-nav">
+            <div class="title title-search">
+                <!--<span class="white title-search-span" id="tag">-->
+                    <!--<span>所有图书</span>-->
+                    <!--<i class="iconfont icon-down" style="padding: 0"></i>-->
+                <!--</span>-->
+                <input class="title-search-input wd100" type="text" name="search"
+                       placeholder="请输入要搜索的书本名">
+            </div>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+            <a class="pull-right font-white" style="line-height: 2.2rem;font-size: .75rem" id="to-search">确定</a>
+        </header>
+        <!--右上角菜单弹出层-->
+        <div class="title-search-popup white" id="popup" style="display: none">
+        </div>
+        <!--遮罩层-->
+        <div class="modal-overlay" id="modal"></div>
+        <!-- 内容 -->
+        <div class="content content-no-padding">
+            <!-- 推荐搜索 && 我搜索过的 -->
+            <div id="init"></div>
+        </div>
+    </div>
+</div>
+
+<!-- 图书类别 -->
+<script id="classify" type="text/template">
+    <p class="modal-p-list modify has-border-bottom" style="color: #3d4145;padding-left:0;text-align: center"
+       data-id="0">
+        所有图书
+    </p>
+    {@each book_type as book, index}
+    <p class="modal-p-list modify" style="color: #3d4145;padding-left:0;text-align: center" data-id="${index}">
+        ${book}
+    </p>
+    {@/each}
+</script>
+
+<!-- 内容 -->
+<script id="items" type="text/template">
+    <div class="white lr-padding sm-margin">
+        <h3 style="margin: 0;">
+            <i class="iconfont icon-Like-hll"></i>
+            猜你要搜
+        </h3>
+        <div style="line-height: 1.6rem;padding: 0 .6rem .6rem">
+            {@each search_list as item}
+            <span class="h4 search-word">${item}</span>
+            {@/each}
+        </div>
+    </div>
+    {@if history.length > 0}
+    <div class="white lr-padding sm-margin">
+        <h3 style="margin: 0;">
+            <i class="iconfont icon-History-hll"></i>
+            <i class="iconfont icon-xiao10 pull-right" id="clean"></i>
+            最近搜索
+        </h3>
+        <div style="line-height: 1.6rem;padding: 0 .6rem .6rem" id="historyList">
+            {@each history as data}
+            <span class="h4 search-word">${data}</span>
+            {@/each}
+        </div>
+    </div>
+    {@/if}
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/library-book-search.js"></script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>订单</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name = "format-detection" content ="telephone=no, email=no" />
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script src="weixin/src/css/fonts/iconfont.js"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current" id="order-address">
+        <header class="bar bar-nav" id="header">
+            <h1 class="title" id="title">
+                选择收货地址
+            </h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+        </header>
+        <!-- 选择收货地址 -->
+        <div class="content content-no-padding" id="container">
+
+        </div>
+        <!-- bottom -->
+    </div>
+</div>
+
+<!-- 选择收货地址 -->
+<script id="list" type="text/template">
+    {@if defaultCheck.address_id}
+    <div class="sm-margin white" id="checked_address">
+        <div class="has-border-bottom row lr-padding address_item" style="width: 100%;"
+             data-address_id="${defaultCheck['address_id']}" data-type="${defaultCheck['type']}">
+            <div class="col-25" style="height: 100%;width: 10%">
+                <i class="iconfont icon-xz-hll font-green check-icon" style="padding: 0;margin: 1rem auto"></i>
+            </div>
+            <div class="col-75" style="height:100%;display: inline-block;margin-left: 0;width: 80%;">
+                <h3 STYLE="margin-bottom: 0">
+                    <span class="address_consignee">${defaultCheck['consignee']}</span>&nbsp;&nbsp;
+                    <span class="address_mobile">${defaultCheck['mobile']}</span>
+                    {@if defaultCheck['is_default'] == '1'}
+                    <a class="font-green" style="border-radius: .05rem;border: 1px solid #009042;padding: 0 .1rem">默认</a>
+                    {@/if}
+                </h3>
+                <h3 class="order-address" style="color: #888">
+                    收货地址：${defaultCheck['address']}
+                </h3>
+            </div>
+            <div class="col-25 address_edit" style="height: 80%;width: 10%;border-left:2px dotted #f6f6f9;">
+                <i class="iconfont font-green icon-bianji1 open-panel"
+                   style="font-size: 1.2rem;margin: 1rem auto;padding:0;float: right"></i>
+            </div>
+        </div>
+    </div>
+    {@/if}
+    <!-- 收货地址列表 -->
+    {@if list.length > 0}
+    <div class="white" id="address_list" style="margin-bottom: 2.5rem">
+        {@each list as item}
+        <div class="has-border-bottom row lr-padding address_item" style="width: 100%;"
+             data-address_id="${item.address_id}" data-type="${item.type}">
+            <div class="col-25" style="height: 100%;width: 10%">
+                <i class="iconfont icon-dz_hll check-icon" style="font-size: 1.2rem;padding: 0;margin: 1rem auto"></i>
+            </div>
+            <div class="col-75" style="height:100%;display: inline-block;margin-left: 0;width: 80%;">
+                <h3 STYLE="margin-bottom: 0">
+                    <span class="address_consignee">${item.consignee}</span>&nbsp;&nbsp;
+                    <span class="address_mobile">${item.mobile}</span>
+                    {@if item['is_default'] == '1'}
+                    <a class="font-green" style="border-radius: .05rem;border: 1px solid #009042;padding: 0 .1rem">默认</a>
+                    {@/if}
+                </h3>
+                <h3 class="order-address" style="color: #888">
+                    收货地址：${item.address}
+                </h3>
+            </div>
+            <div class="col-25 address_edit" style="height: 80%;width: 10%;border-left:2px dotted #f6f6f9;">
+                <i class="iconfont font-green icon-bianji1 open-panel"
+                   style="font-size: 1.2rem;margin: 1rem auto;padding:0;float: right"></i>
+            </div>
+        </div>
+        {@/each}
+    </div>
+    {@/if}
+</script>
+
+<!-- bottom -->
+<script id="bottom" type="text/template">
+    <nav class="bar bar-tab" id="addAddress" style="z-index: 100">
+        <a class="tab-item external">
+            <span class="font-white"><span style="font-size: 1.2rem">+</span> 新建地址</span>
+        </a>
+    </nav>
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/order-address.js"></script>
+</body>
+</html>

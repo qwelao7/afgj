@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>友邻</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current" id="public-info-error">
+        <header class="bar bar-nav">
+            <h1 class="title">上报信息错误</h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" href="javascript:history.go(-1)"></a>
+        </header>
+        <nav class="bar bar-tab" id="submit">
+            <a class="tab-item external">
+                <span class="font-white">提交</span>
+            </a>
+        </nav>
+        <div class="content content-no-padding" id="container">
+            <form class="list-block" style="margin:0">
+                <ul>
+                    <li class="">
+                        <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                            <div class="col-25 h3" style="color: #888">错误信息</div>
+                            <div class="col-75" style="margin-left: 8%;position: relative">
+                                <input type="text"
+                                       style="font-size:.7rem;width: 88%;display: inline-block" id="err-picker"
+                                       placeholder="请选择..">
+                                <input type="hidden" name="cpi_id">
+                                <i class="iconfont icon-right pull-right"
+                                   style="position: absolute;right: .2rem;top: .1rem;"></i>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="">
+                        <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                            <div class="col-25 h3" style="color: #888">错误原因</div>
+                            <div class="col-75" style="margin-left: 8%;position: relative">
+                                <input type="text"
+                                       style="font-size:.7rem;width: 88%;display: inline-block" id="reason-picker"
+                                       placeholder="请选择..">
+                                <input type="hidden" name="feedback_reason">
+                                <i class="iconfont icon-right pull-right"
+                                   style="position: absolute;right: .2rem;top: .1rem;"></i>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/public-info-error.js"></script>
+
+</body>
+</html>

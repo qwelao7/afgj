@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>设施管理</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current" id="equip-add-img">
+        <header class="bar bar-nav">
+            <h1 class="title">添加设施</h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+        </header>
+        <button class="bar bar-tab" id="submit" style="text-align: center;padding: .6rem;color: #fff;">
+            提交
+        </button>
+        <div class="content content-no-padding" id="container">
+            <div class="list-block" style="margin:0">
+                <ul>
+                    <li class="first">
+                        <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                        <div class="col-25 h3" style="color: #888">所属房产</div>
+                        <div class="col-75" style="margin-left: 8%;position: relative" id="communityList">
+                            <i class="iconfont icon-down pull-right"
+                               style="position: absolute;right: .2rem;top: .1rem;"></i>
+                        </div>
+                    </div>
+                    </li>
+
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner"
+                                 style="height:auto;min-height:2.8rem;margin:.5rem 0;overflow: visible">
+                                <div class="item-title label" style="padding: 0">发票</div>
+                                <div class="item-input"><i class="iconfont icon-camera"
+                                                           style="padding:.55rem;border:1px dotted #a0a0a0"
+                                                           id="imgs"></i></div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <h4 style="margin-top: 1.4rem;text-align: center">您只需上传发票照片，平台将为您整理设施信息。</h4>
+            <a class="h4 font-blue" style="display:block;text-align: center" id="add-self">没有发票，我自己填写</a>
+
+        </div>
+    </div>
+</div>
+<script id="communitys" type="text/template">
+    <input type="text" placeholder="请选择" style="border: none;width: 80%;" readonly id="picker2" value="${name}">
+</script>
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/equip-add-img.js"></script>
+
+</body>
+</html>

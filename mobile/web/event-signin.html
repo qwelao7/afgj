@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>活动</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current" id="event-signin">
+        <!-- 标题 -->
+        <header class="bar bar-nav">
+
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+        </header>
+        <!-- 导航 -->
+        <nav class="bar bar-tab" id="submit">
+            <a class="tab-item external">
+                <span class="font-white">提交</span>
+            </a>
+        </nav>
+        <!-- 内容 -->
+        <div class="content login-success-content" id="content">
+            <form class="list-block" style="margin:0">
+                <ul>
+                    <li class="">
+                        <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                            <div class="col-33 h3" style="color: #888;margin-left: 0;text-align: left">签到数字码</div>
+                            <div class="col-66" style="margin-left: 0;position: relative">
+                                <input type="text" placeholder="请输入.."
+                                       style="font-size:.7rem;width: 100%;display: inline-block"
+                                        name="code">
+                            </div>
+                        </div>
+                    </li>
+                    <li class="">
+                        <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                            <div class="col-33 h3" style="color: #888;margin-left: 0;text-align: left">签到人数</div>
+                            <div class="col-66" style="margin-left: 0;position: relative">
+                                <input type="text" placeholder="请输入.."
+                                       style="font-size:.7rem;width: 100%;display: inline-block"
+                                        name="num" value="1">
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- title -->
+<script id="title" type="text/template">
+    <h1 class="title ellipsis-full" style="width: 80%;margin-left: 10%">${event.title}</h1>
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/event-signin.js"></script>
+
+</body>
+</html>

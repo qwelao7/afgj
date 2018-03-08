@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>友邻投诉</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current" id="new-complaint">
+        <header class="bar bar-nav"><a class="iconfont icon-left pull-left icon-white open-panel"
+                                       href="javascript:history.go(-1)"></a>
+            <h1 class="title">新建投诉</h1></header>
+        <div class="content lr-padding grey" style="padding:0" id="container"><textarea name="" id="complaint" cols="39" rows="6"
+                                                                             style="border:none;padding:.6rem .4rem"
+                                                                             placeholder="请输入投诉原因.."></textarea>
+            <div class="white" style="margin-top:-.4rem" id="content">
+                <div class="upload-icon-container" id="imgs"><i class="iconfont icon-camera"></i></div>
+                <div class="row"></div>
+            </div>
+            <button class="button btn-lg btn-confirm" style="margin-top:1rem" id="submit">投诉</button>
+        </div>
+    </div>
+</div>
+<script id="tpl" type="text/template">
+    <div
+    class="user-item lr-padding white">
+    <div class="user-item-img">
+        <img src="${headimgurl}">
+    </div>
+    <div class="user-item-content">
+        <h2>
+            ${nickname}（<span style="color: #888">${address}</span>）
+        </h2>
+    </div>
+    </div></script>
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/new-complaint.js"></script>
+
+</body>
+</html>

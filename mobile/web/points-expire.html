@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>我的友元</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="points-expire">
+        <header class="bar bar-nav" id="header">
+            <a class="iconfont icon-left pull-left icon-white open-panel" href="javascript:history.go(-1)"></a>
+            <h1 class="title">过期记录</h1></header>
+        <div class="content grey" id="container">
+        </div>
+    </div>
+</div>
+
+<script id="tpl" type="text/template">
+    {@each info as item}
+    <div class="expire_item">
+        <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom: 0">
+            {@if item.status == 1}
+            <div style="width: 100%;overflow: hidden;">
+                <div class="h3 points-index-list" style="color: #595757;width: 90%;display: inline-block;">
+                    ${item.point}友元
+                    <span style="float: right">将于${item.expire_time | timeFormat}过期</span>
+                </div>
+                <i class="iconfont icon-down font-green right"
+                   style="font-size: 1rem;font-weight: bold;line-height: 1.5rem;"></i>
+            </div>
+            {@else if item.status == 0}
+            <div style="width: 100%;overflow: hidden;">
+                <div class="h3 points-index-list" style="color: #a0a0a0;width: 90%;display: inline-block;">
+                    ${item.point}友元&nbsp;
+                    <span style="float: right">已于${item.expire_time | timeFormat}过期</span>
+                </div>
+                <i class="iconfont icon-down right font-grey"
+                   style="font-size: 1rem;font-weight: bold;line-height: 1.5rem;"></i>
+            </div>
+            {@/if}
+        </div>
+        <!-- ext -->
+        {@if item.ext}
+        <div class="expire_ext">
+            {@each item.ext as ext, key}
+            {@each ext as log}
+            <div style="overflow: hidden;clear: both;height: 1.6rem;line-height: 1.6rem;width: 90%;margin: 0 auto;"
+                 class="hide expire_ext_item">
+            <span style="font-size: .7rem;width:60%;color: #595757;" class="left ellipsis-full">${key}&nbsp;<span
+                    class="font-dark" style="font-size: .6rem;letter-spacing: 1px;">(${log.name})</span></span>
+                <span class="right ${item.status == 1 ? 'font-green': 'font-dark'}"
+                      style="font-size: .7rem;padding-right: 10%;">${log.point}友元</span>
+            </div>
+            {@/each}
+            {@/each}
+        </div>
+        {@/if}
+    </div>
+    {@/each}
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/points-expire.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>订单</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script src="weixin/src/css/fonts/iconfont.js"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current" id="order-detail">
+        <header class="bar bar-nav" id="header">
+            <h1 class="title" id="title">
+                订单详情
+            </h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+        </header>
+
+        <div class="content content-no-padding" id="container">
+        </div>
+    </div>
+</div>
+
+<script id="tpl" type="text/template">
+    <div class="sm-margin white">
+        <div class="list-title lr-padding has-border-bottom">
+            <svg class="icon" aria-hidden="true" style="margin-right: .4rem">
+                <use xlink:href="#icon-sj-hll"></use>
+            </svg>
+            <h3 style="display: inline-block">${brand_name}</h3>
+            {@if order_status == 2 && shipping_status == 0 && pay_status == 0}
+            <h4 class="order-title-stat">交易关闭</h4>
+            {@else if order_status == 5 && shipping_status == 2 && pay_status == 2}
+            <h4 class="order-title-stat">已完成</h4>
+            {@else if order_status == 3 && pay_status == 2 && ['0','1'].indexOf(shipping_status) != -1}
+            <h4 class="font-green order-title-stat">售后服务中</h4>
+            {@else if order_status == 0 && pay_status == 0 && shipping_status == 0}
+            <h4 class="font-green order-title-stat">待付款</h4>
+            {@else if pay_status == 2
+            && (
+            (order_status == 0 & shipping_status == 0)
+            ||
+            (order_status == 1 && ['0', '1'].indexOf(shipping_status) != -1)
+            )}
+            <h4 class="font-green order-title-stat">待收货</h4>
+            {@else if order_status == 1 && shipping_status == 2 && pay_status == 2}
+            <h4 class="font-green order-title-stat">待评价</h4>
+            {@/if}
+        </div>
+        <div class="has-border-bottom row lr-padding" style="width: 100%;height: 3.2rem">
+            <div class="col col-25" style="height: 100%;width: 18%">
+                <img src="${goods_thumb | img}" class="order-img">
+            </div>
+            <div class="col col-75 order-info">
+                <h3 STYLE="margin-bottom: 0">
+                    <span style="display: inline-block;width: 70% !important;" class="ellipsis">${goods_name}</span>
+                    <span style="float: right">￥${goods_price}元</span>
+                </h3>
+                <h4 style="margin: 0">
+                    {@if goods_brief}
+                    <span style="display: inline-block;width: 70% !important;" class="ellipsis">${goods_brief}</span>
+                    {@/if}
+                    {@if goods_attr}
+                    <span style="display: inline-block;width: 70% !important;" class="ellipsis">${goods_attr}</span>
+                    {@/if}
+                    <span style="float: right">X&nbsp;${goods_number}</span>
+                </h4>
+            </div>
+        </div>
+        <div class="has-border-bottom" style="padding:.6rem">
+            <h4 style="margin: 0">商品合计：￥${goods_amount}</h4>
+            {@if discount != '0.00'}
+            <h4 style="margin: 0">会员优惠：-￥${discount}</h4>
+            {@/if}
+            <h4 style="margin: 0">运费：￥${shipping_fee}</h4>
+            {@if integral_money != '0.00'}
+            <h4 style="margin: 0">友元：-￥${integral_money}</h4>
+            {@/if}
+            {@if bonus != '0.00'}
+            <h4 style="margin: 0">红包：-￥${bonus}</h4>
+            {@/if}
+        </div>
+        <div class="lr-padding order-stat">
+            {@if pay_status == 2 && money_paid != ''}
+            <h3 style="margin: 0">
+                实付:&nbsp;&nbsp;<span class="font-green">￥${money_paid}</span>
+            </h3>
+            {@else}
+                实付:&nbsp;&nbsp;<span class="font-green">￥${order_amount}</span>
+            {@/if}
+        </div>
+    </div>
+        <!-- 待付款 -->
+        {@if order_status == 0 && shipping_status == 0 && ['0', '2'].indexOf(pay_status) != -1}
+        <div class="sm-margin white row" style="padding: 0 1.6rem;height: 2.4rem;width: 100%;line-height: 2.4rem">
+            {@if hot_mobile && hot_mobile != ''}
+            <div class="col-50" style="margin: .5rem 0;width: 50%">
+                <a style="margin: 0 auto" class="button order-cancel-btn" href="tel:${hot_mobile}">
+                    <i class="iconfont icon-lx-hll font-green" style="padding: 0"></i>
+                    联系商家
+                </a>
+            </div>
+            {@/if}
+            <div class="col-50" style="margin: .5rem 0;width: 50%" id="cancel-order">
+                <a style="margin: 0 auto" class="button order-cancel-btn">
+                    <i class="iconfont icon-qx-hll font-green" style="padding: 0"></i>
+                    取消订单
+                </a>
+            </div>
+        </div>
+        {@/if}
+
+        <!-- 待收货(1种情况) ||  待评价 || 交易完成 -->
+        {@if pay_status == 2 && order_status == 1 && ['0', '1', '2'].indexOf(shipping_status) != -1}
+        <div class="sm-margin white row" style="padding: 0 1.6rem;height: 2.4rem;width: 100%;line-height: 2.4rem">
+            {@if hot_mobile && hot_mobile != ''}
+            <div class="col-50" style="margin: .5rem 0;width: 50%">
+                <a style="margin: 0 auto" class="button order-cancel-btn" href="tel:${hot_mobile}">
+                    <i class="iconfont icon-lx-hll font-green" style="padding: 0"></i>
+                    联系商家
+                </a>
+            </div>
+            {@/if}
+            <div class="col-50" style="margin: .5rem 0;width: 50%" id="to-customer-service" data-recId="${rec_id}">
+                <a style="margin: 0 auto" class="button order-cancel-btn">
+                    <i class="iconfont icon-sh2-hll font-green" style="padding: 0"></i>
+                    申请售后
+                </a>
+            </div>
+        </div>
+        {@/if}
+
+        <!-- 待收货(3种情况) || 交易关闭 || 售后服务中 -->
+        {@if (order_status == 3 && pay_status == 2 && ['0', '1'].indexOf(shipping_status) != -1)
+            || (order_status == 5 && shipping_status == 2 && pay_status == 2)
+            || (order_status == 2 && shipping_status == 0 && pay_status == 0)}
+            {@if hot_mobile && hot_mobile != ''}
+            <div class="sm-margin white row" style="padding: 0 1.6rem;height: 2.4rem;width: 100%;line-height: 2.4rem">
+                <a style="margin: .5rem auto" class="button order-cancel-btn" href="tel:${hot_mobile}">
+                    <i class="iconfont icon-lx-hll font-green" style="padding: 0"></i>
+                    联系商家
+                </a>
+            </div>
+            {@/if}
+        {@/if}
+    <div class="sm-margin white">
+        <div class="has-border-bottom row lr-padding" style="width: 100%;height: 4.3rem">
+            <div class="col col-25" style="height: 100%;width: 10%">
+                <i class="iconfont icon-dz_hll" style="font-size: 1.2rem;padding: 0;margin: 1.5rem auto"></i>
+            </div>
+            <div class="col col-75" style="height:100%;display: inline-block;margin-left: 0;width: 90%;">
+                <h3 STYLE="margin-bottom: 0">
+                    收货人：${consignee}
+                    {@if mobile != '' && mobile}
+                    <span style="float: right">${mobile}</span>
+                    {@/if}
+                </h3>
+                {@if address != ''}
+                <h3 class="order-address">
+                    收货地址：${address}
+                </h3>
+                {@/if}
+            </div>
+        </div>
+    </div>
+    <div class="sm-margin white" style="padding: .6rem">
+        <h4 style="margin: 0">订单编号：${order_sn}</h4>
+        <h4 style="margin: 0">订单详情：${to_buyer}</h4>
+        <h4 style="margin: 0">下单时间：${add_time}</h4>
+        <h4 style="margin: 0">配送方式：${shipping_name}</h4>
+        {@if invoice_no != ''}
+        <h4 style="margin: 0">快递单号：${shipping_name}&nbsp;${invoice_no}</h4>
+        {@/if}
+    </div>
+</script>
+
+<script id="nav" type="text/template">
+    {@if order_status == 0 && shipping_status == 0 && pay_status == 0}
+    <nav class="bar bar-tab" data-id="${order_id}">
+        <a class="tab-item external">
+            <span class="font-white to-pay">立即付款</span>
+        </a>
+    </nav>
+    {@/if}
+
+    {@if order_status == 1 && shipping_status == 1 && pay_status == 2}
+    <nav class="bar bar-tab" data-id="${order_id}">
+        <a class="tab-item external">
+            <span class="font-white to-delivery">确认收货</span>
+        </a>
+    </nav>
+    {@/if}
+
+    {@if order_status == 1 && shipping_status == 2 && pay_status == 2}
+    <nav class="bar bar-tab" data-id="${order_id}">
+        <a class="tab-item external">
+            <span class="font-white to-comment">立即评价</span>
+        </a>
+    </nav>
+    {@/if}
+
+    {@if order_status == 2 && ['0', '2'].indexOf(shipping_status) != -1 && pay_status == 2}
+    <nav class="bar bar-tab" data-id="${order_id}">
+        <a class="tab-item external">
+            <span class="font-white view-log">操作记录</span>
+        </a>
+    </nav>
+    {@/if}
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/order-detail.js"></script>
+
+</body>
+</html>

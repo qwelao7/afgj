@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>楼盘信息详情</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current" id="news-list">
+        <header class="bar bar-nav" id="header">
+        </header>
+        <!--右上角菜单弹出层-->
+        <div class="modal-popup white" id="popup" style="display: none">
+        </div>
+        <!--遮罩层-->
+        <div class="modal-overlay"></div>
+        <div class="content content-no-padding">
+            <div class="buttons-tab fixed-tab" data-offset="44">
+                <a href="#tabNews" class="tab-link button active" id="tab-news">资讯</a>
+                <a href="#tabJournal" class="tab-link button" id="tab-jour">成长日志</a>
+                <a href="#tabInfo" class="tab-link button" id="tab-info">楼盘信息</a></div>
+            <div>
+                <div class="tabs">
+                    <!--资讯-->
+                    <div id="tabNews" class="tab active infinite-scroll">
+                        <div class="content-block" style="margin-top: 0" id="newsContent">
+                        </div>
+                        <!-- 加载提示符 -->
+                        <div class="infinite-scroll-preloader">
+                            <div class="preloader">
+                            </div>
+                        </div>
+                    </div>
+                    <!--成长日志-->
+                    <div id="tabJournal" class="tab infinite-scroll">
+                        <div class="content-block" style="margin-top: 0;" id="journalContent">
+                        </div>
+                        <!-- 加载提示符 -->
+                        <div class="infinite-scroll-preloader">
+                            <div class="preloader">
+                            </div>
+                        </div>
+                    </div>
+                    <!--楼盘信息-->
+                    <div id="tabInfo" class="tab">
+                        <div class="content-block white" style="margin-top: 0" id="infoContent"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--成长日志-->
+<script id="jourTpl" type="text/template">
+    {@each list as item}
+    <div class="white lr-padding lg-margin">
+        <div style="text-align: center">
+            <h2 style="display:inline-block;margin: 0 auto;padding:.8rem 2rem 0;border-bottom: 2px solid #a0a0a0;font-weight: bold">
+                ${item.title}</h2>
+            <h4 class="font-green" style="margin: 0 0 .3rem">${item.publish_time | format}</h4>
+        </div>
+        <h3>
+            ${item.content}
+        </h3>
+        {@each item.attachment_content as img}
+        <img src="${img | imgPath}" style="width: 100%">
+        {@/each}
+    </div>
+    {@/each}
+</script>
+<!-- 咨询 -->
+<script id="newsTpl" type="text/template">
+    {@each list as item}
+    <div class="white lr-padding lg-margin news-consult" data-id="${item.id}">
+        <h3 style="color: #333338;margin: 0;padding: .6rem 0 .3rem">
+            ${item.title}
+        </h3>
+        <h5 style="margin: 0">${item.publish_time | formate}</h5>
+        {@if item.thumbnail != ''}
+        <img src="${item.thumbnail | imgPath}?imageMogr2/thumbnail/!700x392r/gravity/center/crop/700x392" style="width: 100%">
+        {@/if}
+    </div>
+    {@/each}
+</script>
+<!-- 信息详情 -->
+<script id="infoTpl" type="text/template">
+    <div class="swiper-container" data-space-between='10'>
+        <div class="swiper-wrapper">
+            {@each bannerpic as pic}
+            <div class="swiper-slide hll-swiper-slide" data-id="${id}" style="width:100%;">
+                <img src="${pic | imgPath}" alt="" style="width:100%"></div>
+            {@/each}
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+    <div class="house-item">
+        <p style="font-weight: bold">${name}</p>
+        <h3 class="area">${avg_price}</h3>
+        <h3 class="address"><i class="iconfont icon-dz_hll"></i>&nbsp;&nbsp;${address}</h3>
+        <ul>
+            <li><label>最早交房</label>
+                <h3 class="inline">${delivery_date}</h3>
+            </li>
+            <li><label>交付标准</label>
+                <h3 class="inline">${decorate_level}</h3>
+            </li>
+            <li>
+                <label>物业形态</label>
+                <h3 class="inline">${property_type}</h3>
+            </li>
+            <li>
+                <label>楼盘简介</label>
+            </li>
+        </ul>
+    </div>
+    <div class="house-list">
+        {@each houseType as house}
+        <div class="item">
+            <h2 class="item-title">户型${house.name}</h2>
+            <a class="fixed-bar">
+                <img style="width: 100%;height:100%;" src="${house.pic | imgPath}"/>
+            </a>
+            <div class="fixed-bar">
+                <h3 class="inline icon-grey">${house.fangxin}</h3>&nbsp;&nbsp;<h3 class="inline icon-grey">
+                ${house.area}</h3>&nbsp;&nbsp;
+                {@if house.lowest_total_price != '0.0'}
+                <h3 class="icon-lightblue inline">${house.lowest_total_price | int}万</h3>
+                {@/if}
+            </div>
+        </div>
+        {@/each}
+    </div>
+</script>
+<!-- title -->
+<script id="titleTpl" type="text/template">
+    <h1 class="title">${name}</h1>
+    <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+    {@if hot_line || wx_qr_code}
+    <a class="iconfont icon-edit pull-right icon-white open-panel" id="tag"></a>
+    {@/if}
+</script>
+<!-- tags -->
+<script id="tagsTpl" type="text/template">
+   {@if hot_line != '' && hot_line}
+   <p class="modal-p-list has-border-bottom" id="tel" style="color: #3d4145" data-tel="${hot_line}">
+       <i class="iconfont icon-iphone font-green" style="margin-right: .6rem"></i>
+       热线电话
+   </p>
+   {@/if}
+   {@if wx_qr_code != '' && wx_qr_code}
+    <p class="modal-p-list modify" id="code" data-code="${wx_qr_code}" style="color: #3d4145">
+        <i class="iconfont icon-icon" style="color: #ffbf00;padding-top: .4rem;margin-right: .6rem"></i>
+        在线沟通
+    </p>
+   {@/if}
+    <!--<a class="modal-p-list delete-confirm" style="color: #3d4145">-->
+        <!--<i class="iconfont icon-guanbi2 font-grey" style="padding-top: .4rem;margin-right: .6rem"></i>-->
+        <!--取消关注-->
+    <!--</a>-->
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script src="//g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/news-list.js"></script>
+
+</body>
+</html>

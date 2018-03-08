@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>小区列表</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="community-list">
+        <header class="bar bar-nav">
+            <input class="title header-input" type="text" placeholder="输入小区名" id="search" style="-webkit-user-select: auto !important;">
+            <a class="iconfont icon-left pull-left icon-white open-panel" href="javascript:history.go(-1)"></a>
+            <a class="font-white pull-right" style="line-height:2.2rem " id="submit">搜索</a>
+        </header>
+        <div class="content grey neighbor-list-content infinite-scroll" data-distance="1%">
+            <div>
+                <div id="container">
+                </div>
+                <div>
+                    <h4 style="text-align: center;margin-top: 1.6rem">搜索不到您的小区？<a class="font-blue" id="create">
+                        手动添加小区信息</a></h4>
+                </div>
+            </div>
+            <!-- 加载提示符 -->
+            <div class="infinite-scroll-preloader" style="text-align: center;margin-bottom: -20px;">
+                <div class="preloader"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--列表-->
+<script id="tpl" type="text/template">
+    {@each list as item}
+    <div class="user-item lr-padding white follow-neighbor last-noborder community" data-id="${item.id}" style="height:3rem;">
+        <div class="user-item-content" style="width: 100%;float: left">
+            <h2 class="item-two-line-title">
+                ${item.name}
+            </h2>
+            <h5 class="item-two-line-detail ellipsis-full">
+                <i class="iconfont icon-dz_hll font-green"
+                   style="padding: 0 .1rem;font-size: .8rem;line-height: .8rem"></i>
+                ${item.city}&nbsp;${item.district}
+            </h5>
+        </div>
+    </div>
+    {@/each}
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/community-list.js"></script>
+
+</body>
+</html>

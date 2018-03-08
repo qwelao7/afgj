@@ -1,0 +1,79 @@
+<ion-view view-title="服务详情" cache-view="false">
+    <ion-nav-buttons side="left">
+        <button class="button button-clear icon ion-ios-arrow-left" ng-click="goto('order')">列表</button>
+    </ion-nav-buttons>
+    <ion-content class="page-order page-order-detail">
+        <ion-list class="list">
+            <!-- 通用头部 -->
+            <ion-item>
+                <div class="row content">
+                    <div class="col col-20 col-center">
+                        <img ng-src="{{qiniuDomain + items.logo}}" style="width: 50px;height: 50px" ng-if="items.logo">
+                    </div>
+                    <div class="col col-80" style="position: relative">
+                        <p style="font-size: 13px;margin-top: 5px" ng-if="params.type==5">{{items.title}}</p>
+                        <p style="font-size: 13px;margin-top: 5px" ng-if="params.type==2">{{items.decoration.name}}户型{{items.title}}</p>
+                        <p style="font-size: 11px;color: #878787">{{items.provider.name}}</p>
+                        <span style="color:#fe7f05;float:right;position: absolute;right: 12px;top:35%;" ng-if="items.userstatus==0">待执行</span>
+                        <span style="color:#fe7f05;float:right;position: absolute;right: 12px;top:35%;" ng-if="items.userstatus==1">待评价</span>
+                        <span style="color:#fe7f05;float:right;position: absolute;right: 12px;top:35%;" ng-if="items.userstatus==2">已完成</span>
+                        <span style="color:#fe7f05;float:right;position: absolute;right: 12px;top:35%;" ng-if="items.userstatus==3">已取消</span>
+                        <span style="color:#fe7f05;float:right;position: absolute;right: 12px;top:35%;" ng-if="items.userstatus==4">已终止</span>
+                        <span style="color:#fe7f05;float:right;position: absolute;right: 12px;top:35%;" ng-if="items.userstatus==5">执行中</span>
+                    </div>
+                </div>
+                <div style="height: 48px;line-height: 48px;font-size: 14px;color: #878787;text-align: right;padding-right: 16px" ng-if="params.type!=5">
+                    总价: <span style="color: #333338">{{items.amount | number: 0}}万</span>
+                </div>
+            </ion-item>
+            <!-- 活动 富文本 -->
+            <ion-item ng-if="params.type==5">
+                <div style="margin: 10px 0;padding: 16px;">
+                    <div data-ng-bind-html="items.description" style="width:98%;white-space:normal;word-wrap: break-word;"></div>
+                </div>
+            </ion-item>
+            <!-- 活动时间跨度 -->
+            <ion-item ng-if="params.type==5">
+                <p class="dolphin-valuable" ng-if="!param.expire" ng-repeat="param in params.date">{{param.time}}&nbsp;&nbsp;{{param.day}}&nbsp;&nbsp;（{{items.schedule.start_time}} - {{items.schedule.end_time}}）</p>
+                <p class="dolphin-full" ng-if="param.expire" ng-repeat="param in params.date">{{param.time}}&nbsp;&nbsp;{{param.day}}&nbsp;&nbsp;（{{items.schedule.start_time}} - {{items.schedule.end_time}}）</p>
+            </ion-item>
+            <!-- 装修升级包 -->
+            <ion-item ng-if="params.type==2">
+                <div class="col col-80 col-offset-20" style="padding: 10px 20px 10px 10px;font-size: 13px;border-bottom: 1px solid #d7d7d7" ng-repeat="item in items.quote">
+                    <p><span>{{item.title}} X {{item.quality}}</span> <span style="display: inline-block;float: right">￥{{item.total_price | number: 0}}</span></p>
+                </div>
+                <div class="col col-80 col-offset-20" style="height:48px;line-height:48px;font-size: 14px;padding: 0 20px 0 10px">
+                    <p style="display: inline-block;float: right;color: #878787">总价：<span  style="color: #333338">￥{{items.amount | number: 0}}万</span></p>
+                    <p style="display: inline-block;float: right;padding-right: 20px;color: #878787">定金：<span style="color: #333338">￥{{settlemet}}</span></p>
+                </div>
+            </ion-item>
+            <!-- 装修地址 -->
+            <ion-item ng-if="params.type==2">
+                <div class="row content" style="height: 43px;">
+                    <div class="col col-20 col-center">
+                        <img src="../../assets/css/images/icon_decoration_address.png" style="width: 24px;height: 24px">
+                    </div>
+                    <div class="col col-80" style="position: relative;font-size: 12px">
+                        {{items.address.mansion}}{{items.address.building_house_num}}
+                    </div>
+                </div>
+                <div style="clear: both"></div>
+                <div class="row content" style="height: 43px;">
+                    <div class="col col-20 col-center">
+                        <img src="../../assets/css/images/icon_decoration_tel.png" style="width: 24px;height: 24px">
+                    </div>
+                    <div class="col col-80" style="position: relative;font-size: 12px">
+                        (<span style="color: #878787">{{items.address.contact_to}}</span>) {{items.address.mobile}}
+                    </div>
+                </div>
+            </ion-item>
+        </ion-list>
+        <div style="height: 50px;"></div>
+    </ion-content>
+    <div class="bar bar-footer bar-balanced" style="background-color: #d7d7d7;background-image:none;" ng-if="items.userstatus==5 && params.type == 5">
+        <div class="title" style="background-color: #d7d7d7;color: #fff" ng-click="action.termination(items)">终止服务</div>
+    </div>
+    <div class="bar bar-footer bar-balanced" style="background-color: #d7d7d7;background-image:none;" ng-if="items.userstatus==0 && params.type == 5">
+        <div class="title" style="background-color: #d7d7d7;color: #fff" ng-click="action.cancel(items)">取消服务</div>
+    </div>
+</ion-view>

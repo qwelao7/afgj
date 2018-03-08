@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>我为小区添便利，借用物品大解锁--回来啦社区</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function () {
+            return false;
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current" id="event">
+        <header class="bar bar-nav" style="background-color: #d8442e">
+            <h1 class="title">我为小区添便利</h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+        </header>
+        <div class="content content-no-padding" id="container" style="background-color:#f5ba30 ">
+            <div class="event-banner">
+            </div>
+            <p class="event-loupan">
+                平治东苑
+            </p>
+            <div id="content"></div>
+
+            <p class="lr-padding" style="color: #462702;margin: 1.5rem 0 .5rem;font-size: .65rem">
+                如果您还有其他物品借用需求，请留言告知我们。回来啦社区将尽量满足您
+            </p>
+            <textarea style="width: 92%;margin: 0 4%;border: none;text-indent: .2rem" placeholder="请输入物品描述.." rows="5" id="request-more"></textarea>
+            <div class="event-btn event-btn-submit" id="more"></div>
+
+            <p class="event-loupan">
+                活动介绍
+            </p>
+            <p class="event-describe">
+                ① 我为小区添便利活动由回来啦社区官方发起，意在为业主朋友们提供日常生活所需，但使用频率偏低的物品。
+            </p>
+            <p class="event-describe">
+                ② 此活动所有物品由回来啦社区出资购买，已认证房产的业主朋友每天会得到一把“钥匙”，可解锁您最需要的物品。
+            </p>
+            <p class="event-describe">
+                ③ 当物品解锁成功，您可以申请领取该物品，回来啦社区将把物品寄送到您手中。您必须承诺在小区内共享该物品，其他业主可通过回来啦社区的借用功能，向您借用该物品。
+            </p>
+            <p class="event-describe">
+                ④ 小区业主需爱护使用物品，回来啦社区不负责物品的维修和保养工作。若物品损坏，回来啦社区不负责补寄新的物品。
+            </p>
+
+
+            <p class="event-loupan">
+                活动报名
+            </p>
+            <p class="lr-padding" style="color: #462702;font-size: .65rem;margin: .5rem 0 1rem">
+                如果您希望该活动尽快走入您的小区，请在以下输入框提交您所在小区的名称。提交次数最多的小区，将优先开通此活动，感谢您对回来啦社区的支持。
+            </p>
+            <div style="width: 100%;height:2.4rem;margin-bottom: 5rem" class="row">
+                <div class="col col-66">
+                    <input type="text" placeholder="请输入您的小区名称.." style="font-size: .65rem;text-indent:.2rem;height: 2.2rem;border: none;display: inline-block;width:100%;" id="request-add">
+                </div>
+                <div class="col col-33">
+                    <div class="event-btn event-btn-submit" style="display: inline-block;line-height: 2.2rem" id="submit"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 借用物品 -->
+<script type="text/template" id="tpl">
+    {@each info as item, index}
+    <div data-good="${item.goods_name}" data-id="${item.id}" data-index="${index}">
+        <div class="event-ware" style='background-image: url("${item.goods_pic | imgPath}");'>
+                <span class="event-detail">
+                    ${item.use_key_num}/${item.need_key_num}
+                </span>
+        </div>
+        {@if item.item_status == 1}
+        <div class="event-btn event-btn-unlock"></div>
+        {@else if item.item_status == 2}
+        <div class="event-btn event-btn-receive"></div>
+        {@else if item.item_status == 3 || item.item_status == 4}
+        <div class="event-btn event-btn-borrow"></div>
+        {@/if}
+    </div>
+    {@/each}
+</script>
+
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/unlock-event.js"></script>
+</body>
+</html>

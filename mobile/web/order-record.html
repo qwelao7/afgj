@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>全部账单</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="order-record">
+        <header class="bar bar-nav" id="header">
+            <a class="iconfont icon-left pull-left icon-white open-panel" href="javascript:history.go(-1)"></a>
+            <h1 class="title">账单记录</h1>
+        </header>
+        <div class="content grey infinite-scroll" data-distance="1%">
+            <!-- 内容 -->
+            <div id="container"></div>
+            <!-- loading -->
+            <!-- 加载提示符 -->
+            <div class="infinite-scroll-preloader" style="text-align: center;margin-bottom: -20px;">
+                <div class="preloader"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 分组 -->
+<script id="group" type="text/template">
+    {@each list as item, index}
+    <div class="points-record-title lr-padding">
+        <h3 class="points-record-date">${index | trans}</h3>
+        <h4 class="points-record-include">
+            使用：<span class="font-orange">0.00</span>
+        </h4>
+    </div>
+    {@each item as data}
+    <div class="user-item lr-padding white">
+        <div class="user-item-content">
+            <h2 class="item-two-line-title ellipsis-full" style="line-height: 1.2rem;max-width: 80%">
+                ${data.name}
+            </h2>
+            <h2 class="item-two-line-right">
+                ${data.money_paid}
+            </h2>
+            <h5 class="item-two-line-detail ellipsis-full">
+                ${data.add_time | time}
+            </h5>
+        </div>
+        <div class="user-item-img">
+            <img src="${data.goods_thumb}" class="order-img head-img">
+        </div>
+    </div>
+    {@/each}
+    {@/each}
+</script>
+
+<!-- 列表 -->
+<script id="list" type="text/template">
+    {@each list as item}
+    <div class="user-item lr-padding white">
+        <div class="user-item-content">
+            <h2 class="item-two-line-title ellipsis-full" style="line-height: 1.2rem;max-width: 80%">
+                ${item.name}
+            </h2>
+            <h2 class="item-two-line-right">
+                ${item.money_paid}
+            </h2>
+            <h5 class="item-two-line-detail ellipsis-full">
+                ${item.add_time | time}
+            </h5>
+        </div>
+        <div class="user-item-img">
+            <img src="${item.goods_thumb}" class="order-img head-img">
+        </div>
+    </div>
+    {@/each}
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/order-record.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>装修项目</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current" id="decoration-manage">
+        <header class="bar bar-nav"><h1 class="title">装修管理</h1> <a
+                class="iconfont icon-left pull-left icon-white open-panel" id="back"></a> <a
+                class="iconfont icon-add pull-right icon-white open-panel" href="new-decoration.html"></a></header>
+        <div class="content content-no-padding">
+            <div id="container"></div>
+        </div>
+    </div>
+</div>
+<script id="tpl" type="text/template">
+    {@each list as item}
+    <div class="detail"
+         data-id="${item.id}"
+         data-desc="${item.title}"
+         data-address_id="${item.address_id}"
+         style="position: relative">
+        {@if item.is_prototyperoom == 1}
+        <img src="weixin/src/css/img/Slice.png" style="width:3.5rem;position: absolute;top: 0;left: 0;">
+        {@/if}
+        <img src="${item.thumbnailpic | imgPath}" style="width: 100%;">
+        <div class="user-item-whole lr-padding white lg-margin" style="margin-top: -0.35rem">
+            <h2 style="width: 80%" class="ellipsis-full">
+                ${item.title}
+            </h2>
+            <h3 class="icon-red">
+                ￥${item.budget}万
+            </h3>
+            <h5 style="display: block;margin-top: 0">
+                ${item.address_desc}
+            </h5>
+        </div>
+    </div>
+    <div style="clear: both"></div>
+    {@/each}
+</script>
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/decoration-manage.js"></script>
+
+</body>
+</html>

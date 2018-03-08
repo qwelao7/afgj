@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>新建装修</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current" id="new-decoration">
+        <header class="bar bar-nav"><h1 class="title">新建装修项目</h1> <a
+                class="iconfont icon-left pull-left icon-white open-panel" href="javascript:history.go(-1)"></a>
+        </header>
+        <div class="content content-no-padding" id="container">
+            <div class="list-block" style="margin:0">
+                <ul>
+                    <li class="first">
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label" style="padding: 0">装修标题</div>
+                                <div class="item-input"><input type="text" placeholder="请输入装修标题..."
+                                                               style="font-size:.7rem" id="title"></div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label" style="padding: 0">装修预算(万)</div>
+                                <div class="item-input"><input type="number" placeholder="请输入装修预算..."
+                                                               style="font-size:.7rem" id="budget"></div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner"
+                                 style="height:auto;min-height:2.8rem;margin:.5rem 0;overflow: visible">
+                                <div class="item-title label" style="padding: 0">请添加效果图</div>
+                                <div class="item-input"><i class="iconfont icon-camera"
+                                                           style="padding:.55rem;border:1px dotted #a0a0a0"
+                                                           id="imgs"></i></div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <button class="button btn-lg btn-confirm" id="submit" style="margin-top:1rem">提交</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script id="tpl" type="text/template">
+    {@if house}
+    <li>
+        <div class="item-content item-link">
+            <div class="item-inner">
+                <div class="item-title label" style="padding: 0">装修房产</div>
+                <div class="item-input">
+                    <select id="fang">
+                        {@each house as fang}
+                        <option value="${fang.id}">${fang.address_desc}</option>
+                        {@/each}
+                    </select>
+                </div>
+            </div>
+        </div>
+    </li>
+    {@/if}
+    {@if brand}
+    <li>
+        <div class="item-content item-link">
+            <div class="item-inner">
+                <div class="item-title label" style="padding: 0">装修公司</div>
+                <div class="item-input">
+                    <select id="provider">
+                        {@each brand as item, index}
+                        <option value="${index}">${item}</option>
+                        {@/each}
+                    </select>
+                </div>
+            </div>
+        </div>
+    </li>
+    {@/if}
+</script>
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/new-decoration.js"></script>
+
+</body>
+</html>

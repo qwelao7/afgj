@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>甲醛检测</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script src="//cdn.bootcss.com/echarts/3.4.0/echarts.min.js"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="drift-air-result">
+        <header class="bar bar-nav">
+            <h1 class="title">检测结果</h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+        </header>
+        <div class="content content-no-padding" style="background-color: #009042" >
+            <div class="white drift-result-container" id="content">
+                <!-- content -->
+                <!-- tips -->
+                <img class="drift-result-qr" src="weixin/src/css/img/hll_qr.jpg">
+                <h3 class="font-green drift-result-qrword">【扫码免费测甲醛】</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script id="tpl" type="text/template">
+    <div class="drift-result-headimg-container">
+        <img src="${user.headimgurl}" class="drift-result-head-img head-img" style="width: 100%;">
+    </div>
+    <div class="drift-result-dottedline"></div>
+    <h4 class="font-white drift-result-address">
+        ${address}
+    </h4>
+    <h2 class="drift-result-name">${user.nickname}</h2>
+    <h4 class="drift-result-time">${created_at | dateFormat, 'MM-dd hh:mm'}</h4>
+    <div class="drift-arrow-right"></div>
+    <div class="drift-arrow-left"></div>
+    <br>
+    <div class="lg-margin-item" style="margin-top: 1.6rem">
+        <div class="user-item decoration-item no-border lr-padding white" style="clear: both;">
+            {@if detail.length > 0}
+            <table class="drift-table" border="1px" cellpadding="0" cellspacing="0" style="margin-bottom: .6rem;">
+                <tr class="grey">
+                    <td class="tr-head">检测点</td>
+                    <td class="tr-head">甲醛含量</td>
+                    <td class="tr-head">检测结果</td>
+                </tr>
+                {@each detail as item}
+                <tr class="drift-tr">
+                    <td class="font-black">${item.check_point}</td>
+                    <td>${item.check_value}ppm</td>
+                    {@if item.level == 1}
+                    <td>合格</td>
+                    {@else}
+                    <td class="font-orange">不合格</td>
+                    {@/if}
+                </tr>
+                {@/each}
+            </table>
+            {@/if}
+            {@if content && content != ''}
+            <h3 style="padding-bottom: .6rem;margin-bottom: 0">
+                ${content}
+            </h3>
+            {@/if}
+            {@if pics.length > 0}
+                {@each pics as pic}
+                    <img src="${ pic | imgPath }" style="width: 100%">
+                {@/each}
+            {@/if}
+        </div>
+    </div>
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/drift-air-result.js"></script>
+</body>
+</html>

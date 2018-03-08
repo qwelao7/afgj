@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>登录信息采集系统</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current" id="data-sales-login">
+        <header class="bar bar-nav" id="header">
+            <h1 class="title">绑定手机号</h1>
+        </header>
+        <div class="content white lr-padding">
+            <div class="content-block index-content-block"></div>
+        </div>
+    </div>
+</div>
+
+<!-- 绑定手机 -->
+<script id="login-input" type="text/template">
+    <div class="index-searchbar">
+        <div class="search-input">
+            <label class="iconfont icon-phone index-shouji" style="margin-top: -0.3rem" for="tel"></label>
+            <input class="index-input" type="tel" id='tel' placeholder='请输入手机号码'/>
+            <a class="iconfont icon-delete index-cancel" style="margin-top: -0.3rem" for="tel" id="cancel"></a>
+        </div>
+    </div>
+    <!-- 验证码容器元素定义 -->
+    <div class="l-captcha mb_20" data-site-key="f18c4f7b030c99fd606a4d9e57738d6d" data-theme="light" data-width="100%"></div>
+    <button class="button btn-lg btn-confirm fog-30 index-btn-next submit-mobile" id="submit-mobile" disabled>下一步
+    </button>
+</script>
+
+<!--跳过-->
+<script id="skip" type="text/template">
+    {@if type == 1}
+    <a id="direct" class="pull-right icon-white open-panel head-text-right">跳过</a>
+    {@/if}
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<!-- 人机验证 -->
+<script src="//captcha.luosimao.com/static/js/api.js"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/data-sales-login.js"></script>
+
+</body>
+</html>

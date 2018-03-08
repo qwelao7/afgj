@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>广场</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function () {
+            return false;
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="square-index">
+        <!-- container -->
+        <div class="content grey" id="content" style="padding-bottom: 2.5rem;">
+            <div id="container">
+
+            </div>
+        </div>
+        <!-- navs -->
+    </div>
+</div>
+
+<!-- 底部导航 -->
+<script type="text/template" id="navs">
+    <nav class="bar bar-tab bar-white" style="z-index: 999;">
+        {@each list as item}
+        <a class="tab-item external ${curTab == item.id ? 'active' : ''}" href="${item.url}">
+            <span class="icon iconfont ${curTab == item.id ? item.icon : item.iconfill}"></span>
+            <span class="tab-label">${item.name}</span>
+        </a>
+        {@/each}
+    </nav>
+</script>
+
+<!-- 模块 -->
+<script type="text/template" id="models">
+   {@if pics.length > 0}
+   <div class="swiper-container" data-space-between='10'>
+       <div class="swiper-wrapper">
+           {@each pics as pic}
+           <div class="swiper-slide square-swiper-slide" data-href="${pic.ad_link}">
+               <img src="${pic.ad_code | imgTrans}" alt="" style="width: 100%;overflow: hidden;height: auto;background: #ccc;min-height: 5rem;display: block;">
+           </div>
+           {@/each}
+       </div>
+       <div class="swiper-pagination square-pagination"></div>
+   </div>
+   {@/if}
+
+    {@each data as list, index}
+    {@if num[index] == '1'}
+    <div class="row white lg-margin square-row">
+        {@each list as item, key}
+        <div class="col-100 square-col-whole square-item" data-href="${item.url}">
+            <img src="${item.pic | img}" style="width: 100%;overflow: hidden;height: auto;background: #ccc;min-height: 5rem;display: block;">
+        </div>
+        {@/each}
+    </div>
+    {@else if parseInt(num[index]) % 2 == 0}
+    <div class="row white lg-margin square-row">
+        {@each list as item, key}
+        {@if parseInt(key) % 2 == 0}
+        <div class="col-50 square-col-left square-item" data-href="${item.url}">
+            <img src="${item.pic | img}" style="width: 100%;overflow: hidden;height: auto;background: #ccc;min-height: 5rem;display: block;">
+        </div>
+        {@else}
+        <div class="col-50 square-col-right square-item" data-href="${item.url}">
+            <img src="${item.pic | img}" style="width: 100%;overflow: hidden;height: auto;background: #ccc;min-height: 5rem;display: block;">
+        </div>
+        {@/if}
+        {@/each}
+    </div>
+    {@else if num[index] == '3'}
+    <!--3个模块-->
+    <div class="row white lg-margin square-row">
+       {@each list as item, key}
+        {@if key == 0}
+        <div class="col-50 square-col-left square-item" data-href="${item.url}">
+            <img src="${item.pic | img}" style="width: 100%;overflow: hidden;height: auto;background: #ccc;min-height: 5rem;display: block;">
+        </div>
+        {@else}
+        <div class="col-50 square-col-right square-item" data-href="${item.url}">
+            <img src="${item.pic | img}" style="width: 100%;overflow: hidden;height: auto;background: #ccc;min-height: 5rem;display: block;">
+        </div>
+        {@/if}
+        {@/each}
+    </div>
+    {@else if num[index] == '5'}
+    <!-- 5个模块 -->
+    <div class="row white lg-margin square-row">
+        {@each list as item, key}
+        {@if key == 0}
+        <div class="col-100 square-col-whole square-item" data-href="${item.url}">
+            <img src="${item.pic | img}" style="width: 100%;overflow: hidden;height: auto;background: #ccc;min-height: 5rem;display: block;">
+        </div>
+        {@else}
+        <div class="col-50 square-col-left square-item">
+            <img src="${item.pic | img}" style="width: 100%;overflow: hidden;height: auto;background: #ccc;min-height: 5rem;display: block;" data-href="${item.url}">
+        </div>
+        {@/if}
+        {@/each}
+    </div>
+    {@/if}
+    {@/each}
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js' charset='utf-8'></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/square-index.js"></script>
+
+</body>
+</html>

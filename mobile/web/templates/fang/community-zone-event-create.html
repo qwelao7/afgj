@@ -1,0 +1,49 @@
+<ion-modal-view>
+    <ion-header-bar class="bar bar-header">
+      <button class="button button-clear button-primary" ng-click="action.back()">取消</button>
+      <h1 class="title">新建{{edit.title}}</h1>
+      <button class="button button-clear button-positive" ng-click="editSubmit()">提交</button>
+    </ion-header-bar>
+    <ion-content class="" style="background-color: #e6e6e6;">
+        <div class="list" ng-show="edit.showActivity">
+            <label class="item item-input">
+                <span class="input-label">标题</span>
+                <input type="text" placeholder="请输入活动标题" ng-model="edit.name">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">报名截止时间</span>
+                <input type="datetime-local" ng-model="edit.signup_end" placeholder="请输入截止时间">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">活动时间</span>
+                <input type="datetime-local" ng-model="edit.begin" placeholder="请输入活动时间">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">活动地点</span>
+                <input type="text" placeholder="请输入活动地点" ng-model="edit.address">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">人数上限</span>
+                <input type="text" placeholder="默认无限制" ng-model="edit.person_num">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">活动费用</span>
+                <input type="text" placeholder="每人费用，默认免费" ng-model="edit.fee">
+            </label>
+            <div class="depict-wrap">
+                <div class="title" style="font-size:16px;color:#444;border-bottom: none;padding-left: 16px">介绍</div>
+                <div class="depict-box">
+                    <textarea class="input-text" style="border: none" rows="10" ng-model="edit.content"
+                              placeholder="请输入描述内容..."></textarea>
+                    <div class="depict-list">
+                        <div class="item-box" ng-repeat="(index,img) in edit.pics">
+                            <img ng-src="{{img}}-100x100"/>
+                            <a class="btn-del icon ion-close-circled" ng-click="action.deleteImg(index,2, false)"></a>
+                        </div>
+                        <div class="button-camera" ng-click="action.addImg(2,false)"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-modal-view>

@@ -1,0 +1,34 @@
+<ion-modal-view>
+  <ion-header-bar class="bar bar-header">
+    <button class="button button-clear button-primary" ng-click="editModal.hide()">取消</button>
+    <h1 class="title">编辑{{editInfo.title}}</h1>
+    <button class="button button-clear button-positive" ng-click="editSubmit()">提交</button>
+  </ion-header-bar>
+  <ion-content class="" style="background-color: #e6e6e6;">
+    <div class="list">
+      <label class="item item-input" ng-show="editInfo.showSkill">
+        <span class="input-label">{{editInfo.title}}</span>
+        <input ng-model="editInfo.name" type="text">
+      </label>
+      <label class="item item-input" ng-hide="editInfo.showSelect || editInfo.showTel||editInfo.showComment||editInfo.showSkill ">
+        <span class="input-label">{{editInfo.title}}</span>
+        <input ng-model="editInfo.name" type="text">
+      </label>
+      <label class="item item-input" ng-show="editInfo.showTel">
+        <span class="input-label">{{editInfo.title}}</span>
+        <input ng-model="editInfo.name" type="tel">
+      </label>
+      <label class="item item-input" ng-show="editInfo.showComment">
+        <textarea ng-model="editInfo.comment" style="height:150px;" placeholder="请输入.." type="text"></textarea>
+      </label>
+      <label class="item item-input item-select" ng-show="editInfo.showSelect">
+        <span class="input-label">{{editInfo.title}}</span>
+        <select ng-model="editInfo.name" ng-options="param.key as param.val for param in editInfo.params"></select>
+      </label>
+      <ion-toggle class="item item-toggle-default" ng-show="isAdmin" ng-model="editInfo.isAdmin"
+                  ng-checked="settingDefault.checked" >
+        {{ settingDefault.text }}
+      </ion-toggle>
+    </div>
+  </ion-content>
+</ion-modal-view>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>芝麻信用授权提示</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="credit-error">
+        <header class="bar bar-nav">
+            <a class="iconfont icon-left pull-left icon-white open-panel" href="credit-auth.html"></a>
+            <h1 class="title">芝麻信用授权提示</h1></header>
+        <div class="content white lr-padding login-success-content">
+            <a class="iconfont icon-tishi1 login-success-icon" style="color: grey;"></a>
+            <h1 style="margin-top: 2rem;" id="error_msg"></h1>
+        </div>
+    </div>
+</div>
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/credit-error.js"></script>
+
+</body>
+</html>

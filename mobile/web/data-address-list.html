@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>业主信息</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="data-address-list">
+        <!-- 头部 -->
+        <header class="bar bar-nav">
+            <h1 class="title" id="title">
+            </h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+            <a class="iconfont pull-right icon-white icon-edit open-panel" id="edit"></a>
+        </header>
+        <div class="modal-popup white visibility-hidden" style="width: 8rem" id="modal-right">
+            <p class="modal-p-list tips-border-bottom statistics" style="padding-left: .5rem">
+                <i class="iconfont icon-Statistics-hll font-blue" style="padding-top: .2rem;margin-right: .6rem"></i>
+                我的录入统计
+            </p>
+            <p class="modal-p-list tips-border-bottom access-apply" style="padding-left: .5rem">
+                <i class="iconfont icon-Jurisdiction-hll font-green" style="padding-top: .2rem;margin-right: .6rem"></i>
+                申请录入权限
+            </p>
+        </div>
+
+        <!--二级菜单-->
+        <div>
+            <!--左侧选择组团div-->
+            <div class="market-select-menu visibility-hidden" id="menus">
+            </div>
+            <!--右侧选择楼栋div-->
+            <div class="market-select-menu row visibility-hidden" id="menus1">
+            </div>
+        </div>
+        <!--右上角菜单弹出层-->
+        <div class="title-search-popup white" id="popup" style="display: none">
+        </div>
+        <!--遮罩层-->
+        <div class="modal-overlay" id="modal"></div>
+        <!-- 内容 -->
+        <div class="content content-no-padding infinite-scroll" data-distance="1%">
+
+            <div class="buttons-tab fixed-tab lr-padding" data-offset="44" id="tab_select">
+
+            </div>
+
+            <div class="content-block" id="content">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--header-->
+<script id="header" type="text/template">
+    <input type="text" id="picker" style="background-color: #009042;border: none; text-align: center;width:100%;"
+           value="${name}▾" readonly>
+</script>
+
+<!--楼盘列表-->
+<script id="tpl" type="text/template">
+    {@each list as item,index}
+    <h3 class="font-green lr-padding" style="margin: .3rem 0">${index}</h3>
+    {@each item as building}
+    <div class="account-item lr-padding white last-noborder house" data-id="${building.room_code}" data-detail="${building.title}${building.item}">
+        <div class="user-item-content" style="width: 100%">
+            <h2 class="ellipsis" style="line-height:2.2rem;margin:0;">
+                ${building.item}
+            </h2>
+            <a class="iconfont icon-right open-panel icon-grey pull-right"></a>
+        </div>
+    </div>
+    {@/each}
+    {@/each}
+</script>
+
+
+<!--fixed-tab--->
+<script id="choose" type="text/template">
+    <a class="button font-black group-select"
+       style="border: none;border-right: 1px solid #f6f6f9">
+        ${group}
+        <i class="iconfont icon-down" style="padding: 0"></i>
+    </a>
+    <a class="button font-black building-select" style="border: none">
+        ${building}
+        <i class="iconfont icon-down" style="padding: 0"></i>
+    </a>
+</script>
+
+
+
+<!--组团弹出列表-->
+<script id="groups" type="text/template">
+    {@each groups as item,index}
+    <h3 class="has-border-bottom market-select-singleline data-select-groups" data-id="${index}">
+        ${item}</h3>
+    {@/each}
+</script>
+
+<!--楼栋弹出列表-->
+<script id="buildings" type="text/template">
+    {@each buildings as item,index}
+    <h3 class="market-select-singleline has-border-bottom col col-33 data-select-buildings"
+        style="width: 33.3333333%!important;" data-id="${index}">${item}</h3>
+    {@/each}
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/data-address-list.js"></script>
+</body>
+</html>

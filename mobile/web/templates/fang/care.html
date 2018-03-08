@@ -1,0 +1,18 @@
+<ion-view view-title="保养">
+    <ion-nav-buttons side="left">
+        <button class="button icon ion-ios-arrow-left button-clear button-positive" ng-click="goBack()"></button>
+    </ion-nav-buttons>
+    <ion-content>
+        <div class="care-list">
+            <div class="list" ng-repeat="item in items | filter:{parent_id:'0'}:true">
+                <div class="item item-divider">
+                    {{item.name}}
+                </div>
+                <a class="item icon ion-ios-arrow-right" ng-repeat="item2 in items | filter:{parent_id:item.id}:true"
+                   ng-click="goto('servers', {id:item2.id})">
+                    {{item2.name}}
+                </a>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

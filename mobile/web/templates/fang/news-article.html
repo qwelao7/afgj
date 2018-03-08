@@ -1,0 +1,19 @@
+<ion-view view-title="文章正文">
+    <ion-nav-buttons side="left">
+        <button class="button icon ion-ios-arrow-left button-clear button-positive" ng-click="goBack()"></button>
+    </ion-nav-buttons>
+    <ion-content style="padding-top: 2px" class="news-article">
+        <div class="news-article-header" style="margin: 0 8px;">
+            <h3 style="margin-top: 10px;font-weight: bold;font-size: 18px;">{{items.title}}</h3>
+            <p style="color: #a0a0a0;">
+                <span class="news-article-header-username" style="float:left;">
+                    {{items.user_name}}
+                </span>
+                <span style="float:right;">{{items.created_at}}</span>
+            </p>
+        </div>
+        <div style="margin: 5px 8px;clear:both;">
+            <div data-ng-bind-html="items.content"></div>
+        </div>
+    </ion-content>
+</ion-view>

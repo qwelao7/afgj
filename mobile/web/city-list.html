@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>城市列表</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="city-list">
+        <header class="bar bar-nav">
+            <input class="title header-input" type="text" placeholder="输入城市名" id="search" style="-webkit-user-select: auto !important;">
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+            <a class="font-white pull-right" style="line-height:2.2rem " id="submit">搜索</a>
+        </header>
+        <div class="content grey">
+            <div id="container">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--列表-->
+<script id="tpl" type="text/template">
+    <!--当前城市-->
+    <h5 class="lr-padding font-green">
+        当前城市
+    </h5>
+    <div>
+        <div class="user-item lr-padding white follow-neighbor last-noborder city" style="height: 2.2rem"
+             data-id="${current.region_id}">
+            <div class="user-item-content" style="float: left;line-height: 2.2rem;">
+                <h2 style="margin:0;">
+                    ${current.region_name}
+                </h2>
+            </div>
+        </div>
+    </div>
+    <!--城市列表-->
+    {@each city as ct, index}
+    {@if ct.length > 0}
+    <h5 class="lr-padding font-green">
+        ${index}
+    </h5>
+    <div>
+        {@each ct as item}
+        <div class="user-item lr-padding white follow-neighbor last-noborder city" style="height: 2.2rem"
+             data-id="${item.region_id}">
+            <div class="user-item-content" style="float: left;line-height: 2.2rem">
+                <h2 style="margin: 0;">
+                    ${item.region_name}
+                </h2>
+            </div>
+        </div>
+        {@/each}
+    </div>
+    {@/if}
+    {@/each}
+</script>
+
+<!--查询-->
+<script id="list" type="text/template">
+    {@each citys as city}
+    <div class="user-item lr-padding white follow-neighbor last-noborder city" style="height: 2.2rem"
+         data-id="${city.region_id}">
+        <div class="user-item-content" style="float: left;line-height: 2.2rem">
+            <h2 style="margin: 0;">
+                ${city.region_name}
+            </h2>
+        </div>
+    </div>
+    {@/each}
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/city-list.js"></script>
+
+</body>
+</html>

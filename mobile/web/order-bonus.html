@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>订单</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name = "format-detection" content ="telephone=no, email=no" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script src="weixin/src/css/fonts/iconfont.js"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+
+<!-- 页面 -->
+<div class="page-group">
+    <div class="page page-current" id="order-bonus">
+        <header class="bar bar-nav">
+            <h1 class="title">使用红包</h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+        </header>
+        <div class="content" style="margin: 0 .6rem" id="container">
+        </div>
+    </div>
+</div>
+
+<!-- 红包 -->
+<script id="tpl" type="text/template">
+    {@each list as item}
+    <div data-id="${item.bonus_id}">
+        {@if item.is_use == 1}
+        <label class="label-checkbox">
+            <div class="stamp stamp03">
+                <div class="par">
+                    <span>￥${parseInt(item.type_money)}</span>
+                    <p>满${parseInt(item.min_goods_amount)}可用</p>
+                </div>
+            </div>
+            <div class="stamp-copy white">
+                <div class="stamp-copy-left">
+                    ${item.type_name}
+                    <p class="font-green">有效期: ${item.use_start_date}-${item.use_end_date}</p>
+                </div>
+                <div class="stamp-copy-right label-checkbox">
+                    <input type="radio" name="bonus" value="${item.type_money}" data-id="${item.bonus_id}">
+                    <div class="item-media" style="display: inline-block;margin-top: 2.3rem">
+                        <i class="icon icon-form-checkbox"></i>
+                    </div>
+                </div>
+            </div>
+        </label>
+        {@else}
+        {@if item.is_expire == 1}
+        <div class="stamp stamp03">
+        {@else}
+        <div class="stamp stamp03 stamp03-expire">
+        {@/if}
+            <div class="par">
+                <span>￥${parseInt(item.type_money)}</span>
+                <p>满${parseInt(item.min_goods_amount)}可用</p>
+            </div>
+        </div>
+        <div class="stamp-copy white">
+            <div class="stamp-copy-whole" style="border-bottom: 2px dotted #a0a0a0">
+                ${item.type_name}
+                <p class="font-green">有效期: ${item.use_start_date}-${item.use_end_date}</p>
+            </div>
+            <h4 style="font-size: .55rem">所结算的商品中没有符合条件的商品</h4>
+        </div>
+        {@/if}
+    </div>
+    {@/each}
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/order-bonus.js"></script>
+</body>
+</html>

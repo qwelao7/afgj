@@ -1,0 +1,44 @@
+<ion-view view-title="邻居信息" class="has-tabs-top">
+    <ion-nav-buttons side="left">
+        <button class="button icon ion-ios-arrow-left button-clear button-positive" ng-click="goBack()"></button>
+    </ion-nav-buttons>
+    <ion-content style="padding-top: 2px">
+        <div class="loupan-neighbor neighbor-detail">
+            <div class="community-session list">
+                <div class="item item-avatar">
+                    <img ng-src="{{qiniuDomain + nghbDetail.avatar}}">
+                    <h2>
+                        <span style="font-weight: bold">{{nghbDetail.nickname}}</span>
+                        <img ng-hide={{nghbDetail.volunteerID==''}} src="../../assets/img/icon_worker.png">
+                    </h2>
+                    <p class="address-detail">
+                        <span>{{nghbDetail.building_num + nghbDetail.unit_num + nghbDetail.house_num}}</span>
+                    </p>
+                </div>
+                <div class="row neighbor-detail-row" style="margin-top: 10px;padding-bottom: 22px" ng-show="nghbDetail.skills">
+                    <span class="col-25" style="text-align: center">个性标签</span>
+                    <p class="personal-label col-75" style="margin-top: 18px">
+                        <span class="label-game" ng-repeat="skill in nghbDetail.skills">{{skill}}</span>
+                    </p>
+                </div>
+                <div class="row neighbor-detail-row" style="border-bottom: 1px solid #c5d8e2"
+                     ng-show="nghbDetail.declaration">
+                    <span class="col-25" style="text-align: center">社长宣言</span>
+                    <p class="personal-label col-75">
+                        <span class="worker-slogan">{{nghbDetail.declaration}}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div style="margin-left: 30px;margin-right: 30px">
+            <button class="button button-block button-calm button-sayhi" ng-show="!nghbDetail.friendStatus"
+                    ng-click="showSayHiDialog()">打招呼
+            </button>
+            <button class="button button-block button-stable button-sayhi" ng-show="1==nghbDetail.friendStatus">待验证
+            </button>
+            <button class="button button-block button-calm button-sayhi" ng-show="2==nghbDetail.friendStatus"
+                    ng-click="sendMsgDialog()">发消息
+            </button>
+        </div>
+    </ion-content>
+</ion-view>

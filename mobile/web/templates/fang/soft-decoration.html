@@ -1,0 +1,23 @@
+<ion-view view-title="装修套餐">
+    <ion-nav-buttons side="left">
+        <button class="button icon ion-ios-arrow-left button-clear button-positive" ng-click="goBack()"></button>
+    </ion-nav-buttons>
+    <ion-content>
+        <div class="list soft-decoration">
+            <a class="item" ng-click="goto('soft-upgrade', {id:item.id})" ng-repeat="item in items|filter:{price_unit:'1'}:true">
+                <img class="full-image" ng-src="{{qiniuDomain + item.thumbnail}}" />
+                <div class="info">
+                    <p class="name">{{item.title}}</p>
+                    <p>{{item.price | number}}元/m²</p>
+                </div>
+            </a>
+            <a class="item" ng-click="goto('soft-upgrade', {id:item.id})" ng-repeat="item in items|filter:{price_unit:'2'}:true">
+                <img class="full-image" ng-src="{{qiniuDomain + item.thumbnail}}" />
+                <div class="info">
+                    <p class="name">{{item.title}}</p>
+                    <p>{{item.price | number}}元/套</p>
+                </div>
+            </a>
+        </div>
+    </ion-content>
+</ion-view>

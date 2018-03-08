@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>我的友元</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="points-spent">
+        <header class="bar bar-nav" id="header">
+            <h1 class="title">交易详情</h1></header>
+        <div class="content grey" id="container">
+        </div>
+    </div>
+</div>
+
+<script id="tpl" type="text/template">
+    <div class="points-index-banner">
+        <h3 style="display:table-cell;height:100px;vertical-align:middle;font-size: .75rem;color:#fff;">
+            <img src="${logo | imgPath}" class="head-img" style="width: 4rem;height: 4rem;"><br>
+            <span>${name}</span>
+        </h3>
+    </div>
+    <div class="white">
+        <h3 class="has-border-bottom" style="font-size: .75rem;text-align: center;margin: 0;padding: 1.2rem">
+            <span style="font-size: 1.5rem">${point}友元</span><br>
+            <span>交易完成</span>
+        </h3>
+    </div>
+    <div>
+        <div class="white" style="padding: .6rem">
+            <h4>付款信息&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="h3">友元</span></h4>
+            <h4>创建时间&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${created_at}</h4>
+        </div>
+    </div>
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/points-spent.js"></script>
+
+</body>
+</html>

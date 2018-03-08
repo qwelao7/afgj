@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>添加社群</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current" id="club-add">
+        <header class="bar bar-nav">
+            <h1 class="title">新建社群</h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" href="javascript:history.go(-1)"></a>
+        </header>
+        <nav class="bar bar-tab" id="submit">
+            <a class="tab-item external">
+                <span class="font-white">提交</span>
+            </a>
+        </nav>
+        <div class="content content-no-padding" id="container">
+            <form class="list-block" style="margin:0">
+                <ul>
+                    <li class="">
+                        <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                            <div class="col-33 h3" style="color: #888;margin-left: 0;text-align: left">社群名称</div>
+                            <div class="col-66" style="margin-left: 8%;position: relative">
+                                <input type="text" placeholder="请输入.." style="font-size:.7rem;width: 88%;display: inline-block" name="name">
+                            </div>
+                        </div>
+                    </li>
+                    <li class="">
+                        <div class="item-content" style="padding-left: .6rem">
+                            <div class="item-inner"
+                                 style="height:auto;min-height:2.8rem;padding-top: 1rem;padding-bottom:1rem;overflow: visible">
+                                <div class="item-title label" style="padding: 0;width: 40%">社群标识</div>
+                                <div class="item-input">
+                                    <i class="iconfont icon-camera" style="padding:.55rem;border:1px dotted #a0a0a0"></i>
+                                </div>
+                                <input type="hidden" name="thumbnail">
+                            </div>
+                        </div>
+                    </li>
+                    <div class="white" style="padding-bottom: .3rem">
+                    <textarea name="announcement" id="" style="width: 100%;border: none;text-indent: .2rem;font-size: .7rem" rows="5"
+                              placeholder="请输入描述内容..."></textarea>
+                    </div>
+                    <div class="grey" style="width: 100%;height: .4rem"></div>
+                    <li class="">
+                        <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                            <div class="col-33 h3" style="color: #888;margin-left: 0;text-align: left">关联QQ群号</div>
+                            <div class="col-66" style="margin-left: 8%;position: relative">
+                                <input type="text" placeholder="请输入.." style="font-size:.7rem;width: 88%;display: inline-block" name="link_qq">
+                            </div>
+                        </div>
+                    </li>
+                    <li class="">
+                        <div class="item-content" style="padding-left: .6rem">
+                            <div class="item-inner"
+                                 style="height:auto;min-height:2.8rem;padding-top: 1rem;padding-bottom:1rem;overflow: visible">
+                                <div class="item-title label" style="padding: 0;width: 40%">QQ群二维码</div>
+                                <div class="item-input">
+                                    <i class="iconfont icon-camera" style="padding:.55rem;border:1px dotted #a0a0a0"></i>
+                                </div>
+                                <input type="hidden" name="qq_qrcode">
+                            </div>
+                        </div>
+                    </li>
+                    <li class="">
+                        <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                            <div class="col-33 h3" style="color: #888;margin-left: 0;text-align: left">关联微信群名</div>
+                            <div class="col-66" style="margin-left: 8%;position: relative">
+                                <input type="text" placeholder="请输入.." style="font-size:.7rem;width: 88%;display: inline-block" name="link_weixin">
+                            </div>
+                        </div>
+                    </li>
+                    <li class="">
+                        <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                            <div class="col-33 h3" style="color: #888;margin-left: 0;text-align: left">微信群主微信号</div>
+                            <div class="col-66" style="margin-left: 8%;position: relative">
+                                <input type="text" placeholder="请输入.." style="font-size:.7rem;width: 88%;display: inline-block" name="weixin_group_master">
+                            </div>
+                        </div>
+                    </li>
+
+                </ul>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/club-add.js"></script>
+
+</body>
+</html>
+

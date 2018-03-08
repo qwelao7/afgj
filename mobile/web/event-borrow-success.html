@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>我为小区添便利</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current" id="event-borrow-success">
+        <header class="bar bar-nav" style="background-color: #d8442e">
+            <h1 class="title">领取成功</h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+        </header>
+        <div class="content white lr-padding login-success-content">
+            <a class="iconfont icon-pass login-success-icon" style="display:block;color: #d8442e"></a>
+            <h1 style="color: #d8442e">恭喜您领取物品成功！</h1>
+            <h3  style="padding: 0 2rem;text-indent: -1rem;margin-left: 1.6rem;text-align: left">① 请确认您房产信息中的联系人和联系电话信息正确；</h3>
+            <h3  style="padding: 0 2rem;text-indent: -1rem;margin-left: 1.6rem;text-align: left">② 物品寄出前，回来啦社区管家会电话跟您再次确认寄送信息，谢谢！</h3>
+        </div>
+    </div>
+</div>
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/event-borrow-success.js"></script>
+
+</body>
+</html>

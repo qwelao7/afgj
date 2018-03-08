@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>订单</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name = "format-detection" content ="telephone=no, email=no" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script src="weixin/src/css/fonts/iconfont.js"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<!-- 主页面 -->
+<div class="page-group">
+    <div class="page page-current" id="order-confirm">
+        <header class="bar bar-nav" id="header">
+            <h1 class="title" id="title">
+                订单确认
+            </h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+        </header>
+        <!-- content -->
+        <div class="content content-no-padding" id="container">
+        </div>
+        <!-- bottom -->
+    </div>
+</div>
+
+<!-- 结算详情 -->
+<script id="tpl" type="text/template">
+    <div class="sm-margin white">
+        {@if address.address_id}
+        <div class="has-border-bottom row lr-padding address_check" style="width: 100%;" data-id="${address.address_id}">
+            <div class="col-25" style="height: 100%;width: 10%">
+                <i class="iconfont icon-dz_hll" style="font-size: 1.2rem;padding: 0;margin: 1rem auto"></i>
+            </div>
+            <div class="col-75" style="height:100%;display: inline-block;margin-left: 0;width: 80%;">
+                <h3 STYLE="margin-bottom: 0" id="ship_address_info">
+                    <span>${address.consignee}</span>&nbsp;&nbsp;
+                    <span>${address.mobile}</span>
+                    {@if address.is_default == 'yes'}
+                    <a class="font-green" style="border-radius: .05rem;border: 1px solid #009042;padding: 0 .1rem">默认</a>
+                    {@/if}
+                </h3>
+                <h3 class="order-address" style="color: #888">
+                    收货地址：<span id="ship_address_detail">${address.address}</span>
+                </h3>
+            </div>
+            <div class="col-25" style="height: 100%;width: 10%">
+                <i class="iconfont icon-right open-panel"
+                   style="font-size: 1.2rem;padding: 0;margin: 1rem auto;float: right"></i>
+            </div>
+        </div>
+        {@else}
+        <div class="has-border-bottom row lr-padding address_check" style="width: 100%;">
+            <div class="col-25" style="height: 100%;width: 10%">
+                <i class="iconfont icon-dz_hll" style="font-size: 1.2rem;padding: 0;margin: 1rem auto"></i>
+            </div>
+            <div class="col-75" style="height:100%;display: inline-block;margin-left: 0;width: 80%;">
+                <h3><span style="line-height: 2rem;">请选择您的收货地址</span></h3>
+            </div>
+            <div class="col-25" style="height: 100%;width: 10%">
+                <i class="iconfont icon-right open-panel"
+                   style="font-size: 1.2rem;padding: 0;margin: 1rem auto;float: right"></i>
+            </div>
+        </div>
+        {@/if}
+    </div>
+    <!-- 商品详情 -->
+    <div class="sm-margin white">
+        <div class="list-title lr-padding has-border-bottom">
+            <svg class="icon" aria-hidden="true" style="margin-right: .4rem">
+                <use xlink:href="#icon-sj-hll"></use>
+            </svg>
+            <h3 style="display: inline-block">${goods.brand_name}</h3>
+        </div>
+        <div class="has-border-bottom row lr-padding to_goods" style="width: 100%;height: 3.2rem" data-id="${goods.goods_id}">
+            <div class="col col-25" style="height: 100%;width: 18%">
+                <img src="${goods.goods_thumb | img}" class="order-img">
+            </div>
+            <div class="col col-75 order-info">
+                <h3 STYLE="margin-bottom: 0">
+                    <span style="display: inline-block;width: 70% !important;" class="ellipsis">${goods.goods_name}</span>
+                    <span style="float: right">￥${goods.goods_price}元</span>
+                </h3>
+                <h4 style="margin: 0">
+                    {@if goods.goods_attr}
+                    <span style="display: inline-block;width: 70% !important;" class="ellipsis">${goods.goods_attr}</span>
+                    {@/if}
+                    {@if goods.goods_brief}
+                    <span style="display: inline-block;width: 70% !important;" class="ellipsis">${goods.goods_brief}</span>
+                    {@/if}
+                    <span style="float: right">X ${goods.goods_number}</span>
+                </h4>
+            </div>
+        </div>
+        <div class="lr-padding order-stat" id="deliver" data-isreal="${goods.is_real}">
+            <h3 style="margin: 0;color: #888">
+                配送方式
+                {@if goods.is_real == 1}
+                <i class="iconfont icon-right pull-right"></i>
+                <span class="pull-right" style="color: #595757;line-height: 1.1rem" id="pay_ship">
+                    ${payment.pay_name}
+                    <br>
+                    ${shipping.shipping_name}
+                </span>
+                {@else}
+                <span class="pull-right" style="color: #595757;line-height: 1.1rem">
+                    ${payment.pay_name}
+                    <br>
+                    ${shipping.shipping_name}
+                </span>
+                {@/if}
+            </h3>
+        </div>
+    </div>
+    <!-- 红包/友元 -->
+    <div class="sm-margin white">
+        <div class="lr-padding order-stat has-border-bottom">
+            {@if bonus != '0'}
+            <h3 style="margin: 0;color: #888" id="red_coupon">
+                红包
+                <span style="color: #595757;float: right">
+                    <span id="bonus_amount">可用</span>
+                    <i class="iconfont icon-right"></i>
+                </span>
+            </h3>
+            {@else}
+            <h3 style="margin: 0;color: #888">
+                红包
+                <span style="color: #595757;float: right">
+                    <span>不可用</span>
+                    <i class="iconfont icon-right"></i>
+                </span>
+            </h3>
+            {@/if}
+        </div>
+        <div style="clear: both"></div>
+        {@if goods.point != '0'}
+        <div class="lr-padding order-stat has-border-bottom">
+            <h3 style="margin: 0;color: #888">
+                可用${goods.point}友元抵￥${goods.integral}
+                <label class="label-switch" style="float: right;margin: .4rem auto;">
+                    <input type="checkbox" name="points" checked value="${goods.integral}">
+                    <div class="checkbox"></div>
+                </label>
+            </h3>
+        </div>
+        {@/if}
+        <div style="clear: both"></div>
+        <!-- 金额明细 -->
+        <div class="lr-padding has-border-bottom" style="margin-bottom: 2.4rem;">
+            <h4>
+                商品金额：<span class="font-green pull-right">￥ ${goods.order_money}</span>
+            </h4>
+            <h4>
+                运费：<span class="font-green pull-right" id="deliver_amount">+￥${shipping.shipping_fee.toFixed(2)}</span>
+            </h4>
+            <h4>
+                红包：<span class="font-green pull-right" id="red_amount">-￥0.00</span>
+            </h4>
+            <h4>
+                友元：
+                {@if goods.integral == '0'}
+                <span class="font-green pull-right">-￥0.00</span>
+                {@else}
+                <span class="font-green pull-right" id="points_amount">-￥${goods.integral}</span>
+                {@/if}
+            </h4>
+        </div>
+    </div>
+    <!--<div class="sm-margin white">-->
+    <!--<div class="lr-padding order-stat has-border-bottom">-->
+    <!--<h3 style="margin: 0;color: #888">-->
+    <!--买家留言：-->
+    <!--<input type="text" style="width: 75%;border: none;color: #595757">-->
+    <!--</h3>-->
+    <!--</div>-->
+</script>
+
+<!-- 提交 -->
+<script id="bottom" type="text/template">
+    <div class="bar bar-tab buttons-row white no-border row" style="background-color: #fff">
+        <div class="white font-black" style="width:66%;line-height: 2.5rem;text-align: center" id="commentBtn">
+            实付：
+            {@if goods.integral == '0'}
+            <span class="font-green order_amount">￥${goods.order_money}</span>
+            {@else}
+            <span class="font-green order_amount">￥${(parseInt(goods.order_money * 100) - parseInt(goods.integral * 100)) / 100}</span>
+            {@/if}
+        </div>
+        <div class="green font-white" style="width:34%;line-height: 2.5rem;text-align: center" id="submit">
+            提交订单
+        </div>
+    </div>
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/order-confirm.js"></script>
+</body>
+</html>

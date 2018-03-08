@@ -1,0 +1,6 @@
+/node_modules
+/build
+/dist
+/package.json
+/webpack.config.js
+/webpack.production.config.js

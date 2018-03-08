@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>我家</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current" id="vehicle-alert-add">
+        <!-- header -->
+        <header class="bar bar-nav">
+            <h1 class="title">新建车辆提醒</h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+        </header>
+        <!-- container -->
+        <div class="content content-no-padding" id="container">
+            <form>
+                <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom: 0">
+                    <div class="col-33 h3" style="color: #888;margin-left: 0">提醒名称</div>
+                    <div class="col-66">
+                        <input type="text" placeholder="请输入..." class="input-common" name="name">
+                    </div>
+                </div>
+                <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom: 0">
+                    <div class="col-33 h3" style="color: #888;margin-left: 0">间隔公里数</div>
+                    <div class="col-66">
+                        <input type="number" placeholder="请输入..." class="input-common" name="next_km">
+                    </div>
+                </div>
+                <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom: 0">
+                    <div class="col-33 h3" style="color: #888;margin-left: 0">间隔月份</div>
+                    <div class="col-66">
+                        <input type="number" placeholder="请输入..." class="input-common" name="next_month">
+                    </div>
+                </div>
+                <div class="normal-list lr-padding has-border-bottom row hide" style="margin-bottom: 0">
+                    <div class="col-33 h3" style="color: #888;margin-left: 0">上次保养时间</div>
+                    <div class="col-66">
+                        <input type="text" placeholder="请输入..." class="input-common" name="last_date" data-toggle="date">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- nav -->
+        <nav class="bar bar-tab" id="submit">
+            <a class="tab-item external">
+                <span class="font-white">提交</span>
+            </a>
+        </nav>
+    </div>
+</div>
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/vehicle-alert-add.js"></script>
+
+</body>
+</html>

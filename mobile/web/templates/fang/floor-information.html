@@ -1,0 +1,53 @@
+<ion-view view-title="楼盘详情">
+    <ion-nav-buttons side="left">
+        <button class="button icon ion-ios-arrow-left button-clear button-positive"
+                ng-click="goBack()"></button>
+    </ion-nav-buttons>
+    <ion-content>
+        <div class="picture-box" style="width: 96%;margin: 0 auto">
+            <ion-slide-box auto-play="true" slide-interval="4000" delegate-handle="slideimgs" does-continue="true">
+                <ion-slide ng-repeat="img in items.bannerpic">
+                    <img class="full-image" style="width: 100%" ng-src="{{qiniuDomain + img}}" ng-click="goto('house-banner-picture',{'id':items.id})"/>
+                </ion-slide>
+            </ion-slide-box>
+        </div>
+        <div class="house-item floor-box">
+
+            <h3>{{items.name}}</h3>
+            <p class="area">{{items.avg_price}}</p>
+            <p class="icon map">{{items.address}}</p>
+            <ul class="floor-details">
+                <li><label>最早交房</label><span>{{items.delivery_date}}</span></li>
+                <li><label>交付标准</label><span>{{items.decorate_level}}</span></li>
+                <li>
+                    <label>物业形态</label><span>{{items.property_type}}</span>
+                </li>
+            </ul>
+        </div>
+        <div class="list information">
+            <div class="item" ng-repeat="item in items.houseType">
+                <h2 class="title">户型{{item.name}}</h2>
+                <a class="row">
+                    <div class="col">
+                        <img class="full-image" style="width: 100%" ng-src="{{qiniuDomain + item.pic}}"/>
+                    </div>
+                </a>
+                <div class="row">
+                    <div class="col">
+                        <p class="info">
+                            <span>{{item.fangxin}}</span>
+                            <span>{{item.area}}</span>
+                            <span class="font-color-5">{{item.lowest_total_price}}万起</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="height:48px;" ng-hide="!items.wx_qr_code && !items.hot_line"></div>
+    </ion-content>
+    <div class="tabs button-bar" ng-hide="!items.wx_qr_code && !items.hot_line">
+        <a class="button bar-orange col" ng-click="action.alertwx(items.wx_qr_code)" ng-show="items.wx_qr_code !=''">在线咨询</a>
+        <a class="button bar-blue col" href="tel:{{items.hot_line}}" ng-if="items.hot_line != ''">购房热线</a>
+    </div>
+</ion-view>

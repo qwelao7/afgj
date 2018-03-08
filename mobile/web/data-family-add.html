@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>业主信息</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="data-family-add">
+        <!-- 头部 -->
+        <header class="bar bar-nav">
+            <h1 class="title" id="title">
+                添加业主
+            </h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+        </header>
+        <nav class="bar bar-tab" id="submit">
+            <a class="tab-item external">
+                <span class="font-white">提交</span>
+            </a>
+        </nav>
+        <!-- 内容 -->
+        <div class="content content-no-padding infinite-scroll" data-distance="1%" id="content">
+
+        </div>
+    </div>
+</div>
+
+
+<!--header-->
+<script id="header" type="text/template">
+    <input type="text" id="picker" style="background-color: #009042;border: none; text-align: center;width:100%;"
+           value="${title}" readonly>
+</script>
+
+
+<script id="tpl" type="text/template">
+    <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+        <div class="col-40 h3" style="color: #888;margin-left: 0">业主姓名</div>
+        <div class="col-60" style="margin-left: 0%">
+            <input type="text" placeholder="请输入..." style="border: none" id="name"></div>
+    </div>
+    <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+        <div class="col-40 h3" style="color: #888;margin-left: 0">是业主(${cname})的</div>
+        <div class="col-60" style="margin-left: 0%">
+            <input type="text" placeholder="请输入..." style="border: none" id="relation"></div>
+    </div>
+    <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+        <div class="col-40 h3" style="color: #888;margin-left: 0">手机号码</div>
+        <div class="col-60" style="margin-left: 0%">
+            <input type="tel" placeholder="请输入..." style="border: none" id="tel"></div>
+    </div>
+</script>
+
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/data-family-add.js"></script>
+</body>
+</html>

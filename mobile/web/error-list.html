@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>故障处理</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="error-list">
+        <!-- 头部 -->
+        <header class="bar bar-nav">
+            <h1 class="title">故障列表</h1>
+        </header>
+        <div class="content content-no-padding" id="container" style="padding-bottom: 2.5rem !important;">
+        </div>
+    </div>
+</div>
+
+<!-- tpl -->
+<script id="tpl" type="text/template">
+    {@if list && list.length > 0}
+    {@each list as item}
+    <div class="error-list white has-border-bottom" data-id="${item.id}">
+        <div class="error-list-left">
+            <h3 class="top-line">${item.address_desc}</h3>
+            <h4 class="bottom-line ellipsis-full" style="width: 100%;">
+                {@if work_id == 1}
+                分类: <span class="font-black" style="margin-right: .4rem">${item.name}</span>
+                {@else if work_id == 2 || work_id == 3 ||work_id == 4 }
+                问题: <span class="font-black" style="margin-right: .4rem">${item.name}</span>
+                {@/if}
+                状态: <span class="font-black">${item.status_name}</span>
+            </h4>
+        </div>
+        {@if item.status_name != '已完成'}
+        {@if item.over_time == 1}
+        <div class="error-list-right">
+            <h5 class="font-white" style="margin: .5rem 0 0 0;">已报障</h5>
+            <h5 class="font-white" style="margin: 0;">${item.time}小时</h5>
+        </div>
+        {@else}
+        <div class="error-list-right-white">
+            <h5 class="font-green" style="margin: .5rem 0 0 0;">已报障</h5>
+            <h5 class="font-green" style="margin: 0;">${item.time}小时</h5>
+        </div>
+        {@/if}
+        {@/if}
+    </div>
+    {@/each}
+    {@/if}
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/error-list.js"></script>
+</body>
+</html>

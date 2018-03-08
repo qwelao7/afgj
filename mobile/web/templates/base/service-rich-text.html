@@ -1,0 +1,15 @@
+<ion-view view-title="服务详情">
+    <ion-nav-buttons side="left">
+        <button class="button icon ion-ios-arrow-left button-clear button-positive" ng-click="goBack()"></button>
+    </ion-nav-buttons>
+
+    <ion-content style="padding-top: 2px;margin-bottom: 47px;" class="news-article">
+        <div style="clear:both;">
+            <div data-ng-bind-html="items.description"></div>
+        </div>
+    </ion-content>
+    <div class="tabs button-bar bar-balanced">
+        <a class="button" style="background-color: #009042;" ng-click="action.goto()">预约服务</a>
+    </div>
+</ion-view>
+

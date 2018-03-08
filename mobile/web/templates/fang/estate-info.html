@@ -1,0 +1,102 @@
+<ion-view view-title="房产信息">
+    <ion-nav-buttons side="left">
+        <button class="button icon ion-ios-arrow-left button-clear button-light button-white"
+                ng-click="goBack()"></button>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right">
+        <button class="button icon ion-ios-more button-clear button-light button-white" ng-click="action.more()"></button>
+    </ion-nav-buttons>
+    <div class="tabs-striped  tabs-color-balanced tabs-top">
+        <div class="tabs">
+            <a class="tab-item item-all-help" ng-class="{active:isSelected==0}"
+               ng-click="action.change('all')">
+                房产信息
+            </a>
+            <a class="tab-item item-my-help" ng-class="{active:isSelected==1}" ng-click="action.change('my')">
+                房主成员
+            </a>
+        </div>
+    </div>
+    <ion-content class="grey" style="padding-top: 2px;margin-top: 47px">
+        <div class="estate-info-group" ng-if="isSelected==0">
+            <ul class="list">
+                <li class="item">
+                    <span>城市区域</span>
+                    <span>{{detail.area}}</span>
+                </li>
+                <li class="item">
+                    <span>小区大厦名</span>
+                    <span>{{detail.mansion}}</span>
+                </li>
+                <li class="item">
+                    <span>楼号门牌号</span>
+                    <span>{{detail.building_house_num}}</span>
+                </li>
+                <li class="item">
+                    <span>是否默认房产</span>
+                    <span>{{detail.is_default}}</span>
+                </li>
+                <li class="item">
+                    <span>联系人</span>
+                    <span>{{detail.contact_to}}</span>
+                </li>
+                <li class="item">
+                    <span>手机号码</span>
+                    <span>{{detail.mobile}}</span>
+                </li>
+            </ul>
+        </div>
+        <div class="member-group" ng-if="isSelected==1">
+            <div class="member">
+                <a class="item item-avatar" ng-repeat="item in info" ng-if="current == 'estater'">
+                    <img ng-src="{{qiniuDomain + item.avatar}}">
+                    <span class="member-name">{{item.nickname}}</span>
+                    <span class="member-phone">{{item.primary_mobile}}</span>
+                </a>
+            </div>
+            <div class="member-request" ng-if="to_auth.length>0&&current=='estater'">
+                <p>待审核认证</p>
+                <a class="item item-avatar" ng-repeat="list in to_auth" ng-if="list.isShow">
+                    <img ng-src="{{qiniuDomain + list.account_info.avatar}}">
+                    <h2 class="request-name">
+                        {{list.account_info.nickname}}
+                        <span>{{list.account_info.primary_mobile}}</span>
+                    </h2>
+                    <h2 class="request-content">{{list.authdata}}</h2>
+                    <button class="button button-small request-button button-authorize" ng-click="action.estate(true, list)">
+                        通过
+                    </button>
+                    <button class="button button-small request-button button-reject" style="background-color: #7dce6f" ng-click="action.estate(false, list)">
+                        拒绝
+                    </button>
+                </a>
+            </div>
+        </div>
+        <button style="background-color: #299a15;color: #fff;width: 80%;margin: 0 auto;margin-top: 10px" class="button button-block button-positive"
+         ng-if="isSelected==1 && current == 'noestate'" ng-click="goto('estate-auth', {'id': params.id})">
+            <div class="title">我要认证</div>
+        </button>
+        <p style="text-align: center;color: #878787;margin-top:10px;" ng-if="isSelected==1 && current == 'unestated'">房主认证中...</p>
+        <p style="text-align: center;color: #878787;margin-top:10px;" ng-if="isSelected==1 && current == 'successed'">房主认证成功！</p>
+        <p style="text-align: center;color: #878787;margin-top:10px;" ng-if="isSelected==1 && current == 'refused'">房主认证失败...失败原因: {{cause}}</p>
+    </ion-content>
+    <div id="mask" class="mask" ng-click="action.unshare()"></div>
+    <div class="row share-out" ng-if="isShare" id="share-out">
+        <table>
+            <tr>
+                <td style="border-right: 1px solid #f5f5f5">
+                    <img src="../../assets/css/images/auth_edit.png" ng-click="addressEdit(detail)">
+                    <p>编辑房产</p>
+                </td>
+                <td style="border-right: 1px solid #f5f5f5" ng-click="action.delete(detail)">
+                    <img src="../../assets/css/images/auth_del.png">
+                    <p>删除房产</p>
+                </td>
+                <td>
+                    <img src="../../assets/css/images/auth_auth.png" ng-click="action.toEstate()">
+                    <p>房主认证</p>
+                </td>
+            </tr>
+        </table>
+    </div>
+</ion-view>

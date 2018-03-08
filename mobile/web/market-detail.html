@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>小市</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="market-detail">
+        <header class="bar bar-nav">
+            <h1 class="title">
+                <input type="text" id="picker"
+                       style="background-color: #009042;border: none;width: 7rem;text-align: center" value="物品详情"
+                       readonly>
+            </h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+        </header>
+        <div class="bar bar-tab bar-white">
+            <div style="padding: .4rem 0;border-top: 1px solid #f6f6f9">
+                <div class="buttons-row white no-border">
+                    <div class="button no-border font-dark"
+                         style="border-left: 1px solid #f6f6f9;height: 1rem;line-height: 1rem" id="comment">
+                        <i class="iconfont icon-liuyan font-dark" style="font-size:.8rem;padding: 0;"></i>
+                        留言
+                    </div>
+                    <div class="button no-border font-dark"
+                         style="border-left: 1px solid #f6f6f9;height: 1rem;line-height: 1rem" id="to_talk">
+                        <i class="iconfont icon-hi font-dark" style="font-size:1.2rem;padding: 0;"></i>
+                        私聊
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content content-no-padding" id="content">
+        </div>
+    </div>
+</div>
+
+<script id="tab" type="text/template">
+    {@if desc.isPraise}
+    <div class="button no-border font-dark" style="border-left: 1px solid #f6f6f9;height: 1rem;line-height: 1rem"
+         id="praised">
+        <i class="iconfont icon-dianzanhll font-green" style="padding: 0;"></i>&nbsp;已赞
+    </div>
+    {@else}
+    <div class="button no-border font-dark" style="border-left: 1px solid #f6f6f9;height: 1rem;line-height: 1rem"
+         id="toPraise">
+        <i class="iconfont icon-zan1 font-dark" style="padding: 0;"></i>&nbsp;赞
+    </div>
+    {@/if}
+</script>
+<script id="tpl" type="text/template">
+    <div class="sm-margin white" data-isowner="${desc.isOwner}">
+        <div class="user-item decoration-item no-border lr-padding white">
+            <div class="user-item-img">
+                <img class="head-img" src="${desc.headimgurl}">
+            </div>
+            <div class="user-item-content">
+                <h1 class="item-two-line-title">
+                    ${desc.nickname}
+                </h1>
+                <h5 class="item-two-line-right font-red" style="margin-top: 1rem">
+                    ${desc.sell_item_price | integer}
+                </h5>
+                <h5 class="item-two-line-detail">
+                    ${desc.created_at | time} ${desc.sell_item_type}
+                </h5>
+            </div>
+            <br style="clear: both">
+            <h3 style="padding-bottom: .4rem;margin-top:.4rem;margin-bottom: 0">
+                ${desc.item_desc}
+            </h3>
+        </div>
+        {@if desc.item_pics != null}
+        <div class="has-border-bottom">
+            <div class="row white lr-padding">
+                {@each desc.item_pics as pic, index}
+                <a class="col col-33-img pb-popup" data-index = "${index}">
+                    <img src="${pic | imgPath}?imageMogr2/thumbnail/!300x300r/gravity/center/crop/200x200"
+                         class="decoration-img" style="margin:0;">
+                </a>
+                {@/each}
+            </div>
+        </div>
+        {@/if}
+    </div>
+</script>
+<script id="ext" type="text/template">
+    <div class="buttons-tab fixed-tab lr-padding" data-offset="44">
+        <a href="#tab2" class="tab-link active button">留言</a>
+        <a href="#tab3" class="tab-link button tab-zan" data-ispraise="${desc.isPraise}">赞</a>
+    </div>
+    <div class="tabs">
+        <div id="tab2" class="tab active">
+            {@if comment.length > 0}
+            {@each comment as ul}
+            <div class="user-item decoration-item lr-padding white">
+                <div class="user-item-img">
+                    <img class="head-img" src="${ul.headimgurl}">
+                </div>
+                <div class="user-item-content">
+                    <h1 class="item-two-line-title">
+                        ${ul.nickname}
+                    </h1>
+                    <h5 class="item-two-line-detail">
+                        ${ul.created_at | time}
+                    </h5>
+                </div>
+                <br style="clear: both">
+                <h3 style="padding-bottom: .4rem;margin-top:.4rem;margin-bottom: 0;padding-left: 14%">
+                    ${ul.content}
+                </h3>
+            </div>
+            {@/each}
+            {@else}
+            <h3 style='text-align: center;margin-top: 4rem;' class="tips2">暂无评论</h3>
+            {@/if}
+        </div>
+        <div id="tab3" class="tab">
+            {@if praise.length > 0}
+            {@each praise as li}
+            <div class="user-item lr-padding white to-praise" data-id="${li.id}">
+                <div class="user-item-img">
+                    <img class="head-img" src="${li.headimgurl}">
+                </div>
+                <div class="user-item-content">
+                    <h2 class="item-two-line-title">
+                        ${li.nickname}
+                    </h2>
+                    <h5 class="item-two-line-detail">
+                        ${li.created_at | time}
+                    </h5>
+                </div>
+            </div>
+            {@/each}
+            {@else}
+            <h3 style='text-align: center;margin-top: 4rem;' class="tips3">暂无点赞</h3>
+            {@/if}
+        </div>
+    </div>
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script src="//g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/market-detail.js"></script>
+</body>
+</html>

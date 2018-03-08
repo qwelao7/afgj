@@ -1,0 +1,63 @@
+<ion-view view-title="精装方案">
+    <ion-nav-buttons side="left">
+        <button class="button icon ion-ios-arrow-left button-clear button-positive" ng-click="goBack()"></button>
+    </ion-nav-buttons>
+    <ion-content style="margin-bottom: 48px;">
+        <div class="house-item">
+            <h3>户型图片</h3>
+            <div class="row">
+                <div class="col col-50 col-offset-25">
+                    <img class="full-image" ng-src="{{qiniuDomain + item[0].pic}}-w640" alt=""/>
+                </div>
+            </div>
+        </div>
+        <div class="house-item">
+            <h3>精装方案</h3>
+            <a ng-click="goto('house-picture', {id:decorate.service.id})" ng-repeat="decorate in item[0].decorate">
+                <p><span ng-bind="$index+1">1</span>. {{decorate.title}}<span>{{decorate.price}}元</span></p>
+                <div class="row">
+                    <div class="col" ng-repeat="img in decorate.service.pics">
+                        <img class="full-image" ng-src="{{qiniuDomain + img[0]}}"/>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="house-item">
+            <h3>个性升级包</h3>
+            <div ng-repeat="decorate in item[0].decorate">
+                <a ng-click="goto('house-picture', {id:upgrade.service.id})" ng-repeat="upgrade in decorate.upgrade">
+                    <p><span ng-bind="$index+1">1</span>. {{upgrade.title}}<span>{{upgrade.price}}元</span></p>
+                    <div class="row">
+                        <div class="col" ng-repeat="img in upgrade.service.pics">
+                            <img class="full-image" ng-src="{{qiniuDomain + img[0]}}"/>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="house-item">
+            <h3 class="name">装修方案估价</h3>
+            <h3 class="title">方案选择</h3>
+            <div class="list blue">
+                <a class="col button button-small button-outline" ng-repeat="decorate in item[0].decorate"
+                   ng-class="{select:params.decorateId==decorate.id}" ng-click="action.selectDecorate(decorate)">
+                    {{decorate.title}}
+                </a>
+            </div>
+            <h3>个性升级包选择</h3>
+            <div class="list">
+                <a class="col button button-small button-outline" ng-class="{select:params.upgradeId==upgrade.id}"
+                   ng-repeat="upgrade in params.decorate.upgrade" ng-click="action.selectUpgrade(upgrade)">
+                    {{upgrade.title}}
+                </a>
+            </div>
+            <div class="price">
+                <span>估价</span>
+                <span class="number" id="price">￥{{params.total}} 元</span>
+            </div>
+        </div>
+    </ion-content>
+    <div class="tabs button-bar bar-orange">
+        <a class="button" href="tel://{{item.decorate[0].service.hotline}}">装修热线</a>
+    </div>
+</ion-view>

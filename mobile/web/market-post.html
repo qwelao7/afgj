@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>小市</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="market-post">
+        <header class="bar bar-nav">
+            <h1 class="title">发布闲置物品</h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" href="javascript:history.go(-1)"></a>
+        </header>
+        <button class="bar bar-tab" id="submit" style="text-align: center;padding: .6rem;color: #fff;">
+            提交
+        </button>
+        <form class="content grey">
+            <div id="container">
+                <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                    <div class="col-25 h3" style="color: #888">物品分类</div>
+                    <div class="col-75" style="margin-left: 8%;position: relative" id="classifyList">
+                        <i class="iconfont icon-down pull-right"
+                           style="position: absolute;right: .2rem;top: .1rem;"></i>
+                    </div>
+                </div>
+                <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                    <div class="col-25 h3" style="color: #888">所在小区</div>
+                    <div class="col-75" style="margin-left: 8%;position: relative" id="communityList">
+                        <i class="iconfont icon-down pull-right"
+                           style="position: absolute;right: .2rem;top: .1rem;"></i>
+                    </div>
+                </div>
+                <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                    <div class="col-25 h3" style="color: #888">售价(元)</div>
+                    <div class="col-75" style="margin-left: 8%;position: relative">
+                        <input type="number" placeholder="请输入售价.." style="border: none;width: 100%;" id="price">
+                    </div>
+                </div>
+                <div class="lr-padding white has-border-bottom row" style="margin-bottom:0">
+                    <textarea placeholder="请输入物品描述..." name="" id="content" cols="30" rows="5"
+                              style="width: 100%;border: none"></textarea>
+                    <div style="width: 100%;padding-bottom: .4rem">
+                        <i class="iconfont icon-camera" style="padding:.55rem;border:1px dotted #a0a0a0" id="imgs"></i>
+                        <div class="row" id="pic" style="margin-top: 2rem;"></div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- 分类 -->
+<script id="tpl" type="text/template">
+    <input type="text" placeholder="请选择" style="border: none;width: 100%;" readonly id="picker1" value="${classify}">
+</script>
+
+<!-- 小区 -->
+<script id="communitys" type="text/template">
+    <input type="text" placeholder="请选择" style="border: none;width: 100%;" readonly id="picker2" value="${name}">
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript" src="/js/market-post.js"></script>
+</body>
+</html>

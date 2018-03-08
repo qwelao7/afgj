@@ -1,0 +1,149 @@
+<ion-view view-title="社群" hide-nav-bar="true">
+    <ion-header class="reset-header">
+        <div class="bar bar-header">
+            <div class="dropdown" ng-show="0!=title.length">
+                <button id="dropdown" data-id="0" class="button" ng-click="params.drop=!params.drop">{{params.loupanName}}</button>
+                <i class="icon ion-arrow-down-b" ng-show="!params.drop"></i>
+                <i class="icon ion-arrow-up-b" ng-show="params.drop"></i>
+            </div>
+
+        </div>
+        <ul class="dropdown-menu" ng-show="params.drop">
+            <li ng-click="params.drop=0;goto('base.community', {id:sub.id})" name="dropdown" ng-repeat="sub in title"><a
+                    href="">{{sub.name}}</a></li>
+        </ul>
+        <button class="button icon ion-android-notifications-none button-clear button-light button-white community-alert"
+                ng-click="goto('community-sayhi', {id: params.id})" ng-show="0!=title.length">
+            <i style="font-size: small" ng-if="msgCounts>0">{{msgCounts}}</i>
+        </button>
+    </ion-header>
+
+
+    <ion-content ng-class="0==title.length?'':'grey'" style="padding-top: 2px;margin-top: 43px">
+        <div class="no-content" ng-show="0==title.length">
+            <img src="../../assets/css/images/blank_community.png">
+            <p>请让我知道您住在哪个小区~</p>
+            <button class="button button-calm" ng-click="goto('estate-manage')">管理我的房产</button>
+        </div>
+        <div class="row community-row" ng-show="0!=title.length">
+            <div class="col-33">
+                <img src="../../assets/css/images/community_pic_01.png" style="width:100%;">
+            </div>
+            <div class="col-67 community-col-right" ng-click="goto('community-neighbor', {id: params.id, searchInfo: '0'})">
+                <p class="col-right-title">很高兴认识你</p>
+                <p class="col-right-info">亲爱的邻居，你回来啦，很高兴认识你哦！</p>
+                <button class="button icon ion-ios-arrow-right button-large button-clear button-positive col-right-button"></button>
+                <div class="col-right-buttons-group">
+                    <div class="col-right-bottom-button">
+                        <img src="../../assets/css/images/community_icon001.png">
+                        <span>{{neighbor.neighborNum}}</span>
+                    </div>
+                    <div class="col-right-bottom-button">
+                        <img src="../../assets/css/images/community_icon002.png">
+                        <span>{{neighbor.myFriendNum}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row community-row" ng-show="0!=title.length">
+            <div class="col-33">
+                <img src="../../assets/css/images/community_pic_02.png" style="width:100%;">
+            </div>
+            <div class="col-67 community-col-right" ng-click="goto('community-zone', {id: params.id})">
+                <p class="col-right-title">园区新鲜事</p>
+                <p class="col-right-info">小区是我们共同的家，我们用心经营它。</p>
+                <button class="button icon ion-ios-arrow-right button-large button-clear button-positive col-right-button"></button>
+                <div class="col-right-buttons-group">
+                    <div class="col-right-bottom-button">
+                        <img src="../../assets/css/images/community_icon003.png">
+                        <span>{{news.newsNum}}</span>
+                    </div>
+                    <div class="col-right-bottom-button">
+                        <img src="../../assets/css/images/community_icon004.png">
+                        <span>{{news.commentNum}}</span>
+                    </div>
+                    <div class="col-right-bottom-button">
+                        <img src="../../assets/css/images/community_icon005.png">
+                        <span>{{news.praiseNum}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row community-row" ng-show="0!=title.length">
+            <div class="col-33">
+                <img src="../../assets/css/images/community_pic_03.png" style="width:100%;">
+            </div>
+            <div class="col-67 community-col-right" ng-click="goto('community-help', {id: params.id})">
+                <p class="col-right-title">友邻互助社</p>
+                <p class="col-right-info">幸福就是无私付出，守望相助。</p>
+                <button class="button icon ion-ios-arrow-right button-large button-clear button-positive col-right-button"></button>
+                <div class="col-right-buttons-group">
+                    <div class="col-right-bottom-button">
+                        <img src="../../assets/css/images/community_icon006.png">
+                        <span>{{help.num}}</span>
+                    </div>
+                    <div class="col-right-bottom-button">
+                        <img src="../../assets/css/images/community_icon007.png">
+                        <span>{{help.solvedNum}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--<div class="community-session " ng-show="0!=title.length">-->
+        <!--<div style="border-top: none" class="item item-icon-right"-->
+        <!--ng-click="goto('community-neighbor', {id: params.id})">-->
+        <!--<a style="font-weight: bold">很高兴认识你</a>-->
+        <!--<i class="icon ion-chevron-right icon-accessory"></i>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="community-session list" ng-show="0!=title.length">-->
+        <!--<div class="item item-icon-right" ng-click="goto('community-zone', {'id': params.id})">-->
+        <!--<a style="font-weight: bold">园区新鲜事</a>-->
+        <!--<i class="icon ion-chevron-right icon-accessory"></i>-->
+        <!--</div>-->
+        <!--<a class="item item-avatar" ng-repeat="item in items['zone']"-->
+        <!--ng-click="goto('community-zone-detail', {id: item.id})">-->
+        <!--<img ng-src="{{qiniuDomain + item.account_info.avatar}}">-->
+        <!--<h2>-->
+        <!--<span style="font-weight: bold">{{item.title}}</span>-->
+        <!--<span class="date">{{item.formate_time}}</span>-->
+        <!--</h2>-->
+        <!--<div class="text">-->
+        <!--<p class="community-comments-name">{{item.content}}</p>-->
+        <!--<p class="community-likes">-->
+        <!--<i class='ion-ios-heart-outline'></i>&nbsp;{{item.praise_num}}-->
+        <!--</p>-->
+        <!--<p class="community-likes">-->
+        <!--<i class='ion-ios-chatbubble-outline'></i>&nbsp;{{item.comment_num}}-->
+        <!--</p>-->
+        <!--</div>-->
+        <!--</a>-->
+        <!--</div>-->
+        <!--<div class="community-session list" ng-show="0!=title.length">-->
+        <!--<div class="item item-icon-right" ng-click="goto('community-help', {'id':params.id})">-->
+        <!--<a style="font-weight: bold">业工帮帮忙</a>-->
+        <!--<i class="icon ion-chevron-right icon-accessory"></i>-->
+        <!--</div>-->
+        <!--<a class="item item-avatar" ng-click="goto('community-help-detail', {id:help.id})"-->
+        <!--ng-repeat="help in items['help']">-->
+        <!--<img ng-src="{{qiniuDomain + help.account_info.avatar}}">-->
+        <!--<h2>-->
+        <!--<span style="font-weight: bold">{{help.title}}</span>-->
+        <!--<span class="date">{{help.formate_time}}</span>-->
+        <!--</h2>-->
+        <!--<div class="text">-->
+        <!--<span class="community-comments-name">{{help.account_info.nickname}}</span>-->
+        <!--<span class="ask-help">-->
+        <!--请{{help.volunteer_info.nickname}}帮忙-->
+        <!--</span>-->
+        <!--<span class="unsolved" ng-show="help.status==0">-->
+        <!--未解决-->
+        <!--</span>-->
+        <!--<span class="solved" ng-show="help.status==1">-->
+        <!--已解决-->
+        <!--</span>-->
+        <!--</div>-->
+        <!--</a>-->
+        <!--</div>-->
+    </ion-content>
+</ion-view>

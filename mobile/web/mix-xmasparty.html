@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Mix活力圣诞趴</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current lr-padding" id="mix-xmasparty">
+        <div class="content white" id="container"
+             style="background-image: url('http://pub.huilaila.net/mix-xmasparty.jpg');background-size: 100% 100%;">
+            <input type="number" id="mix-ipt"
+                   style="display:block;margin: 85% auto 10%;opacity: .6;width: 12.5rem;height: 2rem;line-height: 2rem;border-radius: .2rem;text-indent: .3rem;border:none;box-shadow:0 0 20px #ccc;"
+                   placeholder="请输入您的手机号或贵宾号" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')">
+            <a id="submit" class="button button-fill"
+               style="width: 12.5rem;height: 2rem;line-height: 2rem;display: block;margin: 0 auto;background-color: #31BB04">确
+                定</a>
+        </div>
+    </div>
+</div>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/mix-xmasparty.js"></script>
+</body>
+</html>

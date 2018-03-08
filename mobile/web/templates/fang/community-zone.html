@@ -1,0 +1,122 @@
+<ion-view view-title="园区新鲜事" hide-nav-bar="true">
+    <ion-header class="reset-header">
+        <div class="bar bar-header">
+            <div class="dropdown">
+                <button id="dropdown" data-id="0" class="button" ng-click="params.drop = !params.drop">{{params.title}}</button>
+                <i class="icon ion-arrow-down-b" ng-show="!params.drop"></i>
+                <i class="icon ion-arrow-up-b" ng-show="params.drop"></i>
+            </div>
+
+        </div>
+        <ul class="dropdown-menu" ng-show="params.drop">
+            <li ng-click="params.drop=0;goto('community-zone', {id:sub.id})" name="dropdown" ng-repeat="sub in title"><a
+                    href="">{{sub.name}}</a></li>
+        </ul>
+        <button class="button icon ion-ios-arrow-left button-clear button-light button-white goback-button"
+                ng-click="goBack()"></button>
+        <button ng-if="isVolunteer" class="button icon ion-android-add button-clear button-light button-white add-button"
+                ng-click="action.create()">
+        </button>
+    </ion-header>
+    <ion-content ng-class="0==items.length?'':'grey'" style="padding-top: 2px;margin-top: 43px">
+        <div class="no-content" ng-show="1==sysOp.page&&!sysOp.moreDataFlag">
+            <img src="../../assets/css/images/blank_news.png">
+            <p>抱歉，该楼盘尚无信息~</p>
+        </div>
+        <div class="news-list" ng-repeat="item in items" style="margin-bottom: 10px">
+            <div class="news-info" ng-click="goto('community-zone-detail', {id:item.id,vaild:params.vaild})">
+                <a class="item item-avatar" style="border-bottom: 1px solid #c5d8e2">
+                    <img ng-src="{{qiniuDomain + item.account_info.avatar}}">
+                    <h2>{{item.title}}</h2>
+                    <p class="text" ng-if="item.account_id > 0">{{item.account_info.nickname}}</p>
+                    <p style="color: red;" class="text" ng-if="item.admin_id > 0">{{item.account_info.nickname}}</p>
+                    <p class="date">{{item.publish_time}}</p>
+                </a>
+            </div>
+            <div ng-show="item.content_show" style="margin:0 10px;">
+                <p class="news-article  isAll-{{!params.isAll[$index]}}" style="margin-top: 10px"
+                   ng-click="goto('community-zone-detail', {id:item.id,vaild:params.vaild})">
+                    {{item.content_show}}
+                </p>
+                <div ng-show="item.content.length > 100">
+                    <p class="full-article" ng-click="action.all($index,item)" ng-show="!params.isAll[$index]">
+                        全文 <span class="triangleDown"></span></p>
+                    <p class="full-article" ng-click="action.notall($index,item)" ng-show="params.isAll[$index]">收起 <span
+                            class="triangleUp"></span></p>
+                </div>
+            </div>
+            <!-- PUTONG -->
+            <div class="news-images row row-wrap" ng-if="item.image_type == 1 && item.attachment_type > 0">
+                <div class="col-33" ng-repeat="keys in item.attachment_content track by $index" ng-if="keys.length > 0">
+                    <img style="width:98%;" ng-src="{{qiniuDomain + keys}}?imageView2/1/w/200/h/200"
+                         ng-click="goto('news-picture', {id:item.id})">
+                </div>
+            </div>
+            <!-- ARTICLE -->
+            <div class="news-images" ng-if ="item.image_type == 3 && item.attachment_type > 0">
+                <img style="width: 98%;height:150px;" ng-src="{{qiniuDomain + item.fujian.thumbnail}}?imageView2/1/w/690/h/300"
+                     ng-click="goto('news-article', {id:item.attachment_content})">
+                <div class="news-images-banner">&nbsp;&nbsp;{{item.fujian.title}}</div>
+            </div>
+            <!-- 活动附件 -->
+            <div class="item item-avatar event-share-content"
+            ng-if="item.image_type == 5 && item.attachment_type > 0 && item.fujian"
+            ng-click="goto('community-zone-event-detail', {'id':item.attachment_content, 'loupan_id':params.id})">
+                <img ng-src="{{item.fujian.thumbnail}}">
+                <div class="share-content">
+                    <h2 style="margin-left: 0">{{item.fujian.name}}</h2>
+                    <p style="display: inline-block;margin-bottom: 0;margin-right: 5px">截止时间：<span>{{item.fujian.signup_end}}</span></p>
+                    <p style="display: inline-block">报名人数：<span>{{item.fujian.person_num}}</span></p>
+                </div>
+            </div>
+            <!-- 投票附件 -->
+            <!--ng-click="goto('community-zone-vote-detail', {'id':item.attachment_content, 'loupan_id':params.id})"-->
+            <div class="item item-avatar event-share-content"
+            ng-if="item.image_type == 4 && item.attachment_type > 0 && item.fujian"
+            ng-click="action.href(item)">
+                <img src="../assets/css/images/icon_vote.png">
+                <div class="share-content">
+                    <h2 style="margin-left: 0">{{item.fujian.title}}</h2>
+                    <p style="display: inline-block;margin-bottom: 0;margin-right: 5px">截止时间：<span>{{item.fujian.deadline}}</span></p>
+                    <p style="display: inline-block">投票人数：<span>{{item.voted_person_num}}</span></p>
+                </div>
+            </div>
+            <!-- 评论点赞 -->
+            <div class="fuctional-button button-bar">
+                <a class="button comment-button" ng-click="action.like($index,item)">
+                  <img class="like" src="../../assets/img/icon_upthumb.png" alt="" ng-show = "params.isLike[$index]">
+                  <img class="like" src="../../assets/img/icon_thumb.png" alt="" ng-hide = "params.isLike[$index]">
+                  {{item.praise_num}}
+                </a>
+                <a class="button comment-button" ng-click="action.comment(item)"><img
+                        src="../../assets/img/icon_comment.png">{{item.comment_num}}</a>
+            </div>
+        </div>
+        <!-- 上拉加载 -->
+        <ion-infinite-scroll on-infinite="sysOp.loadMore()" ng-if="sysOp.moreDataFlag" distance="1%">
+        </ion-infinite-scroll>
+        <p ng-hide="sysOp.moreDataFlag||0==items.length" class="col-center">---数据已加载完毕---
+        <p>
+
+    </ion-content>
+    <!-- <div id="mask" class="mask" ng-click="action.unshare()"></div>
+    <div class="row share-out" ng-if="isShare" id="share-out">
+        <p>分享至</p>
+        <table>
+            <tr>
+                <td>
+                    <img src="../../assets/img/icon_wx.png">
+                    <p>微信朋友</p>
+                </td>
+                <td>
+                    <img src="../../assets/img/icon_circle.png">
+                    <p>朋友圈</p>
+                </td>
+                <td>
+                    <img src="../../assets/img/icon_sina.png">
+                    <p>新浪微博</p>
+                </td>
+            </tr>
+        </table>
+    </div> -->
+</ion-view>

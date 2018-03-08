@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>小市</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="market-list">
+        <header class="bar bar-nav" id="header">
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+            <a class="font-white pull-right" style="line-height:2.2rem " id="submit">搜索</a>
+        </header>
+        <nav class="bar bar-tab">
+            <a class="tab-item external">
+                <span class="font-white" id="create">发布闲置物品</span>
+            </a>
+        </nav>
+        <!--遮罩层-->
+        <div class="modal-overlay" style="top: 4.2rem"></div>
+
+        <!--二级菜单-->
+        <!--左侧选择楼盘div-->
+        <div>
+            <div class="market-select-menu visibility-hidden" id="menus">
+            </div>
+            <!--右侧选择物品分类div-->
+            <div class="market-select-menu row visibility-hidden">
+                <h3 class="market-select-singleline has-border-bottom col col-33 market-select-classify"
+                    style="width: 33.3333333%!important;">全部</h3>
+                <h3 class="market-select-singleline has-border-bottom col col-33 market-select-classify"
+                    style="width: 33.3333333%!important;">
+                    女装</h3>
+                <h3 class="market-select-singleline has-border-bottom col col-33 market-select-classify"
+                    style="width: 33.3333333%!important;">
+                    数码</h3>
+                <h3 class="market-select-singleline has-border-bottom col col-33 market-select-classify"
+                    style="width: 33.3333333%!important;">
+                    母婴</h3>
+                <h3 class="market-select-singleline has-border-bottom col col-33 market-select-classify"
+                    style="width: 33.3333333%!important;">
+                    美妆</h3>
+                <h3 class="market-select-singleline has-border-bottom col col-33 market-select-classify"
+                    style="width: 33.3333333%!important;">
+                    童装</h3>
+                <h3 class="market-select-singleline has-border-bottom col col-33 market-select-classify"
+                    style="width: 33.3333333%!important;">
+                    其他</h3>
+            </div>
+        </div>
+
+        <!--内容区-->
+        <div class="content content-no-padding infinite-scroll" data-distance="1%">
+            <!--一级菜单-->
+            <div class="buttons-row market-row white has-border-bottom"
+                 style="padding:.3rem;position: fixed;width: 100%;z-index: 99;" id="check">
+            </div>
+            <div class="content-block" style="margin-top: 2rem;" id="container">
+            </div>
+            <!-- 加载提示符 -->
+            <div class="infinite-scroll-preloader">
+                <div class="preloader">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--小区列表-->
+    <script id="communitys" type="text/template">
+        {@if info && info.length > 0}
+        {@each info as item}
+        <h3 class="has-border-bottom market-select-singleline market-select-community" data-id="${item.community_id}" }>
+            ${item.name}</h3>
+        {@/each}
+        {@/if}
+    </script>
+
+    <!--选择小区-->
+    <script id="choose" type="text/template">
+        <a class="tab-link active button font-black classify"
+           style="border: none;border-right: 1px solid #f6f6f9">
+            ${community.name}
+            <i class="iconfont icon-down" style="padding: 0"></i>
+        </a>
+        <a class="tab-link button font-black classify" style="border: none">
+            ${classify}
+            <i class="iconfont icon-down" style="padding: 0"></i>
+        </a>
+    </script>
+
+    <!--小市列表-->
+    <script id="tpl" type="text/template">
+        {@each list as items}
+        <div class="lg-margin white">
+            <div class="market-list has-border-bottom" data-id="${items.id}">
+                <div class="user-item decoration-item no-border lr-padding white">
+                    <div class="user-item-img">
+                        <img class="head-img" src="${items.headimgurl}">
+                    </div>
+                    <div class="user-item-content">
+                        <h1 class="item-two-line-title">
+                            ${items.nickname}
+                        </h1>
+                        <h5 class="item-two-line-right font-red" style="margin-top: 1rem">
+                            ${items.sell_item_price | integer}
+                        </h5>
+                        <h5 class="item-two-line-detail">
+                            ${items.created_at | format} ${items.sell_item_type}
+                        </h5>
+                    </div>
+                    <br style="clear: both">
+                    <h3 style="padding-bottom: .6rem;margin-bottom: 0">
+                        ${items.item_desc}
+                    </h3>
+                </div>
+                {@if items.item_pics}
+                <div>
+                    <div class="row white lr-padding">
+                        {@each items.item_pics as pic}
+                        <a class="col col-33-img open-about">
+                            <img src="${pic | imgPath}?imageMogr2/thumbnail/!300x300r/gravity/center/crop/200x200"
+                                 class="decoration-img" style="margin: 0">
+                        </a>
+                        {@/each}
+                    </div>
+                </div>
+                {@/if}
+            </div>
+            <div style="padding: .4rem 0">
+                <div class="buttons-row white no-border" data-id="${items.id}" data-ispraise="${items.isPraise}">
+                    <div class="button no-border font-dark to-comment" style="margin-left: -.2rem">
+                        <i class="iconfont icon-liuyan" style="padding: 0;font-size:.8rem"></i>&nbsp;<span
+                            class="font-grey">${items.comment_num}</span>
+                    </div>
+                    {@if !items.isPraise}
+                    <div class="button no-border to-praise"
+                       style="border-left: 1px solid #f6f6f9">
+                        <i class="iconfont icon-zan1" style="padding: 0;"></i>&nbsp;<span class="font-dark">${items.praise_num}</span>
+                    </div>
+                    {@else}
+                    <div class="button no-border to-praise"
+                       style="border-left: 1px solid #f6f6f9">
+                        <i class="iconfont icon-dianzanhll font-green" style="padding: 0;"></i>&nbsp;<span
+                            class="font-green">${items.praise_num}</span>
+                    </div>
+                    {@/if}
+                    <div class="button no-border font-dark to-hi"
+                       style="border-left: 1px solid #f6f6f9" data-isowner = "${items.isOwner}">
+                        <i class="iconfont icon-hi font-dark" style="padding: 0;font-size:1.2rem"></i>&nbsp;私聊
+                    </div>
+                </div>
+            </div>
+        </div>
+        {@/each}
+    </script>
+
+    <script id="inquiry" type="text/tempalte">
+        <input class="title header-input" type="text" placeholder="请输入闲置物品关键字" id="search" value="${keywords}">
+    </script>
+
+    <script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="unit.js"></script>
+    <script type="text/javascript" src="/js/market-list.js"></script>
+</body>
+</html>

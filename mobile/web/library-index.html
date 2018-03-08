@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>博物图书馆</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="library-index">
+        <header class="bar bar-nav">
+            <h1 class="title">博物借书卡</h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+        </header>
+        <!--右上角菜单弹出层-->
+        <div class="library-popup" id="popup">
+            <h2 class="font-green" style="text-align: center">借书须知</h2>
+            <h3 style="text-indent: -0.4rem">
+                • 	每名用户每次均可借阅1本图书，借阅期为30天 <br>
+            </h3>
+            <h3 style="text-indent: -0.4rem">
+                • 	用户可通过向博物图书馆捐赠图书增加单次借阅量 <br>
+                每捐赠一本，可增加1本借阅量 <br>
+                单次借阅量上限为10本
+            </h3>
+        </div>
+        <!--遮罩层-->
+        <div class="modal-overlay"></div>
+        <nav class="bar bar-tab" id="donate">
+            <a class="tab-item external">
+                <span class="font-white">我要捐赠</span>
+            </a>
+        </nav>
+        <div class="content content-no-padding" id="content">
+        </div>
+    </div>
+</div>
+
+<script type="text/template" id="tpl">
+    <div class="sm-margin white">
+        <!-- 个人信息 -->
+        <div class="user-item decoration-item no-border lr-padding white has-border-bottom">
+            <div class="user-item-img">
+                <img class="head-img" src="${user.headimgurl}" >
+            </div>
+            <div class="user-item-content">
+                <h2 class="item-two-line-title">
+                    ${user.nickname}
+                </h2>
+                <h5 class="item-two-line-detail">
+                    还可借阅${user.borrow_limit - user.borrow_num}本
+                    <i class="iconfont icon-wt-hll font-green open-panel" id="tag" style="font-size: .8rem;padding: 0"></i>
+                </h5>
+            </div>
+            <br style="clear: both">
+        </div>
+    </div>
+    <!-- tab -->
+    <div class="buttons-tab fixed-tab lr-padding" data-offset="44">
+        <a href="#tab1" class="tab-link active button">借阅(${user.borrow_num})</a>
+        <a href="#tab2" class="tab-link button">已还(${user.return_num})</a>
+        <a href="#tab3" class="tab-link button">捐赠(${user.donate_num})</a>
+    </div>
+    <!-- tabs -->
+    <div class="tabs">
+        <div id="tab1" class="tab active">
+            {@if borrow.length > 0 && borrow}
+            {@each borrow as borrowItem}
+            <div class="user-item decoration-item lr-padding white book-list" data-id="${ borrowItem.id }">
+                <div class="user-item-img">
+                    <img src="${borrowItem.thumbnail}">
+                </div>
+                <div class="user-item-content">
+                    <h2 class="item-two-line-title">
+                        ${borrowItem.book_name}
+                    </h2>
+                    <h5 class="item-two-line-detail">
+                        评价：${borrowItem.rate_star}星 借阅数：${borrowItem.borrow_num}
+                    </h5>
+                </div>
+                <br style="clear: both">
+            </div>
+            {@/each}
+            {@else}
+            <h3 style='text-align: center;margin-top: 4rem;'>暂无借阅信息</h3>
+            {@/if}
+        </div>
+        <div id="tab2" class="tab">
+            {@if back.length > 0 && back}
+                {@each back as returnItem}
+                <div class="user-item decoration-item lr-padding white book-list" data-id="${ returnItem.id }">
+                    <div class="user-item-img">
+                        <img src="${returnItem.thumbnail}">
+                    </div>
+                    <div class="user-item-content">
+                        <h2 class="item-two-line-title">
+                            ${returnItem.book_name}
+                        </h2>
+                        <h5 class="item-two-line-detail">
+                            评价：${returnItem.rate_star}星 借阅数：${returnItem.borrow_num}
+                        </h5>
+                    </div>
+                    <br style="clear: both">
+            </div>
+            {@/each}
+            {@else}
+            <h3 style='text-align: center;margin-top: 4rem;'>暂无还书信息</h3>
+            {@/if}
+        </div>
+        <div id="tab3" class="tab">
+           {@if donate.length > 0 && donate}
+            {@each donate as donateItem}
+            <div class="user-item decoration-item lr-padding white book-list" data-id="${ donateItem.id }">
+                <div class="user-item-img">
+                    <img src="${donateItem.thumbnail}">
+                </div>
+                <div class="user-item-content">
+                    <h2 class="item-two-line-title">
+                        ${donateItem.book_name}
+                    </h2>
+                    <h5 class="item-two-line-detail">
+                        评价：${donateItem.rate_star}星 借阅数：${donateItem.borrow_num}
+                    </h5>
+                </div>
+                <br style="clear: both">
+            </div>
+            {@/each}
+            {@else}
+            <h3 style='text-align: center;margin-top: 4rem;'>暂无捐赠信息</h3>
+            {@/if}
+        </div>
+    </div>
+</script>
+
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/library-index.js"></script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>我家</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current" id="vehicle-maintenance-add">
+        <!-- header -->
+        <header class="bar bar-nav">
+            <h1 class="title">添加维保信息</h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+        </header>
+        <nav class="bar bar-tab" id="submit">
+            <a class="tab-item external">
+                <span class="font-white">提交</span>
+            </a>
+        </nav>
+        <!-- container -->
+        <div class="content content-no-padding" id="container">
+            <form>
+                <div class="sm-margin">
+                    <div class="normal-list lr-padding has-border-bottom row project_item" style="margin-bottom: 0" id="classify">
+                        <div class="col-40 h3" style="color: #888;margin-left: 0">维保项目</div>
+                        <div class="col-60" id="series">
+                            <input type="text" placeholder="请选择项目..."
+                                   class="input-common" readonly id="project-picker">
+                            <i class="iconfont icon-right" style="position: absolute;right:.3rem;top:.1rem;"></i>
+                        </div>
+                    </div>
+                    <div class="normal-list lr-padding has-border-bottom row project_other project_item" style="margin-bottom: 0">
+                        <div class="col-40 h3" style="color: #888;margin-left: 0">其他</div>
+                        <div class="col-60">
+                            <input type="text" placeholder="请输入..."
+                                   class="input-common" id="other">
+                        </div>
+                    </div>
+                    <input type="hidden" name="notification_name">
+                    <input type="hidden" name="notification_id">
+                </div>
+                <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom: 0">
+                    <div class="col-40 h3" style="color: #888;margin-left: 0">维保日期</div>
+                    <div class="col-60">
+                        <input type="text" placeholder="请选择..."
+                               class="input-common" name="last_date"  data-toggle='date'>
+                    </div>
+                </div>
+                <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom: 0">
+                    <div class="col-40 h3" style="color: #888;margin-left: 0">维保时里程数</div>
+                    <div class="col-60">
+                        <input type="number" placeholder="请输入..."
+                               class="input-common" name="last_km">
+                    </div>
+                </div>
+                <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom: 0">
+                    <div class="col-40 h3" style="color: #888;margin-left: 0">维保商家</div>
+                    <div class="col-60">
+                        <input type="text" placeholder="请输入..."
+                               class="input-common" name="exec_shop">
+                    </div>
+                </div>
+                <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom: 0">
+                    <div class="col-40 h3" style="color: #888;margin-left: 0">维保费用</div>
+                    <div class="col-60">
+                        <input type="number" placeholder="请输入..."
+                               class="input-common" name="exec_fee">
+                    </div>
+                </div>
+                <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom: 0">
+                    <div class="col-40 h3" style="color: #888;margin-left: 0">下次维保间隔公里数</div>
+                    <div class="col-60">
+                        <input type="number" placeholder="请输入..."
+                               class="input-common" name="next_km">
+                    </div>
+                </div>
+                <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom: 0">
+                    <div class="col-40 h3" style="color: #888;margin-left: 0">下次维保间隔月份</div>
+                    <div class="col-60">
+                        <input type="number" placeholder="请输入..."
+                               class="input-common" name="next_month">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- nav -->
+    </div>
+</div>
+
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/vehicle-maintenance-add.js"></script>
+
+</body>
+</html>

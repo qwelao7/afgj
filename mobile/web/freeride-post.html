@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>顺风车</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current" id="freeride-post">
+        <header class="bar bar-nav">
+            <h1 class="title">发布顺风车信息</h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+        </header>
+        <button class="bar bar-tab" id="submit" style="text-align: center;padding: .6rem;color: #fff;">
+            提交
+        </button>
+        <div class="content content-no-padding" id="container">
+            <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom: 0">
+                <div class="col-33 h3" style="color: #888">车辆</div>
+                <div class="col-66" id="panel">
+                    <i class="iconfont icon-right" style="float: right;z-index: 999;"></i>
+                </div>
+            </div>
+            <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom: 0">
+                <div class="col-33 h3" style="color: #888">出发时间</div>
+                <div class="col-66">
+                    <input type="text" class="pickertime" readonly placeholder="请选择出发时间..."
+                           style="border: none;background-color: #fff;font-size: .7rem" id="go_time">
+                </div>
+            </div>
+            <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom: 0">
+                <div class="col-33 h3" style="color: #888">出发地点</div>
+                <div class="col-66">
+                    <input type="text" placeholder="请输入出发地点..."
+                           style="border: none;background-color: #fff;font-size: .7rem;width: 100%;"
+                           class="ride_address"
+                           id="origin">
+                </div>
+            </div>
+            <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom: 0">
+                <div class="col-33 h3" style="color: #888">目的地点</div>
+                <div class="col-66">
+                    <input type="text" placeholder="请输入目的地点..."
+                           style="border: none;background-color: #fff;font-size: .7rem;width: 100%;"
+                           class="ride_address"
+                           id="destination">
+                </div>
+            </div>
+            <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom: 0">
+                <div class="col-33 h3" style="color: #888">剩余座位</div>
+                <div class="col-66">
+                    <input type="text" class="pickerseat" readonly placeholder="请选择剩余座位数..."
+                           style="border: none;background-color: #fff;font-size: .7rem" id="leave_seat">
+                </div>
+            </div>
+            <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom: 0;height:4rem;">
+                <div class="col-33 h3" style="color: #888">提醒乘客</div>
+                <div class="col-66">
+                    <textarea type="text" placeholder="请输入留言..."
+                              style="border: none;background-color: #fff;font-size: .7rem;width: 100%;line-height: 1.25rem;margin-top: .4rem"
+                              id="wish_message"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--车辆默认值-->
+<script id="tpl" type="text/template">
+    <input type="text" class="car-info-input" placeholder="请选择您的车辆"
+           style="border: none;background-color: #fff;font-size: .7rem;" id="pickerCar" data-id="${list[0].id}" value="${list[0].car_num}" readonly>
+</script>
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/freeride-post.js"></script>
+
+</body>
+</html>

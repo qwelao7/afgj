@@ -1,0 +1,48 @@
+<ion-view view-title="装修预约">
+    <ion-nav-buttons side="left">
+        <button class="button icon ion-ios-arrow-left button-clear button-positive" ng-click="goBack()"></button>
+    </ion-nav-buttons>
+    <ion-content class="grey" style="margin-bottom: 47px;">
+        <div class="item item-avatar" style="background-color: #fff;margin-bottom: 15px">
+            <img style="border-radius: 0" ng-src="{{qiniuDomain + decorate.thumbnail}}-100x100" ng-if="decorate.thumbnail">
+            <div class="share-content" style="padding-bottom: 0;">
+                <h2 style="margin-left: 0;font-size: 13px">【{{decorate.type}}】{{decorate.house_type_name}}户型{{decorate.title}}</h2>
+                <p style="display: inline-block;margin-bottom: 0;margin-right: 5px;font-size: 12px">{{decorate.name}} / {{params.area}}m² / {{decorate.room_num_change}}居</p>
+                <span class="item-note" style="font-size: 12px" ng-if="decorate.price_unit == 1"><span style="font-size: 13px;color: #333338">￥{{decorate.price}}万/</span>套</span>
+                <span class="item-note" style="font-size: 12px" ng-if="decorate.price_unit == 2"><span style="font-size: 13px;color: #333338">￥{{decorate.price}}万/</span>平方</span>
+            </div>
+        </div>
+        <div style="background-color: #fff;width: 100%;margin-bottom: 15px">
+            <p style="margin-bottom:0;border-bottom:1px solid #d7d7d7;color: #00a263;font-size: 14px;text-align: center;height: 45px;line-height: 45px">
+                现在预约，免费得“全屋E0级板材环保升级包”！
+            </p>
+            <div style="margin-bottom: 15px" ng-if="upgrade != ''">
+                <p style="height: 45px;border-bottom:1px solid #d7d7d7;line-height: 45px;padding-left: 10px;margin:0;">可选升级包</p>
+                <ul class="list">
+                    <li class="item item-checkbox" ng-repeat="item in upgrade">
+                        <label class="checkbox">
+                            <input type="checkbox" ng-click="action.choose(item)" ng-model="item.check">
+                        </label>
+                        <p style="display:inline-block;">{{item.title}}</p>
+                        <p style="display:inline-block;padding-right: 10px;font-size: 14px;margin: 0;float:right;">￥{{item.price}}万 /
+                            <span style="font-size: 12px;color:#878787;" ng-show="item.price_unit == 2">平方</span>
+                            <span style="font-size: 12px;color:#878787;" ng-show="item.price_unit == 1">套</span>
+                        </p>
+                    </li>
+                </ul>
+                <p style="height: 45px;border-bottom:1px solid #d7d7d7;line-height: 45px;clear:both;">
+                    <span style="float: right;margin-right: 10px">总价：￥{{params.total_price}}万元</span>
+                    <span style="float: right;margin-right: 20px">定金：￥1000</span>
+                </p>
+            </div>
+        </div>
+        <div>
+            <a class="item item-icon-right" ng-click="addressListShow()">
+                <p style="color: #333338">{{addressListEidtInfo.mansion?addressListEidtInfo.mansion + addressListEidtInfo.building_house_num :'请设置服务地址'}}</p>
+                <p>{{addressListEidtInfo.contact_to}} {{addressListEidtInfo.mobile}}</p>
+                <i class="icon ion-ios-arrow-right"></i>
+            </a>
+        </div>
+    </ion-content>
+    <button class="button button-full" style="background-color: #00a263;color:#fff;position: absolute;bottom: -10px" ng-click="action.submit()">提交</button>
+</ion-view>

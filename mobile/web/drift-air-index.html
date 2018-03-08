@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>甲醛检测</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script src="//cdn.bootcss.com/echarts/3.4.0/echarts.min.js"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="drift-air-index">
+        <header class="bar bar-nav">
+            <h1 class="title">检测结果</h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+        </header>
+        <!-- container -->
+        <div class="content content-no-padding infinite-scroll" id="container" data-distance="1%" style="padding-bottom: 3rem;">
+            <!-- content -->
+            <div id="content">
+            </div>
+            <!-- loading -->
+            <div class="infinite-scroll-preloader" style="text-align: center;margin-bottom: -20px;">
+                <div class="preloader"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 顶部展示 -->
+<script id="show" type="text/template">
+    <div class="green" style="width:100%;height: 16rem">
+        <h1 class="font-white drift-title-1">甲醛检测仪漂流活动</h1>
+        <div id="drift-charts" class="drift-charts"></div>
+        <h3 class="font-white drift-title-2">自2017年4月10日以来，累计检测${statistics.hcho_num}个家庭</h3>
+        <h3 class="font-white drift-title-3">共计${statistics.hcho_detail_num}个房间，甲醛超标率高达${ statistics.not_perfect | math, statistics.hcho_detail_num }%</h3>
+    </div>
+</script>
+
+<!-- 列表展示 -->
+<script id="list" type="text/template">
+    {@if list.length > 0}
+    {@each list as item}
+    <div class="lg-margin white">
+        <div class="lg-margin-item air-item" data-id="${item.id}">
+            <div class="user-item decoration-item no-border lr-padding white" style="clear: both;">
+                <div class="user-item-img">
+                    <img src="${item.user.headimgurl}" class="head-img">
+                </div>
+                <div class="user-item-content">
+                    <h2 class="item-two-line-title">
+                        ${item.user.nickname}
+                    </h2>
+                    <h5 class="item-two-line-detail">
+                        <span>${item.created_at | dateFormat, 'MM-dd hh:mm'}</span>
+                        <span>(${item.address})</span>
+                    </h5>
+                </div>
+                {@if item.detail.length > 0}
+                <table class="drift-table" border="1px" cellpadding="0" cellspacing="0" style="margin-bottom: .6rem;">
+                    <tr class="grey">
+                        <td class="tr-head">检测点</td>
+                        <td class="tr-head">甲醛含量</td>
+                        <td class="tr-head">检测结果</td>
+                    </tr>
+                    {@each item.detail as detail}
+                    <tr class="drift-tr">
+                        <td class="font-black">${detail.check_point}</td>
+                        <td>${detail.check_value}ppm</td>
+                        {@if detail.level == 1}
+                        <td>合格</td>
+                        {@else}
+                        <td class="font-orange">不合格</td>
+                        {@/if}
+                    </tr>
+                    {@/each}
+                </table>
+                {@/if}
+                {@if item.content}
+                <h3 style="padding-bottom: .6rem;margin-bottom: 0">
+                    ${item.content}
+                </h3>
+                {@/if}
+            </div>
+            {@if item.pics.length > 0}
+            <div class="content-wrap">
+                <!-- 图片 -->
+                <div class="row white lr-padding" data-pics="${item.pics.join(',')}">
+                    {@each item.pics as pic}
+                    <a class="col col-33-img open-about">
+                        <img src="${pic | imgPath}?imageMogr2/thumbnail/!300x300r/gravity/center/crop/200x200"
+                             class="decoration-img" style="margin:0;">
+                    </a>
+                    {@/each}
+                </div>
+            </div>
+            {@/if}
+        </div>
+    </div>
+    {@/each}
+    {@/if}
+</script>
+
+<!-- 底部按钮展示 -->
+<script id="bottom" type="text/template">
+    <nav class="bar bar-tab" id="submit">
+        <a class="tab-item external">
+            <span class="font-white">反馈我的检测结果</span>
+        </a>
+    </nav>
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script src="//g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/drift-air-index.js"></script>
+</body>
+</html>

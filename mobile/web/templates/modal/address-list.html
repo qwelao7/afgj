@@ -1,0 +1,24 @@
+<ion-modal-view>
+  <ion-header-bar class="bar bar-header">
+    <button class="button button-clear button-primary" ng-click="addressListModal.hide()">取消</button>
+    <h1 class="title">选择服务地址</h1>
+    <!--<button class="button button-clear button-positive" ng-click="addressListSubmit()">确定</button>-->
+  </ion-header-bar>
+  <ion-content class="">
+      <div class="list" ng-show="addressList.length">
+        <ion-radio ng-repeat="item in addressList"
+               ng-value="item.id"
+               ng-change="addressListChange(item)"
+               ng-click="addressListChange(item);addressListSubmit()"
+               ng-model="addressListEidtInfo.id"
+               name="addlist">
+              <div class="text-green">{{ item.detail }}</div>
+              <h4 class="text-black">{{ item.contact_to }} {{ item.mobile }}</h4>
+        </ion-radio>
+      </div>
+      <div ng-hide="addressList.length" style="text-align:center;padding-top: 10rem;" ng-click="goto('estate-manage')">请先创建服务地址</div>
+  </ion-content>
+      <div class="bar bar-footer bar-balanced" ng-click="addressAdd()">
+        <div class="title">新建服务地址</div>
+    </div>
+</ion-modal-view>

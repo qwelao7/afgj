@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>博物图书馆</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="library-book-detail">
+        <!-- 头部 -->
+        <header class="bar bar-nav">
+            <h1 class="title">图书详情</h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+            <a class="iconfont icon-edit pull-right icon-white open-panel" id="tag"></a>
+        </header>
+        <!--右上角菜单弹出层-->
+        <div class="modal-popup white" id="popup" style="display: none">
+            <p class="modal-p-list modify open-report" id="report" style="color: #3d4145;padding-left: .4rem">
+                <i class="iconfont icon-bianji" style="color: #009042;padding-top: .3rem;margin-right: .6rem"></i>
+                报告异常
+            </p>
+        </div>
+        <!--遮罩层-->
+        <div class="modal-overlay" id="modal"></div>
+        <!-- 内容 -->
+        <div class="content content-no-padding" id="content" style="padding-bottom: 2.5rem !important;">
+        </div>
+        <!-- 底部菜单 -->
+        <!-- popup -->
+        <div class="popup popup-report">
+            <div class="content-block">
+                <header class="bar bar-nav">
+                    <h1 class="title">报告异常</h1>
+                    <a class="iconfont icon-left pull-left icon-white open-panel" id="backPopup"></a>
+                </header>
+                <nav class="bar bar-tab" id="submit">
+                    <a class="tab-item external">
+                        <span class="font-white">提交</span>
+                    </a>
+                </nav>
+                <div class="content content-no-padding" id="container">
+                    <div class="normal-list lr-padding has-border-bottom row white" style="margin-bottom: 0"
+                         id="classify">
+                        <div class="col-33 h3" style="margin-left: 0;color: #888">异常类型</div>
+                        <div class="col-66">
+                            <div id="picker" width="100%">
+                                <input type="text" placeholder="请选择异常类型..." class="input-common" readonly id="errType">
+                                <i class="iconfont icon-right" style="position: absolute;right:.3rem;top:.1rem;"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                    <textarea name="" id="textarea" rows="5" placeholder="请输入异常描述..."
+                              style="border: none;padding: .6rem;width: 100%"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 评论列表 -->
+<script type="text/template" id="tpl">
+    <div class="sm-margin white">
+        <div class="swiper-container" data-space-between='10'>
+            <div class="swiper-wrapper" style="height: 10.6rem;">
+                {@if detail.pics.length > 0 && detail.pics}
+                {@each detail.pics as pic}
+                <div class="swiper-slide">
+                    <img src="${pic}" alt="" style="height: 10.6rem;margin: 0 auto;">
+                </div>
+                {@/each}
+                {@/if}
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+        <div class="user-item decoration-item no-border lr-padding white has-border-bottom sm-margin">
+            <div class="user-item-content" style="width: 100%">
+                <h1 class="item-two-line-title">
+                    ${detail.book_name}
+                </h1>
+                <h5 class="item-two-line-detail" style="margin-bottom: .2rem">
+                    捐赠者：${detail.donate}
+                </h5>
+            </div>
+            <br style="clear: both">
+        </div>
+    </div>
+    {@if detail.store.length > 0}
+    {@each detail.store as store}
+    <div class="normal-list lr-padding sm-margin has-border-bottom commerce-list" data-href="${store.book_url}">
+        <div class="h3">
+            ${store.commerce}
+            <span style="float: right">
+                <i class="iconfont icon-right open-panel"></i>
+            </span>
+        </div>
+    </div>
+    {@/each}
+    {@/if}
+    <div class="lr-padding white">
+        <div class="normal-list has-border-bottom" style="margin: 0">
+            <div class="h3">
+                评论 (${detail.rate_num})
+                {@if comment.length > 0}
+                <span class="font-green" style="float: right">
+                    ${detail.rate_star}星
+                </span>
+                {@/if}
+            </div>
+        </div>
+        {@if comment.length > 0 && comment}
+        {@each comment as commentItem}
+        <div class="user-item decoration-item white">
+            <div class="user-item-img">
+                <img class="head-img" src="${commentItem.headimgurl}">
+            </div>
+            <div class="user-item-content">
+                <h1 class="item-two-line-title">
+                    ${commentItem.nickname}：${commentItem.rate_star}星
+                </h1>
+                <h5 class="item-two-line-detail">
+                    ${commentItem.created_at | time}
+                </h5>
+            </div>
+            <br style="clear: both">
+            <h3 style="padding-bottom: .4rem;margin-top:.4rem;margin-bottom: 0;padding-left: 14%;word-break: break-all;">
+                ${commentItem.rate_comment}
+            </h3>
+        </div>
+        {@/each}
+        {@else}
+        <h3 style='text-align: center;padding-top: 1.5rem;height: 4rem;'>暂无评论!</h3>
+        {@/if}
+    </div>
+</script>
+<!-- 底部按钮 -->
+<script type="text/template" id="navButtons">
+    <div class="bar bar-tab buttons-row white no-border row" style="background-color: #fff">
+        {@if detail.is_borrow == 1}
+        <div class="green font-white" style="width:50%;line-height: 2.5rem;text-align: center" id="how-to-return">
+            归还
+        </div>
+        {@else if detail.is_borrow == 0}
+        <div class="green font-white" style="width:50%;line-height: 2.5rem;text-align: center" id="how-to-borrow">
+        借阅
+        </div>
+        {@/if}
+        <div class="white font-black" style="width:50%;line-height: 2.5rem;text-align: center" id="commentBtn">
+            评价
+        </div>
+    </div>
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script src="//g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/library-book-detail.js"></script>
+</body>
+</html>

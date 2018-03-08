@@ -1,0 +1,44 @@
+<ion-view view-title="楼盘详情">
+    <ion-nav-buttons side="left">
+        <button class="button icon ion-ios-arrow-left button-clear button-positive"  ng-click="goBack()"></button>
+    </ion-nav-buttons>
+    <ion-content>
+        <div class="floor-details">
+            <ul>
+                <li><label>开发商</label><span>{{item.developer}}</span></li>
+            </ul>
+        </div>
+        <div class="floor-details">
+            <ul>
+                <li><label>楼盘状态</label><span>{{keyMap['loupanStatus'][item.status]['name']}}</span></li>
+                <li><label>参考均价</label><span>{{item.avg_price}}元/㎡</span></li>
+                <li><label>最新开盘</label><span>{{item.sell_date}}</span></li>
+                <li><label>最早交房</label><span>{{item.delivery_date}}</span></li>
+            </ul>
+            <ul>
+                <li><label>区域位置</label><span>{{item.area_address}}</span></li>
+                <li><label>楼盘地址</label><span>{{item.address}}</span></li>
+                <li><label>售楼处地址</label><span>{{item.sell_address}}</span></li>
+            </ul>
+            <ul>
+                <li><label>建筑类型</label><span>{{keyMap['loupanBuildingTypeText'][item.building_type]['name']}}</span></li>
+                <li><label>产权年限</label><span>{{item.property_rights_years}}年</span></li>
+                <li><label>装修标准</label><span>{{keyMap['loupanDecorateLevel'][item.decorate_level]['name']}}</span></li>
+                <li><label>装修价格</label><span>{{item.decorate_price}}元/㎡</span></li>
+                <li><label>装修说明</label><span>{{item.decorate_brief}}</span></li>
+                <li><label>容积率</label><span>{{item.plot_ratio}}</span></li>
+                <li><label>绿化率</label><span>{{item.green_ratio}}%</span></li>
+                <li><label>规划户数</label><span>{{item.house_total}}</span></li>
+                <li><label>规划车位</label><span>{{item.parking_total}}</span></li>
+            </ul>
+        </div>
+        <div class="floor-details">
+            <ul>
+                <li><label>物业类型</label><span>{{keyMap['loupanPropertyType'][item.property_type]['name']}}</span></li>
+                <li><label>物业公司</label><span>{{item.proprety_company}}</span></li>
+                <li><label>物业费</label><span>{{item.property_fee}}元/㎡/月</span></li>
+                <li><label>供暖方式</label><span>{{keyMap['loupanHeatingType'][item.heating_type]['name']}}</span></li>
+            </ul>
+        </div>
+    </ion-content>
+</ion-view>

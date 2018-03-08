@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>房产信息</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+    <script type='text/javascript' src='http://g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+    <script>
+        $.config = {
+            // 路由功能开关过滤器，返回 false 表示当前点击链接不使用路由
+            routerFilter: function ($link) {
+                // 某个区域的 a 链接不想使用路由功能
+                if ($link.is('index.html')) {
+                    return true;
+                }
+                return false;
+            }
+        };
+    </script>
+</head>
+<body>
+
+<div class="page-group">
+    <div class="page page-current" id="estate-info">
+        <!--标题栏-->
+        <header class="bar bar-nav" style="z-index: 99999;">
+            <h1 class="title">房产信息</h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+            <a class="iconfont icon-gengduo pull-right icon-white open-panel" id="popup"></a>
+        </header>
+        <!-- 这里是页面内容区 -->
+        <div class="content content-no-padding" id="container">
+        </div>
+
+        <!-- 遮罩层 -->
+        <div class="mark content unshow share-out" style="padding: 0;z-index: 99999;" id="mark">
+
+        </div>
+
+        <div class="modal-overlay"></div>
+    </div>
+</div>
+
+<script id="tpl" type="text/template">
+    <div class="content-no-padding">
+        <div class="user-item lr-padding white" style="line-height: 2.8rem">
+            <h3 class="inline" style="width: 30%;margin: 0">城市区域</h3>
+            <h3 class="inline" style="width: 70%;display: inline;margin: 0">${province}-${city}-${district}</h3>
+        </div>
+        <div class="user-item lr-padding white" style="line-height: 2.8rem">
+            <h3 class="inline" style="width: 30%;margin: 0">小区或大厦名</h3>
+            <h3 class="inline" style="width: 70%;display: inline;margin: 0">${address_desc | format, 0}</h3>
+        </div>
+        <div class="user-item lr-padding white" style="line-height: 2.8rem">
+            <h3 class="inline" style="width: 30%;display: inline-block;position:relative;margin: 0">
+                楼号门牌号</h3>
+            <h3 class="inline"
+                style="width: 68%;display: inline-block;word-wrap:break-word;text-overflow: ellipsis;margin: 0">
+                ${address_desc | format, 1}</h3>
+        </div>
+        <div class="user-item lr-padding white" style="line-height: 2.8rem">
+            <h3 class="inline" style="width: 30%;;margin: 0">是否常住房</h3>
+            <h3 class="inline" style="width: 70%;display: inline;;margin: 0">${is_default | isDefault}</h3>
+        </div>
+        {@if consignee && consignee != ''}
+        <div class="user-item lr-padding white" style="line-height: 2.8rem">
+            <h3 class="inline" style="width: 30%;;margin: 0">联系人</h3>
+            <h3 class="inline" style="width: 70%;display: inline;;margin: 0">${consignee}</h3>
+        </div>
+        {@/if}
+        {@if mobile && mobile != ''}
+        <div class="user-item lr-padding white" style="line-height: 2.8rem">
+            <h3 class="inline" style="width: 30%;margin: 0">手机号码</h3>
+            <h3 class="inline" style="width: 70%;display: inline;margin: 0">${mobile}</h3>
+        </div>
+        {@/if}
+    </div>
+</script>
+
+<script id="ext" type="text/template">
+    <div class="content-no-padding">
+        <div class="user-item lr-padding white" style="line-height: 2.8rem">
+            <h3 class="inline" style="width: 30%;margin: 0">城市区域</h3>
+            <h3 class="inline" style="width: 70%;display: inline;margin: 0">${province}-${city}-${district}</h3>
+        </div>
+        <div class="user-item lr-padding white" style="line-height: 2.8rem">
+            <h3 class="inline" style="width: 30%;margin: 0">小区或大厦名</h3>
+            <h3 class="inline" style="width: 70%;display: inline;margin: 0">${community_name}</h3>
+        </div>
+        <div class="user-item lr-padding white" style="line-height: 2.8rem">
+            <h3 class="inline" style="width: 30%;display: inline-block;position:relative;top:-.95rem;;margin: 0">
+                楼号门牌号</h3>
+            <h3 class="inline"
+                style="width: 68%;display: inline-block;word-wrap:break-word;text-overflow: ellipsis;overflow: hidden;;margin: 0">
+                {@if group_name !=''}${group_name}{@/if}{@if building_num != ''}{@if group_name !=''}-{@/if}${building_num}{@/if}{@if unit_num != ''}{@if building_num !=''}-{@/if}${unit_num}{@/if}{@if house_num != ''}{@if unit_num !=''}-{@/if}${house_num}{@/if}
+            </h3>
+        </div>
+        <div class="user-item lr-padding white" style="line-height: 2.8rem">
+            <h3 class="inline" style="width: 30%;;margin: 0">是否常住房</h3>
+            <h3 class="inline" style="width: 70%;display: inline;;margin: 0">${is_default | isDefault}</h3>
+        </div>
+        {@if consignee && consignee != ''}
+        <div class="user-item lr-padding white" style="line-height: 2.8rem">
+            <h3 class="inline" style="width: 30%;;margin: 0">联系人</h3>
+            <h3 class="inline" style="width: 70%;display: inline;;margin: 0">${consignee}</h3>
+        </div>
+        {@/if}
+        {@if mobile && mobile != ''}
+        <div class="user-item lr-padding white" style="line-height: 2.8rem">
+            <h3 class="inline" style="width: 30%;margin: 0">手机号码</h3>
+            <h3 class="inline" style="width: 70%;display: inline;margin: 0">${mobile}</h3>
+        </div>
+        {@/if}
+    </div>
+</script>
+
+<script id="tab" type="text/template">
+    <table>
+        <tr>
+            <td style="border-right: 1px solid #f5f5f5" id="update">
+                <img src="../../../assets/css/images/auth_edit.png">
+                <h3>编辑房产</h3>
+            </td>
+            <td style="border-right: 1px solid #f5f5f5" id="delete">
+                <img src="../../../assets/css/images/auth_del.png">
+                <h3>删除房产</h3>
+            </td>
+            {@if code == 0}
+            <td id="share">
+                <img src="../../../assets/css/images/auth_auth.png">
+                <h3>房主成员</h3>
+            </td>
+            {@else}
+            <td id="auth">
+                <img src="../../../assets/css/images/auth_auth.png">
+                <h3>房主认证</h3>
+            </td>
+            {@/if}
+        </tr>
+    </table>
+</script>
+
+<script type='text/javascript' src='http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/estate-info.js"></script>
+
+</body>
+</html>

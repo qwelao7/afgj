@@ -1,0 +1,30 @@
+<ion-view view-title="销售详情">
+    <ion-nav-buttons side="left">
+        <button class="button icon ion-ios-arrow-left button-clear button-positive" ng-click="goBack()"></button>
+    </ion-nav-buttons>
+    <ion-content class="padding">
+        <div class="sales-details">
+            <div class="row title">
+                <div class="col col-15">楼栋</div>
+                <div class="col col-15">房号</div>
+                <div class="col col-20">建筑面积</div>
+                <div class="col">得房率</div>
+                <div class="col">总价</div>
+                <div class="col col-15">状态</div>
+            </div>
+            <div class="row" ng-repeat="item in items">
+                <div class="col col-15">{{item.building_num}}栋</div>
+                <div class="col col-15">{{item.house_num}}室</div>
+                <div class="col col-20">{{item.area}}㎡</div>
+                <div class="col">{{item.get_ratio}}%</div>
+                <div class="col">{{item.total_price}}万元</div>
+                <div class="col col-15"><span class="{{keyMap['houseSellStatus'][item.sell_status]['class']}}">&nbsp;{{keyMap['houseSellStatus'][item.sell_status]['name']}}</span></div>
+            </div>
+        </div>
+
+        <!-- 上拉加载 -->
+        <ion-infinite-scroll on-infinite="sysOp.loadMore()" ng-if="sysOp.moreDataFlag" distance="1%">
+        </ion-infinite-scroll>
+        <p ng-hide="sysOp.moreDataFlag||0==items.length" class="col-center">---数据已加载完毕---<p>
+    </ion-content>
+</ion-view>

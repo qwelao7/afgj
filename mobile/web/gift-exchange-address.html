@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>礼券兑换</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <style type="text/css">
+        .bar{
+            background-color: #be0b21!important;
+        }
+    </style>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="gift-exchange-address">
+        <header class="bar bar-nav" style="background-color: #be0b21">
+            <h1 class="title">填写收货地址</h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" href="javascript:history.go(-1)"></a>
+        </header>
+        <button class="bar bar-tab" id="submit" style="text-align: center;padding: .6rem;color: #fff;background-color: #be0b21">
+            提交
+        </button>
+        <form class="content grey">
+            <div id="container" style="font-size: .7rem;">
+                <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                    <div class="col-25 h3" style="color: #888">收件人</div>
+                    <div class="col-75" style="margin-left: 8%">
+                        <input type="text" placeholder="请输入联系人姓名" style="border: none" name="consignee">
+                    </div>
+                </div>
+                <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                    <div class="col-25 h3" style="color: #888">收件人电话</div>
+                    <div class="col-75" style="margin-left: 8%">
+                        <input type="tel" placeholder="请输入联系人电话" style="border: none" name="mobile">
+                    </div>
+                </div>
+                <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                    <div class="col-25 h3" style="color: #888">印章信息</div>
+                    <div class="col-75" style="margin-left: 8%">
+                        <input type="text" placeholder="请填写印章信息" style="border: none" name="message">
+                    </div>
+                </div>
+                <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0">
+                    <div class="col-25 h3" style="color: #888">收货地址</div>
+                    <div class="col-75" style="margin-left: 8%">
+                        <input type="text" id='city-picker' value="江苏 南京 玄武区" placeholder="请选择收货地址" style="border: none" name="region" readonly>
+                    </div>
+                </div>
+                <div class="normal-list lr-padding has-border-bottom row" style="margin-bottom:0;height: auto;">
+                    <div class="col-25 h3" style="color: #888">详细地址</div>
+                    <div class="col-75" style="margin-left: 8%">
+                        <textarea id="" style="width: 100%;border: none;line-height: 1rem;margin-top: .5rem;" rows="2"
+                                  placeholder="请输入详细地址..." name="address" contenteditable="true"></textarea>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js' charset='utf-8'></script>
+<script type="text/javascript" src="//g.alicdn.com/msui/sm/0.6.2/js/sm-city-picker.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/gift-exchange-address.js"></script>
+
+</body>
+</html>

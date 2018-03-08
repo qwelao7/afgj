@@ -1,0 +1,63 @@
+ <ion-view view-title="房主认证">
+    <ion-nav-buttons side="left">
+        <button class="button icon ion-ios-arrow-left button-clear button-light button-white"
+                ng-click="goBack()"></button>
+    </ion-nav-buttons>
+    <ion-content style="margin-bottom: 47px">
+        <!-- 已认证 -->
+        <div class="unauthorized-group" ng-show = "params.isAuth">
+            <div class="estate-info-title">
+                {{address}} 已认证业主
+            </div>
+            <div style="background-color: #fff;font-weight: bold">
+                <a class="item item-avatar" ng-repeat = "info in authinfo">
+                    <img ng-src="{{qiniuDomain + info.avatar}}">
+                    <h2 style="margin:0;line-height: 40px;display: inline-block">{{info.nickname}}</h2>
+                    <img style="margin-bottom:10px;height: 20px" src="../../assets/css/images/icon_owner.png">
+                </a>
+            </div>
+            <div style="background-color: #fff;font-size: 16px;margin-top: 20px">
+                <p style="padding:10px 15px;">请已认证业主帮我验证</p>
+                <textarea name="" id="" rows="10" style="width: 100%;padding:0 15px" placeholder="请输入..." ng-model="editInfo.desc"></textarea>
+            </div>
+        </div>
+        <!-- 未认证 -->
+        <div class="authorized-group depict-box" ng-hide = "params.isAuth">
+            <div class="estate-pic authorized">
+                <p>
+                    <span>房产证认证</span>
+                </p>
+                <div>
+                    <span>示例</span>
+                    <img src="../../assets/css/images/estate_pic.png">
+                </div>
+                <div class="depict-list" style="margin-left: 110px">
+                    <div class="button-camera" ng-click="action.addImg('sf')" ng-if="editInfo.imgs.sf==''"></div>
+                    <div class="item-box" ng-repeat="(index,img) in editInfo.imgs.sf" ng-if="editInfo.imgs.sf">
+                        <img ng-src="{{img}}-100x100"/>
+                        <a class="btn-del icon ion-close-circled" ng-click="action.deleteImg(index, 'sf')"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="id-pic authorized">
+                <p>
+                    <span>身份证认证</span>
+                </p>
+                <div>
+                    <span>示例</span>
+                    <img src="../../assets/css/images/id_pic.png">
+                </div>
+                <div class="depict-list" style="margin-left: 110px">
+                    <div class="button-camera" ng-click="action.addImg('fang')" ng-if="editInfo.imgs.fang==''"></div>
+                    <div class="item-box" ng-repeat="(index,img) in editInfo.imgs.fang" ng-if="editInfo.imgs.fang">
+                        <img ng-src="{{img}}-100x100"/>
+                        <a class="btn-del icon ion-close-circled" ng-click="action.deleteImg(index, 'fang')"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+    <div class="bar bar-footer" style="background-color: #299a15;color: #fff">
+        <div class="title" ng-click="action.submit()">提交</div>
+    </div>
+</ion-view>

@@ -1,0 +1,20 @@
+<ion-view view-title="装修日志">
+    <ion-nav-buttons side="left">
+        <button class="button icon ion-ios-arrow-left button-clear button-positive" ng-click="goBack()"></button>
+    </ion-nav-buttons>
+    <ion-content class="grey">
+        <div class="ds-section">
+            <div class="ds-sec-content" ng-repeat="item in items" ng-click="goto('journal-detail', {'id':item.address_id})">
+                <img style="width: 100%" ng-src="{{qiniuDomain + item.coverpic}}">
+                <div class="ds-content-text">
+                    <span>
+                        {{item.title}}
+                    </span>
+                    <span>
+                        {{item.budget | number: 0}}万 / {{item.loupan.name}} / {{item.area | number: 0}}m² / {{item.room}}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

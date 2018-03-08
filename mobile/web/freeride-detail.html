@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>顺风车</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current" id="freeride-detail">
+        <header class="bar bar-nav">
+            <h1 class="title">顺风车详情</h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+        </header>
+        <!--tools-->
+        <div id="nav"></div>
+        <!--container-->
+        <div class="content content-no-padding" id="container">
+        </div>
+    </div>
+</div>
+
+<!--详情-->
+<script id="tpl" type="text/template">
+    <div class="user-item lr-padding white">
+        <div class="user-item-img">
+            <img src="${detail.info.headimgurl}" style="border-radius: 50%;">
+        </div>
+        <div class="user-item-content">
+            <h2 class="item-two-line-title">
+                ${detail.info.nickname}
+            </h2>
+            <h5 class="item-two-line-detail ellipsis-full">
+                ${detail.car.brand_name} ${detail.car.model_name} ${detail.car.color} ${detail.car.car_num}
+            </h5>
+        </div>
+    </div>
+    <div class="sm-margin">
+        <div class="list-title lr-padding has-border-bottom white">
+            <h3>
+                <i class="iconfont icon-shijian1" style="padding: 0 .3rem"></i>
+                ${detail.go_time | format} <span class="h5" id="seats">剩余${detail.leave_seat}座位</span>
+            </h3>
+        </div>
+        <div class="list-title lr-padding has-border-bottom white">
+            <h3>
+                <i class="iconfont icon-dz_hll" style="padding: 0 .3rem"></i>
+                ${detail.origin}
+            </h3>
+        </div>
+        <div class="list-title lr-padding has-border-bottom white">
+            <h3>
+                <i class="iconfont icon-mudedi" style="padding: 0 .3rem"></i>
+                ${detail.destination}
+            </h3>
+        </div>
+        {@if detail.wish_message}
+        <div class="list-title lr-padding has-border-bottom white lg-margin">
+            <h3>
+                <i class="iconfont icon-tishi" style="padding: 0 .3rem"></i>
+                ${detail.wish_message}
+            </h3>
+        </div>
+        {@/if}
+    </div>
+    <div class="rs-members">
+        {@if members.length > 0}
+        <div class="list-title lr-padding white has-border-bottom">
+            <h3>预约乘客</h3>
+        </div>
+
+        {@each members as member}
+        <div class="user-item decoration-item lr-padding white order-member" data-uid="${member.info.user_id}">
+            <div class="user-item-img">
+                <img class="head-img" src="${member.info.headimgurl}">
+            </div>
+            <div class="user-item-content">
+                {@if member.info.nickname != null}
+                <h2 class="item-two-line-title">
+                    ${member.info.nickname}&nbsp;(${member.address.address_desc})
+                </h2>
+                {@else}
+                <h2 class="item-two-line-title">
+                    ${member.info.user_name}&nbsp;(${member.address.address_desc})
+                </h2>
+                {@/if}
+                {@if member.info.mobile_phone != '' && params.isInitiator == true}
+                <a class="iconfont icon-iphone item-detail-dial-freecar" href="tel:${member.info.mobile_phone}"></a>
+                {@/if}
+                <h5 class="item-two-line-detail-freecar ellipsis-full">
+                    <i class="iconfont icon-car" style="padding: 0 .3rem 0 0;font-size: .8rem;"></i>
+                    <span>${member.customer_num}人</span>
+                    {@if member.thanks_point != null}
+                    <i class="iconfont icon-love" style="padding: 0 .3rem 0 .6rem"></i>
+                    <span>${member.thanks_point}</span>
+                    {@/if}
+                </h5>
+            </div>
+            <br style="clear: both">
+            {@if member.thanks_word != null}
+            <h3 style="padding-bottom: .4rem;margin-top:.4rem;margin-bottom: 0;padding-left: 14%">
+                ${member.thanks_word}
+            </h3>
+            {@/if}
+        </div>
+        {@/each}
+        {@/if}
+    </div>
+</script>
+<!--底部工具栏-->
+<script id="tools" type="text/template">
+    <!--发起者-->
+    {@if info.isInitiator}
+    <nav class="bar bar-tab">
+        {@if !info.isThank}
+        <a class="tab-item external cancel" id="cancel-route">
+            <span class="font-white">取消行程</span>
+        </a>
+        <a class="tab-item external" id="cancel-enough" data-seats="${info.seats}">
+            <span class="font-white">乘客已满</span>
+        </a>
+        {@else}
+        <a class="tab-item external">
+            <span class="font-white">行程已结束</span>
+        </a>
+        {@/if}
+    </nav>
+    {@else}
+    <!--乘客-->
+    <!--是否显示感谢-->
+    {@if info.isThank}
+    {@if info.isJoin}
+    {@if !info.hasThank}
+    <nav class="bar bar-tab">
+        <a class="tab-item external" id="to-thank">
+            <span class="font-white">感谢车主</span>
+        </a>
+    </nav>
+    {@/if}
+    {@/if}
+    {@else}
+    <nav class="bar bar-tab">
+        <a class="tab-item external" href="tel:${info.call}" id="call-driver">
+            <span class="font-white">呼叫车主</span>
+        </a>
+        <!--是否预约过顺风车-->
+        {@if !info.isJoin}
+        <a class="tab-item external white" id="to-join" data-seats="${info.seats}">
+            <span class="font-black">我要搭车</span>
+        </a>
+        {@else}
+        <a class="tab-item external cancel" id="cancel-join">
+            <span class="font-white">取消搭车</span>
+        </a>
+        {@/if}
+    </nav>
+    {@/if}
+    {@/if}
+</script>
+<!--添加-->
+<script id="add" type="text/template">
+    <div class="rs-members">
+        {@if params.isShow}
+        <div class="list-title lr-padding white has-border-bottom">
+            <h3>预约乘客</h3>
+        </div>
+        {@/if}
+        <div class="user-item decoration-item lr-padding white order-member" data-uid="${user.user_id}">
+            <div class="user-item-img">
+                <img class="head-img" src="${user.headimgurl}">
+            </div>
+            <div class="user-item-content">
+                {@if user.nickname != null}
+                <h2 class="item-two-line-title">
+                    ${user.nickname}&nbsp;(${params.address.address_desc})
+                </h2>
+                {@else}
+                <h2 class="item-two-line-title">
+                    ${user.user_name}&nbsp;(${params.address.address_desc})
+                </h2>
+                {@/if}
+                <h5 class="item-two-line-detail-freecar ellipsis-full">
+                    <i class="iconfont icon-car" style="padding: 0 .3rem 0 0;font-size: .8rem;"></i>
+                    <span>${params.num}人</span>
+                </h5>
+            </div>
+            <br style="clear: both">
+        </div>
+    </div>
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/freeride-detail.js"></script>
+
+</body>
+</html>

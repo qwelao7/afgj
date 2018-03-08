@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>博物图书馆</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="library-donate">
+        <header class="bar bar-nav">
+            <h1 class="title">我要捐书</h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+        </header>
+        <div class="content content-no-padding white" id="content">
+        </div>
+    </div>
+</div>
+
+<script type="text/template" id="tpl">
+    <div class="lr-padding">
+        <h2>
+            您此次捐书码为：
+        </h2>
+        <p class="font-green" style="text-align: center;font-size: 2.5rem">
+            ${code}
+        </p>
+        <div style="padding: 0 1rem">
+            <h3 style="text-indent: -0.4rem">
+                • 请将捐书码写在纸上，与所捐书籍放在同一个袋子里。将袋子交给您附近有博物图书馆的店铺的工作人员。
+            </h3>
+            <h3 style="text-indent: -0.4rem">
+                • 五个工作日内，书架整理员会将您捐赠的图书编目上架，并奖励您相应的借阅资格。
+            </h3>
+            <h3 style="margin: 1rem 0 .3rem;text-indent: -0.4rem">
+                注：
+            </h3>
+            <h3 style="text-indent: -0.4rem">
+                • 捐赠图书应保持完整，干净。内容积极、健康。
+            </h3>
+            <h3 style="text-indent: -0.4rem">
+                • 书架管理员认定不适合上架的图书，将按废纸回收，所得款项由回来啦社区统一购置新书，投放到博物图书馆。
+            </h3>
+        </div>
+
+    </div>
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/library-donate.js"></script>
+</body>
+</html>

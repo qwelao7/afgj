@@ -1,0 +1,58 @@
+<ion-view view-title="装修套餐">
+    <ion-nav-buttons side="left">
+        <button class="button icon ion-ios-arrow-left button-clear button-positive" ng-click="goBack()"></button>
+    </ion-nav-buttons>
+    <ion-content class="grey">
+        <div class="button-bar bar-light">
+            <a class="button"  ng-click="action.expand('loupan')">
+                <span>楼盘</span>
+                <i class="icon ion-ios-arrow-up" ng-if="showLoupan"></i>
+                <i class="icon ion-ios-arrow-down" ng-if="!showLoupan"></i>
+            </a>
+            <a class="button"  ng-click="action.expand('type')">
+                <span>户型</span>
+                <i class="icon ion-ios-arrow-up" ng-if="showType"></i>
+                <i class="icon ion-ios-arrow-down" ng-if="!showType"></i>
+            </a>
+        </div>
+        <div ng-if="!showLoupan" style="position: absolute;top: 49px">
+            <div class="row skill-row">
+                <div class="col-33 skill-options" ng-repeat="item in info.loupan">
+                <span ng-click="action.choose(item, 'loupan')"
+                      ng-class="{select:loupanChoose.indexOf(item.id)!=-1}">
+                    {{item.name}}
+                </span>
+                </div>
+            </div>
+        </div>
+        <div ng-if="!showType" style="position: absolute;top: 49px;width:100%;">
+            <div class="row skill-row">
+                <div class="col-33 skill-options" ng-repeat="item in info.house_type">
+                    <span ng-click="action.choose(item, 'house_type')"
+                        ng-class="{select:houseTypeChoose.indexOf(item.room_num)!=-1}"
+                        ng-if="item.room_num_change!='全部'">
+                        {{item.room_num_change}}居
+                    </span>
+                    <span ng-click="action.choose(item, 'house_type')"
+                                          ng-class="{select:houseTypeChoose.indexOf(item.room_num)!=-1}"
+                                          ng-if="item.room_num_change=='全部'">
+                        {{item.room_num_change}}
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="ds-section">
+            <div class="ds-sec-content" ng-repeat="item in items"  ng-click="goto('decoration-set-detail', {id: item.id})">
+                <img style="width: 100%" ng-src="{{qiniuDomain + item.thumbnail}}">
+                <div class="ds-content-text">
+                    <span>
+                        【{{item.type}}】{{item.house_type_name}}户型{{item.title}}
+                    </span>
+                    <span ng-if="item.price_unit==1">
+                        {{item.price}}万 / {{item.name}} / {{item.area}}m² / {{item.room_num_change}}居
+                    </span>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

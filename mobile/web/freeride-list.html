@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>顺风车</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>
+        $.config = {
+            routerFilter: function (i) {
+                return !!i.is("index.html")
+            }
+        }
+    </script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current" id="freeride-list">
+        <header class="bar bar-nav">
+            <h1 class="title">
+            </h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+        </header>
+        <nav class="bar bar-tab">
+            <a class="tab-item external" href="javascript:void(0);">
+                <span class="font-white" id="create">发布顺风车信息</span>
+            </a>
+        </nav>
+        <div class="content content-no-padding infinite-scroll" data-distance="1%">
+            <div id="container"></div>
+            <!-- 加载提示符 -->
+            <div class="infinite-scroll-preloader">
+                <div class="preloader"></div>
+            </div>
+        </div>
+
+        <!-- 用户协议 -->
+        <div class="popup popup-agreement">
+            <div class="content-block lr-padding">
+                <h1>顺风车服务公告</h1>
+                <h3>本公告为“回来啦社区”顺风车服务之责任豁免、风险承担等事宜的相关条款。所有使用该服务的用户，皆视为已阅读、理解并接受本公告下所有条款。</h3>
+                <h3>1. 本服务使用者需年满18周岁、具有完全民事行为能力、身体健康，不存在影响参与服务的不适或疾病等；未成年人参与该服务需由其监护人许可并全程陪同；代他人报名者，视为被报名者知晓该公告并授权报名者该参与行为。</h3>
+                <h3>2. 本服务为公益服务，采取自愿参加、风险自担、责任自负、费用自理的原则。由于网络平台的特殊性，回来啦社区没有义务也无法做到对服务使用者的信息及行为进行审查，因此平台方不为任何使用者的信息及行为担保。平台方提供的任何便利或帮助不构成法律上的义务，更不构成分担服务使用者任何损失或风险的依据。</h3>
+                <h3>3. 本服务使用者理解并清楚，平台方仅为服务的倡导者和组织者，无法预知和避免服务中可能发生的一切风险或意外。同时，服务使用者充分理解并清楚服务中可能出现的一切风险或安全隐患，并承诺参与服务中可能出现的一切风险或责任由本人自行承担，包括但不限于人身、财产和精神损失，与平台方无关。</h3>
+                <h3>4. 为保障本服务的顺利进行，也为了保障本服务使用者自身的安全，平台方建议本服务使用者根据自身情况购买保险，如各种健康险、意外险等，本服务使用者应了解自行购买保险的意义并自行承担购买保险的相关费用。</h3>
+                <h3>5. 本服务使用者应在服务期间遵守法律法规等规定，采取合理有效的措施以最大限度保障自身的人身及财产安全。</h3>
+                <h3>6. 本服务使用者理解并清楚平台方已提示可通过如下方面减小风险：</h3>
+                <h3 style="padding-left: .5rem;">a) 要求并保存对方的个人信息，包括但不限于身份证复印件、联系方式等；</h3>
+                <h3 style="padding-left: .5rem;">b) 了解并确定双方的身体、心理、物质等状况是否适合参与服务；</h3>
+                <h3 style="padding-left: .5rem;">c) 参与本服务之前，双方签订合同明确各自权利义务、搭车时间路线、可能产生费用的承担方式、发生意外时各自的责任承担、无法履约时的相关通知及其他义务等；</h3>
+                <h3 style="padding-left: .5rem;">d) 避免携带大量现金或贵重物品、避免夜间或人烟稀少路段行驶、避免疲劳驾驶或酒后驾驶、避免路途中与家人失去联系等；</h3>
+                <h3>7. 本服务使用者理解，服务方有权根据法律法规、司法或行政命令以及公司内部政策情况，对服务进行调整、中止或终止。平台方对本服务进行调整时，会将最新服务规则或内容等刊载于本服务网页；主办方对服务进行中止或终止时，不承诺对本服务使用者进行另行通知。</h3>
+                <h3>8. 本服务最终解释权归上海沄甄网络科技有限公司所有。</h3>
+                <p><a id="agree" style="float:right">同意</a><a id="reject" style="float: right;margin-right: 2rem;color:red;">拒绝</a></p></div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<!--列表-->
+<script id="tpl" type="text/template">
+    {@each list as item}
+    <div class="ride-list-item">
+        <div class="freeride" data-id="${item.id}">
+            <div class="user-item lr-padding white">
+                <div class="user-item-img">
+                    <img src="${item.info.headimgurl}" style="border-radius: 50%;">
+                </div>
+                <div class="user-item-content">
+                    <h2 class="item-two-line-title">
+                        ${item.info.nickname}
+                    </h2>
+                    <h5 class="item-two-line-detail ellipsis-full">
+                        ${item.car.brand_name} ${item.car.model_name} ${item.car.color} ${item.car.car_num}
+                    </h5>
+                </div>
+            </div>
+            <div class="list-title lr-padding has-border-bottom white">
+                <h3>
+                    <i class="iconfont icon-shijian1" style="padding: 0 .3rem"></i>
+                    ${item.go_time | format} <span class="h5">剩余${item.leave_seat}座位</span>
+                </h3>
+            </div>
+            <div class="list-title lr-padding has-border-bottom white">
+                <h3>
+                    <i class="iconfont icon-dz_hll" style="padding: 0 .3rem"></i>
+                    ${item.origin}
+                </h3>
+            </div>
+            <div class="list-title lr-padding has-border-bottom white">
+                <h3>
+                    <i class="iconfont icon-mudedi" style="padding: 0 .3rem"></i>
+                    ${item.destination}
+                </h3>
+            </div>
+            {@if item.wish_message}
+            <div class="list-title lr-padding has-border-bottom white">
+                <h3>
+                    <i class="iconfont icon-tishi" style="padding: 0 .3rem"></i>
+                    ${item.wish_message}
+                </h3>
+            </div>
+            {@/if}
+        </div>
+        <div class="buttons-row ride-btn-bar white has-border-bottom lg-margin">
+            <div href="tel:${item.info.mobile_phone}" class="button ride-btn font-green call-driver"
+                 style="border: none;border-right: 1px solid #f6f6f9;height: 1.2rem;line-height: 1.2rem;margin: .5rem 0">呼叫车主</div>
+            {@if item.leave_seat == 0}
+            <div class="button ride-btn font-grey open-modal ride-join">我要搭车</div>
+            {@else}
+            <div class="button ride-btn font-green open-modal ride-join">我要搭车</div>
+            {@/if}
+        </div>
+    </div>
+    {@/each}
+</script>
+
+<!--置顶-->
+<script id="top" type="text/template">
+    {@each info as item}
+    {@each item as li}
+    <div class="ride-list-item">
+        <div data-id="${li.id}" class="freeride">
+            <div class="user-item lr-padding white ">
+                <div class="user-item-img">
+                    <img src="${li.desc.headimgurl}" style="border-radius: 50%;">
+                </div>
+                <div class="user-item-content">
+                    <h2 class="item-two-line-title">
+                        ${li.desc.nickname}
+                    </h2>
+                    <h5 class="item-two-line-detail ellipsis-full">
+                        ${li.car.brand_name} ${li.car.model_name} ${li.car.color} ${li.car.car_num}
+                    </h5>
+                </div>
+            </div>
+            <div class="list-title lr-padding has-border-bottom white">
+                <h3>
+                    <i class="iconfont icon-shijian1" style="padding: 0 .3rem"></i>
+                    ${li.go_time | format} <span class="h5">剩余${li.leave_seat}座位</span>
+                </h3>
+            </div>
+            <div class="list-title lr-padding has-border-bottom white">
+                <h3>
+                    <i class="iconfont icon-dz_hll" style="padding: 0 .3rem"></i>
+                    ${li.origin}
+                </h3>
+            </div>
+            <div class="list-title lr-padding has-border-bottom white">
+                <h3>
+                    <i class="iconfont icon-mudedi" style="padding: 0 .3rem"></i>
+                    ${li.destination}
+                </h3>
+            </div>
+            {@if li.wish_message}
+            <div class="list-title lr-padding has-border-bottom white">
+                <h3>
+                    <i class="iconfont icon-tishi" style="padding: 0 .3rem"></i>
+                    ${li.wish_message}
+                </h3>
+            </div>
+            {@/if}
+        </div>
+        {@if li.isInitiator}
+        <div class="buttons-row ride-btn-bar white has-border-bottom lg-margin">
+            <div class="button ride-btn font-grey route-cancel"
+                 style="border: none;border-right: 1px solid #f6f6f9;height: 1.2rem;line-height: 1.2rem;margin: .5rem 0">取消行程</div>
+            {@if li.leave_seat == 0}
+            <div class="button ride-btn font-grey custom-enough-grey">乘客已满</div>
+            {@else}
+            <div class="button ride-btn font-green custom-enough-green">乘客已满</div>
+            {@/if}
+        </div>
+        {@else}
+        <div class="buttons-row ride-btn-bar white has-border-bottom lg-margin">
+            <div href="tel:${li.desc.mobile_phone}" class="button ride-btn font-green call-driver"
+                 style="border: none;border-right: 1px solid #f6f6f9;height: 1.2rem;line-height: 1.2rem;margin: .5rem 0">呼叫车主</div>
+            <div class="button ride-btn font-grey ride-cancel">取消搭车</div>
+        </div>
+        {@/if}
+    </div>
+    {@/each}
+    {@/each}
+</script>
+
+<!--回顾-->
+<script id="view" type="text/template">
+    {@each list as data}
+    <div class="freeride" data-id="${data.id}">
+        <div class="user-item lr-padding white">
+            <div class="user-item-img">
+                <img src="${data.info.headimgurl}" style="border-radius: 50%;">
+            </div>
+            <div class="user-item-content">
+                <h2 class="item-two-line-title" style="opacity: .4">
+                    ${data.info.nickname}
+                </h2>
+                <h5 class="item-two-line-detail ellipsis-full" style="opacity: .4">
+                    ${data.car.brand_name} ${data.car.model_name} ${data.car.color} ${data.car.car_num}
+                </h5>
+            </div>
+        </div>
+        <div class="list-title lr-padding has-border-bottom white">
+            <h3 style="opacity: .4">
+                <i class="iconfont icon-shijian1" style="padding: 0 .3rem"></i>
+                ${data.go_time | format}
+            </h3>
+        </div>
+        <div class="list-title lr-padding has-border-bottom white">
+            <h3 style="opacity: .4">
+                <i class="iconfont icon-dz_hll" style="padding: 0 .3rem"></i>
+                ${data.origin}
+            </h3>
+        </div>
+        <div class="list-title lr-padding has-border-bottom white">
+            <h3 style="opacity: .4">
+                <i class="iconfont icon-mudedi" style="padding: 0 .3rem"></i>
+                ${data.destination}
+            </h3>
+        </div>
+        {@if data.wish_message}
+        <div class="list-title lr-padding has-border-bottom white">
+            <h3 style="opacity: .4">
+                <i class="iconfont icon-tishi" style="padding: 0 .3rem"></i>
+                ${data.wish_message}
+            </h3>
+        </div>
+        {@/if}
+        <div class="buttons-row ride-btn-bar white has-border-bottom lg-margin" data-id="${data.id}">
+            <div class="button ride-btn font-green ride-detail">查看详情</div>
+            {@if !data.hasThank && data.hasJoin}
+            <div class="button ride-btn font-green ride-detail to-thank">感谢车主</div>
+            {@/if}
+        </div>
+    </div>
+    {@/each}
+</script>
+
+<!--楼盘-->
+<script id="fangs" type="text/template">
+    <input type="text" id="picker" style="background-color: #009042;border: none;text-align: center;width:100%;"
+           data-id="${id}" readonly>
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/freeride-list.js"></script>
+
+</body>
+</html>

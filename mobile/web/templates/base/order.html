@@ -1,0 +1,99 @@
+<ion-view view-title="服务列表">
+    <ion-nav-buttons side="left">
+        <button class="button icon ion-ios-arrow-left button-clear button-positive"
+                ng-click="goBack()"></button>
+    </ion-nav-buttons>
+    <div class="tabs-striped tabs-top">
+        <div class="tabs" style="top: 43px;">
+            <a class="tab-item" ng-class="{active:state==-1}" href="#/order" ng-click="setState(-1)" style="border-color: #009042">全部</a>
+            <a class="tab-item" ng-class="{active:state==0}" href="#/order" ng-click="setState(0)" style="border-color: #009042">待执行</a>
+            <a class="tab-item" ng-class="{active:state==2}" href="#/order" ng-click="setState(2)" style="border-color: #009042">执行中</a>
+            <a class="tab-item" ng-class="{active:state==1}" href="#/order" ng-click="setState(1)" style="border-color: #009042">待评价</a>
+        </div>
+    </div>
+    <ion-content class="page-order">
+        <ion-refresher on-refresh="action.doRefresh()"></ion-refresher>
+        <div class="list" style="padding-top: 49px">
+            <div ng-repeat="item in orderList | filter:filterOrderList">
+                <!--<div class="row header">-->
+                <!--<div class="col col-25 col-center">{{item.service.title}}</div>-->
+                <!--<div class="col col-center text-gray">{{item.servicetime.date_time.substr(0, 15)}}</div>-->
+                <!--<div class="col col-25 col-center text-orange" ng-switch="item.userstatus">-->
+                <!--<span ng-switch-when="0">待执行</span>-->
+                <!--<span ng-switch-when="1">待评价</span>-->
+                <!--<span ng-switch-when="2">已完成</span>-->
+                <!--<span ng-switch-when="3">已取消</span>-->
+                <!--<span ng-switch-when="4">已终止</span>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="row content" ng-click="goto('order-detail', {orderId:item.id})">-->
+                <!--<div class="col col-20 col-center">-->
+                <!--<span class="ui-icon icon-wash"></span>-->
+                <!--</div>-->
+                <!--<div class="col col-80">-->
+                <!--<div class="row" ng-repeat="quote in item.quote">-->
+                <!--<div class="col col-50">-->
+                <!--{{quote.servicequote.title}}-->
+                <!--</div>-->
+                <!--<div class="col col-right text-gray">x{{quote.quality}}</div>-->
+                <!--<div class="col col-33 col-right">¥ {{quote.price | number:2}}</div>-->
+                <!--</div>-->
+                <!--<div class="row">-->
+                <!--<div class="col col-offset-50 col-right">总额:</div>-->
+                <!--<div class="col col-33 col-right">¥ {{item.amount | number:2}}</div>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
+                <div style="margin-bottom: 8px;">
+                    <a style="height: 84px" class="item item-icon-right item-avatar"
+                       ng-click="goto('order-detail', {type: item.type.fixed_catalog, orderId:item.id})">
+
+                        <img style="border-radius: 0;max-width: 64px;max-height: 64px;top:9px;"
+                             ng-src="{{qiniuDomain + item.logo}}" ng-if="item.logo">
+                        <div style="padding-left: 25%;margin:10px 0;">
+                            <p style="color: #333338">
+                                {{item.title}}
+                                <span style="font-size: 12px;color: #595757" ng-if="item.type.fixed_catalog==4">（总价: ￥{{item.amount}}）</span>
+                                <span style="font-size: 12px;color: #595757" ng-if="item.type.fixed_catalog==2">（定金: ￥1000）</span>
+                                <span class="order-stat" ng-if="item.userstatus==0">待执行</span>
+                                <span class="order-stat" ng-if="item.userstatus==1">待评价</span>
+                                <span class="order-stat" ng-if="item.userstatus==2">已完成</span>
+                                <span class="order-stat" ng-if="item.userstatus==3">已取消</span>
+                                <span class="order-stat" ng-if="item.userstatus==4">已终止</span>
+                                <span class="order-stat" ng-if="item.userstatus==5">执行中</span>
+                            </p>
+                            <p style="font-size: 11px">
+                                {{item.provider.name}}
+                            </p>
+                            <p style="font-size: 11px">
+                                <span ng-if="item.type.fixed_catalog==5">
+                                    {{item.schedule.start_date}}&nbsp;({{item.schedule.day}}{{item.schedule.start_time}}-{{item.schedule.end_time}})
+                                </span>
+                            </p>
+
+                            <i class="icon ion-ios-arrow-right" style="color: #8cb7d2"
+                               ng-click="goto('order-detail', {type: item.type.fixed-catalog, orderId:item.id})"></i>
+                        </div>
+                    </a>
+                </div>
+                <!--<div class="row footer" ng-show="item.userstatus<2">-->
+                <!--<div class="col col-20"></div>-->
+                <!--<div class="col col-80 col-right">-->
+                <!--<button class="button button-outline button-light" ng-show="item.userstatus<2&&item.workstatus<2" ng-click="action.cancel(item)">-->
+                <!--取消订单-->
+                <!--</button>-->
+                <!--<button class="button button-outline button-light" ng-show="item.userstatus<2&&item.workstatus==2">-->
+                <!--终止服务-->
+                <!--</button>-->
+                <!--<button class="button button-outline button-balanced" ng-show="item.userstatus<2&&item.paystatus==0" ng-click="action.pay(item)">-->
+                <!--立即支付-->
+                <!--</button>-->
+                <!--<button class="button button-outline button-balanced" ng-show="item.userstatus==1" ng-click="action.comment(item)">-->
+                <!--立即评价-->
+                <!--</button>-->
+                <!--</div>-->
+                <!--</div>-->
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,74 @@
+<ion-view view-title="友邻互助社" hide-nav-bar="true">
+    <ion-header class="reset-header">
+        <div class="bar bar-header">
+            <div class="dropdown">
+                <button id="dropdown" data-id="0" class="button" ng-click="params.drop = !params.drop">
+                    {{params.title}}
+                </button>
+                <i class="icon ion-arrow-down-b" ng-show="!params.drop"></i>
+                <i class="icon ion-arrow-up-b" ng-show="params.drop"></i>
+            </div>
+
+        </div>
+        <ul class="dropdown-menu" ng-show="params.drop">
+            <li ng-click="action.goto(sub)" name="dropdown" ng-repeat="sub in title">
+                <a href="">{{sub.name}}</a>
+            </li>
+        </ul>
+        <button class="button icon ion-ios-arrow-left button-clear button-light button-white goback-button"
+                ng-click="goto('base.community', {'id':params.id})"></button>
+        <button class="button icon ion-android-add button-clear button-light button-white add-button"
+                ng-click="action.create()"></button>
+    </ion-header>
+    <div class="tabs-striped  tabs-color-balanced tabs-top">
+        <div class="tabs">
+            <div class="tab-item item-all-help" ng-class="{active:isSelected==0}"
+               ng-click="action.change('all')">
+                所有求助
+            </div>
+            <div class="tab-item item-my-help" ng-class="{active:isSelected==1}" ng-click="action.change('my')">
+                我的求助
+            </div>
+            <div class="tab-item item-my-help" ng-class="{active:isSelected==2}" ng-show="admins"
+               ng-click="action.change('ask')">
+                请我帮忙
+            </div>
+        </div>
+    </div>
+    <ion-content ng-class="0==items.length?'':'grey'" style="padding-top: 2px;margin-top: 90px">
+        <!-- 空白页 -->
+        <div class="no-content" ng-show="1==sysOp.page&&!sysOp.moreDataFlag">
+            <img src="../../assets/css/images/blank_community_help.png">
+            <p>有困难，找业工~</p>
+        </div>
+        <!-- 正文 -->
+        <div class="community-session list">
+            <a class="item item-avatar" ng-click="goto('community-help-detail', {id: item.id, vaild:params.vaild, type:params.type})"
+               ng-repeat="item in items">
+                <img ng-src="{{qiniuDomain + item.account_info.avatar}}">
+                <h2>
+                    <span class="community-help-item-title">{{item.title}}</span>
+                    <span class="date">{{item.formate_time}}</span>
+                </h2>
+                <p class="text">
+                    <span>{{item.account_info.nickname}}</span>
+                    <span class="ask-help">
+                        请{{item.volunteer_info.nickname}}帮忙
+                    </span>
+                    <span class="unsolved" ng-show="item.status==0">
+                        未解决
+                    </span>
+                    <span class="solved" ng-show="item.status==1">
+                        已解决
+                    </span>
+                </p>
+            </a>
+        </div>
+
+        <!-- 上拉加载 -->
+        <ion-infinite-scroll on-infinite="sysOp.loadMore()" ng-if="sysOp.moreDataFlag" distance="1%">
+        </ion-infinite-scroll>
+        <p ng-hide="sysOp.moreDataFlag||0==items.length" class="col-center">---数据已加载完毕---
+        <p>
+    </ion-content>
+</ion-view>

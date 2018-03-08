@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>我的友元</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="points-record">
+        <header class="bar bar-nav" id="header">
+        </header>
+        <div class="content grey infinite-scroll" data-distance="1%">
+            <!-- 内容 -->
+            <div id="container" ></div>
+            <!-- loading -->
+            <!-- 加载提示符 -->
+            <div class="infinite-scroll-preloader" style="text-align: center;margin-bottom: -20px;">
+                <div class="preloader"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- header -->
+<script id="title" type="text/template">
+    <a class="iconfont icon-left pull-left icon-white open-panel" href="javascript:history.go(-1)"></a>
+    {@if type == '2'}
+    <h1 class="title">获取记录</h1>
+    {@else if type == '3'}
+    <h1 class="title">使用记录</h1>
+    {@else}
+    <h1 class="title">所有记录</h1>
+    {@/if}
+</script>
+
+<!-- 分组 -->
+<script id="group" type="text/template">
+    {@each period_stat as item}
+        <div class="points-record-title lr-padding">
+            <h3 class="points-record-date">${item.month}</h3>
+            <h4 class="points-record-include">
+                {@if type != '3'}
+                获取：<span class="font-green">${item.acquire_point}</span>
+                {@/if}
+                {@if type != '2'}
+                &nbsp;&nbsp;使用：<span class="font-orange">${item.used_point}</span>
+                {@/if}
+            </h4>
+        </div>
+       {@each list[item.period] as data}
+        <div class="user-item lr-padding white">
+            <div class="user-item-content">
+                <h2 class="item-two-line-title ellipsis-full" style="line-height: 1.2rem;max-width: 82%">
+                    ${data.remark}
+                </h2>
+                <h2 class="item-two-line-right">
+                    ${data.point}
+                </h2>
+                <h5 class="item-two-line-detail ellipsis-full">
+                    ${data.created_at | time}
+                </h5>
+            </div>
+            <div class="user-item-img">
+                <img src="${data.img}" class="order-img head-img">
+            </div>
+        </div>
+        {@/each}
+    {@/each}
+</script>
+
+<!-- 列表 -->
+<script id="list" type="text/template">
+    {@each list as item}
+    <div class="user-item lr-padding white">
+        <div class="user-item-content">
+            <h2 class="item-two-line-title ellipsis-full" style="line-height: 1.2rem;max-width: 85%">
+                ${item.remark}
+            </h2>
+            <h2 class="item-two-line-right">
+                ${item.point}
+            </h2>
+            <h5 class="item-two-line-detail ellipsis-full">
+                ${item.created_at | time}
+            </h5>
+        </div>
+        <div class="user-item-img">
+            <img src="${item.img}" class="order-img head-img">
+        </div>
+    </div>
+    {@/each}
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/points-record.js"></script>
+
+</body>
+</html>

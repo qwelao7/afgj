@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>车辆提醒</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="vehicle-alert">
+        <!-- 头部 -->
+        <header class="bar bar-nav">
+            <h1 class="title">车辆提醒</h1>
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+            <a class="iconfont icon-edit pull-right icon-white open-panel" id="tag"></a>
+        </header>
+        <!--右上角菜单弹出层-->
+        <div class="modal-popup white" id="popup" style="display: none">
+            <p class="modal-p-list modify open-report" id="car-record" style="color: #3d4145;padding-left: .4rem">
+                <i class="iconfont icon-Maintain1-hll" style="color: #133286;padding-top: .3rem;margin-right: .6rem"></i>
+                维保记录
+            </p>
+            <p class="modal-p-list modify open-report" id="edit-car" style="color: #3d4145;padding-left: .4rem">
+                <i class="iconfont icon-bianji1" style="color: #009042;padding-top: .3rem;margin-right: .6rem"></i>
+                编辑车辆
+            </p>
+            <p class="modal-p-list modify open-report" id="delete-car" style="color: #3d4145;padding-left: .4rem">
+                <i class="iconfont icon-xiao10" style="color: #ff7729;padding-top: .3rem;margin-right: .6rem"></i>
+                删除车辆
+            </p>
+        </div>
+        <!--遮罩层-->
+        <div class="modal-overlay" id="modal"></div>
+        <!-- 内容 -->
+        <div class="content content-no-padding" id="container" style="padding-bottom: 2.5rem !important;">
+
+        </div>
+        <!-- 底部菜单 -->
+        <nav class="bar bar-tab" id="add" style="z-index: 99;">
+            <a class="tab-item external">
+                <span class="font-white">+新建提醒</span>
+            </a>
+        </nav>
+    </div>
+</div>
+
+<script id="tpl" type="text/template">
+    <div class="vehicle-list vehicle-alert-title lr-padding white lg-margin">
+        <div class="vehicle-list-left vehicle-alert">
+            <h3 class="top-line">${base.series_name} ${base.color} ${base.car_num}</h3>
+            <h4 class="bottom-line"><span class="font-green" id="now-kw-show">${base.now_km}km</span>
+                <span id="update_time">{@if base.record_km_date}（更新于${base.record_km_date}）{@/if}</span>
+            </h4>
+        </div>
+        <div class="vehicle-list-right">
+            <a class="label-chosen" id="miles-update">更新里程</a>
+        </div>
+    </div>
+</script>
+
+<!-- list -->
+<script id="list" type="text/template">
+    <div id="content">
+        {@each list as item}
+        {@if item.alert_status == 1}
+        <div class="vehicle-list white sm-margin vehicle-alert-list-warning">
+            <div class="vehicle-list-left" data-id="${item.id}" data-name="${item.notification_name}">
+                <i class="iconfont icon-SmallBell-all font-white"></i>
+                <h3 class="top-line font-white">${item.notification_name}提醒</h3>
+                {@if item.util_next_time != null && item.util_next_km != null}
+                <h4 class="bottom-line font-white">下次保养: ${item.util_next_time | trans} 或 ${item.util_next_km}KM</h4>
+                {@else if item.util_next_time == null && item.util_next_km != null}
+                <h4 class="bottom-line font-white">下次保养: ${item.util_next_km}KM</h4>
+                {@else if item.util_next_time != null && item.util_next_km == null}
+                <h4 class="bottom-line font-white">下次保养: ${item.util_next_time | trans}</h4>
+                {@/if}
+            </div>
+            <div class="vehicle-list-right vehicle-delete" data-id="${item.id}">
+                <i class="iconfont icon-xiao10"></i>
+            </div>
+        </div>
+        {@else}
+        <div class="vehicle-list vehicle-alert-list-safe white sm-margin">
+            <div class="vehicle-list-left" data-id="${item.id}" data-name="${item.notification_name}">
+                <i class="iconfont icon-SmallBell-all"></i>
+                <h3 class="top-line">${item.notification_name}提醒</h3>
+                {@if item.util_next_time != null && item.util_next_km != null}
+                <h4 class="bottom-line">下次保养: ${item.util_next_time | trans} 或 ${item.util_next_km}KM</h4>
+                {@else if item.util_next_time == null && item.util_next_km != null}
+                <h4 class="bottom-line">下次保养: ${item.util_next_km}KM</h4>
+                {@else if item.util_next_time != null && item.util_next_km == null}
+                <h4 class="bottom-line">下次保养: ${item.util_next_time | trans}</h4>
+                {@/if}
+            </div>
+            <div class="vehicle-list-right vehicle-delete" data-id="${item.id}">
+                <i class="iconfont icon-xiao10"></i>
+            </div>
+        </div>
+        {@/if}
+        {@/each}
+    </div>
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/vehicle-alert.js"></script>
+</body>
+</html>

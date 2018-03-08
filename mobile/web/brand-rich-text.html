@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>项目介绍</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page page-current" id="brand-rich-text" style="padding:0">
+        <div class="content white" id="container">
+            <div id="loupan"></div>
+            <div id="richText" style="padding:0 .6rem"></div>
+        </div>
+    </div>
+</div>
+<script id="title" type="text/template">
+    <header
+            class="bar bar-nav" id="header">
+        <h1 class="title">${name}</h1>
+        <a class="iconfont icon-left pull-left icon-white open-panel" href="javascript:history.go(-1)"></a>
+    </header></script>
+<script id="fixed" type="text/template">
+    {@if wx_qr_code != "" || hot_line != ""}
+    <div class="fixed-bar font-white font-center fixed-bottom">
+        {@if wx_qr_code != ""}
+        <div class="orange col-fixed" id="code" data-code="${wx_qr_code}">详情了解</div>
+        {@/if}
+        {@if hot_line != ""}
+        <div class="blue col-fixed"><a href="tel:${hot_line}" class="font-white"
+                                       style="display: block;width: 100%;">热线咨询</a></div>
+        {@/if}
+    </div>
+    {@/if}
+</script>
+<script id="info" type="text/template">
+    <div class="swiper-container" data-space-between='10'>
+        <div class="swiper-wrapper">
+            {@each bannerpic as pic}
+            <div class="swiper-slide hll-swiper-slide" data-id="${id}" style="max-height: 30rem">
+                <img src="${pic | imgPath}" alt="" style="width: 100%;"></div>
+            {@/each}
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+    <div class="house-item">
+        <p style="font-weight: bold">${name}</p>
+        <!--<h3 class="area">${avg_price}</h3>-->
+        <h3 class="address"><i class="iconfont icon-dz_hll"></i>&nbsp;&nbsp;${address}</h3>
+        <ul>
+            <!--<li><label>最早交房</label>-->
+                <!--<h3 class="inline">${delivery_date}</h3>-->
+            <!--</li>-->
+            <!--<li><label>交付标准</label>-->
+                <!--<h3 class="inline">${decorate_level}</h3>-->
+            <!--</li>-->
+            <!--<li>-->
+                <!--<label>物业形态</label>-->
+                <!--<h3 class="inline">${property_type}</h3>-->
+            <!--</li>-->
+            <li>
+                <label>楼盘简介</label>
+            </li>
+        </ul>
+    </div>
+    <!--<div class="house-list">-->
+        <!--{@each houseType as house}-->
+        <!--<div class="item">-->
+            <!--<h2 class="item-title">户型${house.name}</h2>-->
+            <!--<a class="fixed-bar">-->
+                <!--<img style="width: 100%;height:100%;" src="${house.pic | imgPath}"/>-->
+            <!--</a>-->
+            <!--<div class="fixed-bar">-->
+                <!--<h3 class="inline icon-grey">${house.fangxin}</h3>&nbsp;&nbsp;<h3 class="inline icon-grey">-->
+                <!--${house.area}</h3>&nbsp;&nbsp;-->
+                <!--{@if house.lowest_total_price != '0.0'}-->
+                <!--<h3 class="icon-lightblue inline">${house.lowest_total_price | int}万</h3>-->
+                <!--{@/if}-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--{@/each}-->
+    <!--</div>-->
+    {@if wx_qr_code != "" || hot_line != ""}
+    <div style="height: 48px;"></div>
+    {@/if}
+</script>
+<script id="rich" type="text/template">
+    {@if wx_qr_code != "" || hot_line != ""}
+    <div style="height: 48px;"></div>
+    {@/if}
+</script>
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script src="//g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/brand-rich-text.js"></script>
+
+</body>
+</html>

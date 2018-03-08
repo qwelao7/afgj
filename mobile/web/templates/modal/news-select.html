@@ -1,0 +1,33 @@
+<ion-modal-view>
+  <ion-header-bar class="bar bar-header">
+    <button class="button button-clear button-primary" ng-click="editModal.hide()">取消</button>
+    <h1 class="title" ng-hide="editInfo.showComment">消息筛选</h1>
+    <h1 class="title" ng-show="editInfo.showComment">添加评论</h1>
+    <button class="button button-clear button-positive" ng-show="editInfo.showComment" ng-click="editSubmit()">提交</button>
+  </ion-header-bar>
+  <ion-content class="" style="background-color: #e6e6e6;">
+    <div class="list">
+      <label class="item item-input" ng-click="editSubmit_type(params.id,0)" ng-hide="editInfo.showComment">
+        <span class="input-label">全部</span>
+      </label>
+      <label class="item item-input" ng-click="editSubmit_type(params.id,1)" ng-hide="editInfo.showComment">
+        <span class="input-label">楼盘新闻</span>
+      </label>
+      <label class="item item-input" ng-click="editSubmit_type(params.id,2)" ng-hide="editInfo.showComment">
+        <span class="input-label">楼盘活动</span>
+      </label>
+      <label class="item item-input" ng-click="editSubmit_type(params.id,3)" ng-hide="editInfo.showComment">
+        <span class="input-label">成长日志</span>
+      </label>
+      <label class="item item-input" ng-show="editInfo.showComment">
+        <textarea ng-model="editInfo.comment" style="height:150px;" placeholder="请输入.." type="text"></textarea>
+      </label>
+
+        <ion-toggle class="item item-toggle-default" ng-show="isAdmin" ng-model="settingDefault.checked"
+                    ng-checked="settingDefault.checked" ng-change="defaultChange()">
+          {{ settingDefault.text }}
+        </ion-toggle>
+
+    </div>
+  </ion-content>
+</ion-modal-view>

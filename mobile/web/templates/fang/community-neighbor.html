@@ -1,0 +1,104 @@
+<ion-view view-title="" class="has-tabs-top" hide-nav-bar="true">
+    <ion-header class="reset-header">
+        <div class="bar bar-header">
+            <div class="dropdown">
+                <button id="dropdown" data-id="0" class="button" ng-click="param.drop=!param.drop">
+                    {{loupans[stateParams.id].name}}
+                </button>
+                <i class="icon ion-arrow-down-b" ng-hide="param.drop"></i>
+                <i class="icon ion-arrow-up-b" ng-show="param.drop"></i>
+            </div>
+        </div>
+        <ul class="dropdown-menu" ng-show="param.drop">
+            <li ng-repeat="loupan in loupans" ng-click="param.drop=0;goto('community-neighbor', {id:loupan.id})" name="dropdown">
+                <a href="">{{loupan.name}}</a>
+            </li>
+        </ul>
+        <button class="button icon ion-ios-arrow-left button-clear button-light button-white goback-button" ng-click="goBack()"></button>
+    </ion-header>
+    <ion-content style="padding-top: 2px;margin-top: 43px">
+        <div class="bar bar-header item-input-inset">
+            <label class="item-input-wrapper">
+                <input type="search" placeholder="请输入房号、昵称或技能" ng-change="watch(searchInfo)" ng-model="searchInfo">
+            </label>
+            <button class="button button-clear" style="color:#878787" ng-click="search(searchInfo)">
+                搜索
+            </button>
+        </div>
+        <div class="no-content" ng-show="buildings.length==0 && searchInfo == undefined">
+            <img src="../../assets/css/images/blank_community_neighbor.png">
+            <p>欢迎您成为该小区第一位在线业主~</p>
+        </div>
+        <!-- 管家 -->
+        <div class="loupan-neighbor" ng-hide="admins.length==0||admins==null||!show">
+            <h4>管家</h4>
+            <div class="community-session list">
+                <div class="item item-avatar" style="padding-left: 0" ng-repeat="admin in admins">
+                    <div class="left-avatar row">
+                        <img class="col-20" style="margin-top: 2%" ng-src="{{qiniuDomain + admin.avatar}}">
+                        <div class="col-80" style="margin-left: 10px;line-height: 48px;font-weight: bold;font-size: medium">
+                            {{admin.nickname}}
+                        </div>
+                    </div>
+                    <button class="button button-small button-calm" ng-click="replyDialog('admin',{{admin.id}});">发消息</button>
+                </div>
+            </div>
+        </div>
+        <!-- 自己 -->
+        <div class="loupan-neighbor" ng-hide="myself.length==0||myself==null||!show">
+            <h4>我</h4>
+            <div class="community-session list">
+                <div class="item item-avatar" style="padding-left: 0">
+                    <div class="left-avatar row" ng-click="goto('account-manage')">
+                        <img class="col-20" ng-src="{{myself.user.avatar}}" ng-if="myself.user.avatar != undefined">
+                        <div class="col-80" style="margin-left: 10px">
+                            <h2>
+                                <span style="font-weight: bold">我</span>
+                                <img src="../../assets/img/icon_worker.png" ng-show="myself.isVolunteer> 0">
+                            </h2>
+                            <p class="personal-label">
+                                <span class="label-game" ng-repeat="skill in myself.skill">{{skill}}</span>
+                            </p>
+                            <div class="address-detail" ng-repeat="ad in myself.address">
+                                <span class="myself-address">{{ad}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 其他用户 -->
+        <div class="loupan-neighbor" ng-repeat="buildings in param.list track by $index" ng-show="buildings">
+            <h4>{{$index}}栋</h4>
+            <div class="community-session list">
+                <div class="item item-avatar" style="padding-left: 0" ng-repeat="nghb in buildings">
+                    <div class="left-avatar row" ng-click="goto('community-neighbor-detail', {{nghb}})">
+                        <img class="col-20" ng-src="{{qiniuDomain + nghb.avatar}}">
+                        <div class="col-80" style="margin-left: 10px">
+                            <h2>
+                                <span style="font-weight: bold">{{nghb.nick}}</span>
+                                <img src="../../assets/img/icon_worker.png" ng-show={{nghb.volunteerID}}>
+                            </h2>
+                            <p class="personal-label">
+                                <span class="label-game" ng-repeat="skill in nghb.skills_check">{{skill}}</span>
+                            </p>
+                            <p class="address-detail">
+                                <span>{{nghb.building_num}}栋{{nghb.unit_num}}单元{{nghb.house_num}}室</span>
+                            </p>
+                        </div>
+                    </div>
+                    <button class="button button-small button-calm" ng-show="!nghb.friendStatus" ng-click="sayhi(nghb)">
+                        打招呼
+                    </button>
+                    <span ng-show="nghb.friendStatus==1">待验证</span>
+                    <button class="button button-small button-calm" ng-show="nghb.friendStatus==2" ng-click="replyDialog('account',{{nghb.account_id}});">发消息
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 上拉加载 -->
+        <ion-infinite-scroll on-infinite="sysOp.loadMore()" ng-if="sysOp.moreDataFlag" distance="1%">
+        </ion-infinite-scroll>
+    </ion-content>
+</ion-view>

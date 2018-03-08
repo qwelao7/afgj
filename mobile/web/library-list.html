@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>博物图书馆</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="http://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <script src="http://g.alicdn.com/sj/lib/zepto/zepto.min.js" charset="utf-8"></script>
+    <script>$.config = {
+        routerFilter: function (i) {
+            return !!i.is("index.html")
+        }
+    }</script>
+    <link href="/css/style.css?3a42c8577e44024cafdd" rel="stylesheet">
+</head>
+<body>
+<div class="page-group">
+    <div class="page" id="library-list">
+        <header class="bar bar-nav">
+            <input class="title header-input" type="text" placeholder="搜索" name="search" style="margin-left: 11%">
+            <a class="iconfont icon-left pull-left icon-white open-panel" id="back"></a>
+        </header>
+        <div class="content content-no-padding" id="content">
+
+        </div>
+    </div>
+</div>
+
+<script type="text/template" id="tpl">
+    {@each info as item}
+    <div class="user-item decoration-item lr-padding white library-list" data-id="${item.id}" data-open="${item.is_open}"
+    data-name="${item.library_name}" data-type="${item.share_type}">
+        <div class="user-item-img">
+            {@if item.share_type == 1 || (item.share_type == 2 && item.is_open)}
+            <img src="${item.thumbnail | imgPath}">
+            {@else if item.share_type == 2 && !item.is_open}
+            <div class="library-lock">
+                <i class="iconfont icon-suo-hll"></i>
+            </div>
+            {@/if}
+        </div>
+        <div class="user-item-content">
+            <div style="position: relative;">
+                <h2 class="item-two-line-title ellipsis-full" style="width: 60%">
+                    ${item.library_name}
+                </h2>
+                <h5 class="item-two-line-detail">
+                    藏书${item.library_book}册
+                </h5>
+                <span style="position: absolute;right: 0.05rem;top: 0.4rem;color: #999;font-size: 0.6rem;">距离约${item.distance | distance}</span>
+            </div>
+        </div>
+        <br style="clear: both">
+    </div>
+    {@/each}
+</script>
+
+<script src="http://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js" charset="utf-8"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript" src="unit.js"></script>
+<script type="text/javascript" src="/js/library-list.js"></script>
+</body>
+</html>
